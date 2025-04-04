@@ -3,34 +3,66 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiApp1234.MainPage">
 
-    <ScrollView>
-        <VerticalStackLayout
-            Padding="30,0"
-            Spacing="25">
-            <Image
-                Source="dotnet_bot.png"
-                HeightRequest="185"
-                Aspect="AspectFit"
-                SemanticProperties.Description="dot net bot in a race car number eight" />
+    <ScrollView BackgroundColor="#f1f4f8">
 
-            <Label
-                Text="Hello, World!"
-                Style="{StaticResource Headline}"
-                SemanticProperties.HeadingLevel="Level1" />
+        <StackLayout Padding="40">
 
-            <Label
-                Text="Welcome to &#10;.NET Multi-platform App UI"
-                Style="{StaticResource SubHeadline}"
-                SemanticProperties.HeadingLevel="Level2"
-                SemanticProperties.Description="Welcome to dot net Multi platform App U I" />
+            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" Spacing="8">
+                <Image Source="user_icon.png" WidthRequest="32" HeightRequest="15"/>
+                <Image Source="settings_icon.png" WidthRequest="32" HeightRequest="15"/>
+            </StackLayout>
 
-            <Button
-                x:Name="CounterBtn"
-                Text="Click me" 
-                SemanticProperties.Hint="Counts the number of times you click"
-                Clicked="OnCounterClicked"
-                HorizontalOptions="Fill" />
-        </VerticalStackLayout>
+            <!-- Title -->
+            <Label Text="Quiz"
+                     FontSize="30"
+                     FontAttributes="Bold"
+                     HorizontalOptions="Center"
+                     Margin="0,16,0,8"
+                     VerticalOptions="Start"/>
+
+            <!-- Title -->
+            <Label Text="Customer Type"
+               FontSize="24"
+               FontAttributes="Bold"
+               Margin="16,16,16,16"/>
+
+            <!-- Quiz Question -->
+            <Label Text="What type of budgeter best describes you?"
+               FontSize="18"
+               Margin="0,8,0,16"
+                       HorizontalOptions="Center"
+                       VerticalOptions="CenterAndExpand"/>
+
+            <!-- Options -->
+            <StackLayout>
+                <RadioButton Content="The Impulsive Spender" GroupName="BudgetType" IsChecked="True"/>
+                <RadioButton Content="The Over-Spender" GroupName="BudgetType"/>
+                <RadioButton Content="The Under Planner" GroupName="BudgetType"/>
+                <RadioButton Content="The Expert Budgeter" GroupName="BudgetType"/>
+                <RadioButton Content="The Debt Snowball Budgeter" GroupName="BudgetType"/>
+                <RadioButton Content="The Savings-Oriented Budgeter" GroupName="BudgetType"/>
+                <RadioButton Content="I'm Unsure" GroupName="BudgetType"/>
+            </StackLayout>
+
+            <!-- Progress Bar -->
+            <ProgressBar Progress="0.16" Margin="0,16,0,8"/>
+
+            <!-- Link to Article -->
+            <Label HorizontalOptions="Center">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="Explain Budgeting Types" TextDecorations="Underline" TextColor="Blue"/>
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+
+            <!-- Buttons -->
+            <HorizontalStackLayout HorizontalOptions="Center" Margin="0,16,0,0" Spacing="8" VerticalOptions="EndAndExpand" Padding="0,0,0,30" >
+                <Button Text="Next Question" x:Name="Button" WidthRequest="120" BackgroundColor="MediumPurple" TextColor="AntiqueWhite" Clicked="Button_Clicked"/>
+                <Button Text="Skip for now" WidthRequest="120" x:Name="Button1"  Clicked="Button1_Clicked"/>
+            </HorizontalStackLayout>
+        </StackLayout>
+
     </ScrollView>
 
 </ContentPage>
