@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiApp1234.Settings"
+             Title="Settings">
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="24">
+            <!-- Title -->
+            <Label Text="Settings" FontSize="24" FontAttributes="Bold" />
+
+            <!-- Accessibility Settings -->
+            <Label Text="Accessibility Settings" FontSize="18" FontAttributes="Bold" Margin="0,24,0,8" />
+
+            <!-- Screen Contrast -->
+            <Label Text="Screen Contrast" />
+            <Slider Minimum="0" Maximum="1" />
+
+            <!-- Text Size -->
+            <Label Text="Text Size" />
+            <Slider Minimum="0" Maximum="1" />
+
+            <!-- Text-to-Speech -->
+            <Grid ColumnDefinitions="*,Auto">
+                <Label Text="Text-to-Speech" Grid.Column="0" VerticalOptions="Center" />
+                <Switch Grid.Column="1" />
+            </Grid>
+
+            <!-- Dark Mode -->
+            <Grid ColumnDefinitions="*,Auto">
+                <Label Text="Dark Mode" Grid.Column="0" VerticalOptions="Center" />
+                <Switch Grid.Column="1" />
+            </Grid>
+
+            <!-- Help & Support -->
+            <Label Text="Help and Support" FontSize="18" FontAttributes="Bold" Margin="0,24,0,8" />
+            <Button Text="Contact Support (+44 7471 185479)" BackgroundColor="Purple" TextColor="White" />
+
+            <!-- FAQ -->
+            <Label Text="Frequently Asked Questions" />
+            <Label Text="How do I reset my password?" />
+            <Label Text="Where can I update my profile?" />
+            <Label Text="How do I cancel my subscription?" />
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
