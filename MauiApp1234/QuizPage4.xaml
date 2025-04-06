@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiApp1234.QuizPage4"
+             Title="QuizPage4">
+
+    <ScrollView BackgroundColor="#f1f4f8">
+        <StackLayout Padding="40">
+            <!-- Header -->
+            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" Spacing="8">
+                <Image Source="user_icon.png" WidthRequest="32" HeightRequest="32"/>
+                <Image Source="settings_icon.png" WidthRequest="32" HeightRequest="32"/>
+            </StackLayout>
+
+            <!-- Title -->
+            <Label Text="Quiz"
+          FontSize="30"
+          FontAttributes="Bold"
+          HorizontalOptions="Center"
+          Margin="0,16,0,8"
+          VerticalOptions="Start"/>
+
+            <!-- Title -->
+            <Label Text="Settings"
+             FontSize="24"
+             FontAttributes="Bold"
+             Margin="16,16,16,16"/>
+
+            <!-- Settings Question -->
+            <Label Text="Do you have any accessibility needs?"
+                FontSize="18"
+                Margin="0,8,0,16"/>
+
+            <!-- Accessibility Options -->
+            <StackLayout >
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Text to Speech" Padding="0,11,0,0" />
+                    <CheckBox IsChecked="True"/>
+                </StackLayout>
+
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Colour Contrast" Padding="0,11,0,0" />
+                    <CheckBox/>
+                </StackLayout>
+
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Extra Large Fonts" Padding="0,11,0,0" />
+                    <CheckBox/>
+                </StackLayout>
+
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="None" Padding="0,11,0,0" />
+                    <CheckBox/>
+                </StackLayout>
+
+            </StackLayout>
+
+            <!-- Progress Bar -->
+            <ProgressBar Progress="0.64" Margin="0,16,0,8"/>
+
+            <!-- Buttons -->
+            <HorizontalStackLayout VerticalOptions="EndAndExpand" HorizontalOptions="Center" Margin="0,16,0,0" Spacing="8" Padding="0,0,0,30" >
+                <Button Text="Next Question" WidthRequest="120" x:Name="Button" Clicked="Button_Clicked" BackgroundColor="MediumPurple"/>
+                <Button Text="Skip for now" WidthRequest="120" x:Name="Button1" Clicked="Button1_Clicked"/>
+            </HorizontalStackLayout>
+        </StackLayout>
+    </ScrollView>
+
+</ContentPage>
