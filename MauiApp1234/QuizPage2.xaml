@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiApp1234.QuizPage2"
+             Title="QuizPage2">
+
+    <ScrollView BackgroundColor="#f1f4f8">
+        <StackLayout Padding="40">
+            <!-- Title -->
+            <Label Text="Quiz"
+          FontSize="30"
+          FontAttributes="Bold"
+          HorizontalOptions="Center"
+          Margin="0,16,0,8"
+          VerticalOptions="Start"/>
+
+            <!-- Title -->
+            <Label Text="Financial Literacy"
+             FontSize="24"
+             FontAttributes="Bold"
+             Margin="16,16,16,16"/>
+
+            <!-- Quiz Question -->
+            <Label Text="Rate your financial literacy from 1 to 5:"
+                FontSize="18"
+                Margin="0,8,0,16"/>
+
+            <!-- Options -->
+            <StackLayout>
+                <RadioButton Content="1" GroupName="FinancialLiteracy" IsChecked="True"/>
+                <RadioButton Content="2" GroupName="FinancialLiteracy"/>
+                <RadioButton Content="3" GroupName="FinancialLiteracy"/>
+                <RadioButton Content="4" GroupName="FinancialLiteracy"/>
+                <RadioButton Content="5" GroupName="FinancialLiteracy"/>
+            </StackLayout>
+
+            <!-- Progress Bar -->
+            <ProgressBar Progress="0.32" Margin="0,16,0,8"/>
+
+            <!-- Link to Article -->
+            <Label HorizontalOptions="Center">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="In case you do not know your financial literacy levels, click this link:"
+                           TextColor="Black"/>
+                        <Span Text="LINK TO ARTICLE EXPLAINING BUDGETING TYPES"
+                           TextDecorations="Underline"
+                           TextColor="Blue"/>
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+
+            <!-- Buttons -->
+            <HorizontalStackLayout VerticalOptions="EndAndExpand" HorizontalOptions="Center" Margin="0,16,0,0" Spacing="8" Padding="0,0,0,30">
+                <Button Text="Next Question" WidthRequest="120" x:Name="Button" Clicked="Button_Clicked" BackgroundColor="MediumPurple"/>
+                <Button Text="Skip for now" WidthRequest="120" x:Name="Button1" Clicked="Button1_Clicked"/>
+            </HorizontalStackLayout>
+        </StackLayout>
+    </ScrollView>
+
+</ContentPage>
