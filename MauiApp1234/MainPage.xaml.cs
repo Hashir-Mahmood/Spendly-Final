@@ -2,24 +2,24 @@
 {
     public partial class MainPage : ContentPage
     {
-        int count = 0;
+      
 
         public MainPage()
         {
             InitializeComponent();
         }
 
-        private void OnCounterClicked(object sender, EventArgs e)
+        private void Button_Clicked(object sender, EventArgs e)
         {
-            count++;
+            Navigation.PushAsync(new QuizPage2());
 
-            if (count == 1)
-                CounterBtn.Text = $"Clicked {count} time";
-            else
-                CounterBtn.Text = $"Clicked {count} times";
-
-            SemanticScreenReader.Announce(CounterBtn.Text);
         }
+
+        private void Button1_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new InfoHub1());
+        }
+
     }
 
 }

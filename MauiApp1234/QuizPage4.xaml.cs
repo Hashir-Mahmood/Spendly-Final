@@ -6,4 +6,15 @@ public partial class QuizPage4 : ContentPage
 	{
 		InitializeComponent();
 	}
+
+    private void Button_Clicked(object sender, EventArgs e)
+    {
+        Navigation.PushAsync(new QuizPage5());
+    }
+
+    private void Button1_Clicked(object sender, EventArgs e)
+    {
+        Navigation.PushAsync(new InfoHub1());
+    }
+
 }
