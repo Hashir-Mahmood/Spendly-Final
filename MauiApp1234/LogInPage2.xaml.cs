@@ -6,4 +6,10 @@ public partial class LogInPage2 : ContentPage
 	{
 		InitializeComponent();
 	}
+
+    private void ForgotPassword_Clicked(object sender, EventArgs e)
+    {
+        Navigation.PushAsync(new LogInPage3());
+    }
+
 }

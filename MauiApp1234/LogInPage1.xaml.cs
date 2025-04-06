@@ -6,4 +6,10 @@ public partial class LogInPage1 : ContentPage
 	{
 		InitializeComponent();
 	}
+
+    private void CreateAccount_Clicked(object sender, EventArgs e)
+    {
+        Navigation.PushAsync(new LogInPage2());
+    }
+
 }
