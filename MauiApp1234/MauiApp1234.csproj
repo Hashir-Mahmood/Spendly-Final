@@ -84,6 +84,9 @@
 	  <MauiXaml Update="QuizPage4.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="QuizPage5.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Secuirty.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
