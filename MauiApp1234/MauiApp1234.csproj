@@ -72,6 +72,9 @@
 	  <MauiXaml Update="Debt.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="InfoHub1.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Investing.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

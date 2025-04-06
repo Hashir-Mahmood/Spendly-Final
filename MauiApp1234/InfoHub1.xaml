@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiApp1234.InfoHub1"
+             Title="InfoHub1">
+
+    <ScrollView BackgroundColor="#f1f4f8">
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <!-- Header Section -->
+            <Grid Grid.Row="0" BackgroundColor="#9C27B0" Padding="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <!-- Icons Row -->
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Image Grid.Column="0" 
+                    Source="profile_icon.png"
+                    HorizontalOptions="Start"
+                    HeightRequest="24"
+                    WidthRequest="24" />
+
+                    <Image Grid.Column="1" 
+                    Source="settings_icon.png"
+                    HorizontalOptions="End"
+                    HeightRequest="24"
+                    WidthRequest="24" />
+                </Grid>
+
+                <!-- Title -->
+                <Label Grid.Row="1"
+                Text="InfoHub"
+                TextColor="White"
+                FontSize="32"
+                FontAttributes="Bold"
+                Margin="0,10,0,5" />
+
+                <!-- Subtitle -->
+                <Label Grid.Row="2"
+                Text="Discover insights and learn something new"
+                TextColor="White"
+                FontSize="16"
+                Margin="0,0,0,15" />
+
+                <!-- Buttons -->
+                <StackLayout Grid.Row="3" Orientation="Horizontal" Spacing="10">
+                    <Button Text="Article preferences"
+                     BackgroundColor="#7986CB"
+                     TextColor="White"
+                     CornerRadius="20"
+                     Padding="15,10"
+                     HeightRequest="40" 
+                     x:Name="Category" Clicked="Category_Clicked"/>
+
+                    <Button Text="Retake Quiz"
+                     BackgroundColor="#7986CB"
+                     TextColor="White"
+                     CornerRadius="20"
+                     Padding="15,10"
+                     HeightRequest="40" 
+                     x:Name="Quiz" Clicked="Quiz_Clicked"/>
+
+                    <Button Text="Sign Out"
+                     BackgroundColor="#7986CB"
+                     TextColor="White"
+                     CornerRadius="20"
+                     Padding="15,10"
+                     HeightRequest="40" 
+                     x:Name="SignOut" Clicked="SignOut_Clicked"/>
+                </StackLayout>
+            </Grid>
+
+            <!-- Content Section -->
+            <ScrollView Grid.Row="1">
+                <StackLayout Padding="20,10">
+                    <!-- Featured Articles Section -->
+                    <Label Text="Featured Articles"
+                    FontSize="24"
+                    FontAttributes="Bold"
+                    HorizontalOptions="Center"
+                    Margin="0,20,0,10" />
+
+                    <!-- CarouselView for Articles -->
+                    <CarouselView HeightRequest="200" 
+                           PeekAreaInsets="10"
+                           Margin="0,10">
+                        <CarouselView.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>Article1</x:String>
+                                <x:String>Article2</x:String>
+                                <x:String>Article3</x:String>
+                            </x:Array>
+                        </CarouselView.ItemsSource>
+                        <CarouselView.ItemTemplate>
+                            <DataTemplate>
+                                <Frame BorderColor="LightGray"
+                                CornerRadius="10"
+                                HasShadow="True"
+                                Margin="5">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+
+                                        <Label Grid.Row="0"
+                                        Text="Set goals for your money"
+                                        VerticalOptions="Center"
+                                        FontSize="20"
+                                        FontAttributes="Bold" />
+
+                                        <StackLayout Grid.Row="1" 
+                                              Orientation="Horizontal"
+                                              Spacing="5">
+                                            <Image Source="clock_icon.png" 
+                                            HeightRequest="16" 
+                                            WidthRequest="16" />
+                                            <Label Text="5 min read" 
+                                            FontSize="14"
+                                            TextColor="Gray"
+                                            VerticalOptions="Center" />
+                                        </StackLayout>
+                                    </Grid>
+                                </Frame>
+                            </DataTemplate>
+                        </CarouselView.ItemTemplate>
+                    </CarouselView>
+
+                    <!-- Latest Videos Section -->
+                    <Label Text="Latest Videos"
+                    FontSize="24"
+                    FontAttributes="Bold"
+                    HorizontalOptions="Center"
+                    Margin="0,20,0,10" />
+
+                    <!-- ListView for Videos -->
+                    <CollectionView HeightRequest="300">
+                        <CollectionView.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>Video1</x:String>
+                                <x:String>Video2</x:String>
+                                <x:String>Video3</x:String>
+                            </x:Array>
+                        </CollectionView.ItemsSource>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Padding="0,10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="120" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <!-- Video Thumbnail -->
+                                    <Frame Grid.Column="0"
+                                    BackgroundColor="LightGray"
+                                    HeightRequest="100"
+                                    WidthRequest="120"
+                                    CornerRadius="5"
+                                    Padding="0">
+                                        <Image Aspect="AspectFill" />
+                                    </Frame>
+
+                                    <!-- Video Info -->
+                                    <StackLayout Grid.Column="1" Padding="10,0">
+                                        <Label Text="Does saving money mean not purchasing what you want?"
+                                        FontAttributes="Bold"
+                                        FontSize="16"
+                                        LineBreakMode="WordWrap" />
+
+                                        <Label Text="Learn the fundamentals of long-term budgeting"
+                                        TextColor="Gray"
+                                        FontSize="14"
+                                        Margin="0,5,0,5" />
+
+                                        <StackLayout Orientation="Horizontal" Spacing="5">
+                                            <Image Source="eye_icon.png" HeightRequest="16" WidthRequest="16" />
+                                            <Label Text="1.2K views" FontSize="14" TextColor="Gray" />
+                                        </StackLayout>
+                                    </StackLayout>
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+
+                </StackLayout>
+            </ScrollView>
+        </Grid>
+    </ScrollView>
+
+</ContentPage>
