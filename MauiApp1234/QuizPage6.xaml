@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiApp1234.QuizPage6"
+             Title="QuizPage6">
+
+    <ScrollView BackgroundColor="#f1f4f8">
+        <StackLayout Padding="40">
+            <!-- Header with Icons -->
+            <HorizontalStackLayout HorizontalOptions="FillAndExpand" Spacing="8">
+                <Image Source="user_icon.png" WidthRequest="32" HeightRequest="32"/>
+                <Image Source="settings_icon.png" WidthRequest="32" HeightRequest="32"/>
+            </HorizontalStackLayout>
+
+            <!-- Title -->
+            <Label Text="Quiz"
+             FontSize="30"
+             FontAttributes="Bold"
+             HorizontalOptions="Center"
+             Margin="0,16,0,8"
+             VerticalOptions="Start"/>
+
+            <!-- Title -->
+            <Label Text="Settings"
+             FontSize="24"
+             FontAttributes="Bold"
+             Margin="16,16,16,16"/>
+
+            <Label Text="What is your biggest financial difficulty?"
+                FontSize="18"
+                FontAttributes="Bold"
+                HorizontalOptions="Center"
+                Margin="0,16,0,16"/>
+
+            <!-- Options (Checkboxes) -->
+            <StackLayout>
+                <RadioButton Content="Budgetary Constraints" IsChecked="True"/>
+                <RadioButton Content="Over-Spending/Impulsive Shopping"/>
+                <RadioButton Content="Debt"/>
+                <RadioButton Content="Life Events"/>
+            </StackLayout>
+
+            <!-- Progress Bar -->
+            <ProgressBar Progress="1" Margin="0,16,0,8" ProgressColor="Purple"/>
+
+            <!-- Submit Button -->
+            <HorizontalStackLayout HorizontalOptions="Center" Margin="0,16,0,0" Spacing="8" VerticalOptions="EndAndExpand" Padding="0,0,0,30">
+                <Button Text="Next Question" WidthRequest="120" x:Name="Button" Clicked="Button_Clicked" BackgroundColor="MediumPurple"/>
+                <Button Text="Skip for now" WidthRequest="120" x:Name="Button1" Clicked="Button1_Clicked"/>
+            </HorizontalStackLayout>
+        </StackLayout>
+    </ScrollView>
+
+</ContentPage>
