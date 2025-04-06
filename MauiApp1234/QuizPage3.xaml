@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiApp1234.QuizPage3"
+             Title="QuizPage3">
+
+    <ScrollView BackgroundColor="#f1f4f8">
+        <StackLayout Padding="40">
+            <!-- Title -->
+            <Label Text="Quiz"
+         FontSize="30"
+         FontAttributes="Bold"
+         HorizontalOptions="Center"
+         Margin="0,16,0,8"
+         VerticalOptions="Start"/>
+
+            <!-- Title -->
+            <Label Text="Financial Goals"
+            FontSize="24"
+            FontAttributes="Bold"
+            Margin="16,16,16,16"/>
+
+            <!-- Quiz Question -->
+            <Label Text="What is your primary financial goal right now?"
+               FontSize="18"
+               Margin="0,8,0,16"
+              />
+
+            <!-- Options with Checkboxes -->
+            <StackLayout HorizontalOptions="Center" VerticalOptions="CenterAndExpand">
+                <RadioButton Content="To start Investing"/>
+                <RadioButton Content="Saving for a large purchase (house, car)"/>
+                <RadioButton Content="Build an emergency fund"/>
+                <RadioButton Content="To start a business"/>
+                <RadioButton Content="To pay off debts"/>
+                <RadioButton Content="To Budget Easier"/>
+            </StackLayout>
+
+            <!-- Progress Bar -->
+            <ProgressBar Progress="0.48" Margin="0,16,0,8"/>
+
+            <!-- Buttons -->
+            <HorizontalStackLayout VerticalOptions="EndAndExpand" HorizontalOptions="Center" Margin="0,16,0,0" Spacing="8" Padding="0,0,0,30" >
+                <Button Text="Next Question" WidthRequest="120" x:Name="Button" Clicked="Button_Clicked" BackgroundColor="MediumPurple"/>
+                <Button Text="Skip for now" WidthRequest="120" x:Name="Button1" Clicked="Button1_Clicked"/>
+            </HorizontalStackLayout>
+        </StackLayout>
+    </ScrollView>
+
+</ContentPage>
