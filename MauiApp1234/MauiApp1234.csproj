@@ -81,6 +81,9 @@
 	  <MauiXaml Update="Investing.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="LogInPage1.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="QuizPage2.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
