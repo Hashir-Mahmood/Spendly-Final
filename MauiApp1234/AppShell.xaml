@@ -7,9 +7,29 @@
     Shell.FlyoutBehavior="Disabled"
     Title="MauiApp1234">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+    <TabBar>
+        <Tab Title="Budgeting" Icon="dotnet_bot.png">
+            <ShellContent Title="Budgeting"
+                ContentTemplate="{DataTemplate local:Budgeting}" Route="MainPage" />
+        </Tab>
+        <Tab Title="InfoHub" Icon="dotnet_bot.png">
+            <ShellContent Title="InfoHub"
+        ContentTemplate="{DataTemplate local:InfoHub1}" Route="MainPage" />
+        </Tab>
+        <Tab Title="Investments" Icon="dotnet_bot.png">
+            <ShellContent Title="Investments"
+            ContentTemplate="{DataTemplate local:Investing}" Route="MainPage" />
+        </Tab>
+        <Tab Title="Debt" Icon="dotnet_bot.png">
+            <ShellContent Title="Debt"
+            ContentTemplate="{DataTemplate local:Debt}" Route="MainPage" />
+        </Tab>
+        <Tab Title="Dashboard" Icon="dotnet_bot.png">
+            <ShellContent Title="Dashboard"
+            ContentTemplate="{DataTemplate local:Dashboard}" Route="MainPage" />
+        </Tab>
+    </TabBar>
+    
+    
 
 </Shell>
