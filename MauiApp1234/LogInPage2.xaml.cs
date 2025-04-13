@@ -12,4 +12,8 @@ public partial class LogInPage2 : ContentPage
         Navigation.PushAsync(new LogInPage3());
     }
 
+    private void SignIn_Clicked(object sender, EventArgs e)
+    {
+        Navigation.PushAsync(new Budgeting());
+    }
 }

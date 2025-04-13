@@ -113,7 +113,8 @@
                     BackgroundColor="#7047EC"
                     CornerRadius="25"
                     HeightRequest="50"
-                    Margin="0,5"/>
+                    Margin="0,5"
+                    x:Name="SignIn" Clicked="SignIn_Clicked"/>
 
                     <!-- Separador "O iniciar sesión con" -->
                     <Label Grid.Row="5"
