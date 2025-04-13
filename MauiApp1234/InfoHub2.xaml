@@ -28,11 +28,11 @@
         <HorizontalStackLayout VerticalOptions="EndAndExpand" Spacing="8" HorizontalOptions="Center">
             <Button Text="Apply changes to InfoHub"
             BackgroundColor="MediumPurple"
-            TextColor="White" FontAttributes="Bold"
+            TextColor="White" FontAttributes="Bold" x:Name="applyChanges" Clicked="applyChanges_Clicked"
             />
             <Button Text="Cancel"
             BackgroundColor="MediumPurple" FontAttributes="Bold"
-            TextColor="White" FontSize="Subtitle"
+            TextColor="White" FontSize="Subtitle" x:Name="cancel" Clicked="cancel_Clicked"
             />
         </HorizontalStackLayout>
     </StackLayout>
