@@ -2,11 +2,82 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiApp1234.Investing"
-             Title="Investing">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             Title="Investment"
+             BackgroundColor="#f5f5f8">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20">
+
+            <!-- Portfolio Header -->
+            <Label Text="Investment Portfolio" FontSize="24" FontAttributes="Bold" TextColor="#6200EA" Margin="0,20,0,0"/>
+            <Label Text="$247,892.50" FontSize="32" FontAttributes="Bold" TextColor="#6200EA"/>
+            <Label Text="+2.4% this month" FontSize="16" TextColor="Green"/>
+            <Label Text="Portfolio performance" FontSize="20" TextColor="#6200EA" Margin="0,40,0,40"/>
+
+            <!-- Placeholder for Chart -->
+            <Frame BackgroundColor="#FFFFFF" CornerRadius="20" Padding="10" BorderColor="Transparent" Margin="0,0,0,20" HeightRequest="250">
+                <VerticalStackLayout>
+                    <Label Text="Chart (Last 6 Months)" FontAttributes="Bold" />
+                    <BoxView HeightRequest="150" BackgroundColor="White" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Top Investments -->
+            <Frame BackgroundColor="#FFFFFF" CornerRadius="20" BorderColor="Transparent" Margin="0,0,0,20">
+                <StackLayout>
+                    <Label Text="Top Investments" FontSize="20" FontAttributes="Bold" TextColor="#6200EA" HorizontalTextAlignment="Center" Margin="0,0,0,5"/>
+
+                    <FlexLayout Direction="Row" Margin="0,0,0,5">
+                        <HorizontalStackLayout FlexLayout.Grow="1">
+                            <BoxView WidthRequest="40" HeightRequest="40" BackgroundColor="Gray" CornerRadius="20"/>
+                            <VerticalStackLayout Padding="10,0">
+                                <Label Text="Apple Inc." FontSize="16" FontAttributes="Bold"/>
+                                <Label Text="AAPL • Tech" FontSize="12" TextColor="Gray"/>
+                            </VerticalStackLayout>
+                        </HorizontalStackLayout>
+                        <VerticalStackLayout>
+                            <Label Text="$12,450" FontSize="16" FontAttributes="Bold"/>
+                            <Label Text="+5.2%" FontSize="12" TextColor="Green"/>
+                        </VerticalStackLayout>
+                    </FlexLayout>
+
+                    <FlexLayout Direction="Row" Margin="0,0,0,5">
+                        <HorizontalStackLayout FlexLayout.Grow="1">
+                            <BoxView WidthRequest="40" HeightRequest="40" BackgroundColor="Gray" CornerRadius="20"/>
+                            <VerticalStackLayout Padding="10,0">
+                                <Label Text="Microsoft" FontSize="16" FontAttributes="Bold"/>
+                                <Label Text="MSFT • Tech" FontSize="12" TextColor="Gray"/>
+                            </VerticalStackLayout>
+                        </HorizontalStackLayout>
+                        <VerticalStackLayout>
+                            <Label Text="$10,280" FontSize="16" FontAttributes="Bold"/>
+                            <Label Text="+3.5%" FontSize="12" TextColor="Green"/>
+                        </VerticalStackLayout>
+                    </FlexLayout>
+                </StackLayout>
+            </Frame>
+
+            <!-- User Recommendations -->
+            <Frame BackgroundColor="#FFFFFF" CornerRadius="20" BorderColor="Transparent">
+                <StackLayout>
+                    <Label Text="User Recommendations" FontSize="20" FontAttributes="Bold" TextColor="#6200EA" HorizontalTextAlignment="Center" Margin="0,0,0,5"/>
+
+                    <VerticalStackLayout>
+                        <Label Text="The user is advised to transfer money to another." FontSize="16"/>
+                        <HorizontalStackLayout Margin="0,0,0,4">
+                            <Button Text="Confirm" BackgroundColor="#6200EA" TextColor="White" FontAttributes="Bold" CornerRadius="18" HeightRequest="40" Margin="0,0,10,0"/>
+                            <Button Text="Cancel" BackgroundColor="#FF0000" TextColor="White" FontAttributes="Bold" CornerRadius="18" HeightRequest="40"/>
+                        </HorizontalStackLayout>
+
+                        <Label Text="The user is advised to transfer money to another2." FontSize="16"/>
+                        <HorizontalStackLayout Margin="0,0,0,4">
+                            <Button Text="Confirm" BackgroundColor="#6200EA" TextColor="White" FontAttributes="Bold" CornerRadius="18" HeightRequest="40" Margin="0,0,10,0"/>
+                            <Button Text="Cancel" BackgroundColor="#FF0000" TextColor="White" FontAttributes="Bold" CornerRadius="18" HeightRequest="40"/>
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </StackLayout>
+            </Frame>
+
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

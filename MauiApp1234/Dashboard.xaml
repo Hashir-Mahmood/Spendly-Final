@@ -2,6 +2,233 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiApp1234.Dashboard"
-             Title="Dashboard">
-    
+             Shell.NavBarIsVisible="False">
+
+    <ScrollView>
+        <StackLayout Padding="20" Spacing="20">
+
+            <!-- Header -->
+            <Label Text="Financial Dashboard" FontSize="28" FontAttributes="Bold" HorizontalOptions="Center"/>
+
+            <!-- Total Balance Card -->
+            <Frame CornerRadius="10" Padding="15" BackgroundColor="White">
+                <StackLayout>
+                    <Label Text="Total Balance:" FontAttributes="Bold" HorizontalTextAlignment="Center" FontSize="24"/>
+                    <Label Text="£2000" FontSize="30" FontAttributes="Bold" HorizontalTextAlignment="Center" Margin="0,10,0,10"/>
+                    <Label Text="see financial diagnostics >>" TextColor="Purple" HorizontalTextAlignment="Center"/>
+                </StackLayout>
+            </Frame>
+
+            <!-- Financial Diagnostics -->
+            <Frame CornerRadius="10" Padding="15" BackgroundColor="White">
+                <VerticalStackLayout Padding="5">
+                    <Label Text="Financial Diagnostics" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center"/>
+                    <Label Text="Track your income split across accounts" FontSize="14" TextColor="Gray" HorizontalOptions="Center" Margin="0,10,0,0"/>
+
+                    <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
+                        <RadioButton Content="Week" GroupName="TimePeriod" />
+                        <RadioButton Content="Month" GroupName="TimePeriod" IsChecked="True"/>
+                        <RadioButton Content="Year" GroupName="TimePeriod"/>
+                    </HorizontalStackLayout>
+
+                    <!-- Income Chart -->
+                    <Frame BackgroundColor="LightGray" Padding="10" CornerRadius="10" Margin="10">
+                        <VerticalStackLayout>
+                            <!-- Repeat ProgressBars -->
+                            <HorizontalStackLayout>
+                                <Label Text="Classic" FontSize="14" FontAttributes="Bold" WidthRequest="120"/>
+                                <ProgressBar Progress="0.4" HeightRequest="10" WidthRequest="200"/>
+                                <Label Text="$400" FontSize="14" TextColor="Green"/>
+                                <Label Text="⬆" FontSize="16" TextColor="Green"/>
+                            </HorizontalStackLayout>
+
+                            <HorizontalStackLayout>
+                                <Label Text="Club Lloyds" FontSize="14" FontAttributes="Bold" WidthRequest="120"/>
+                                <ProgressBar Progress="0.3" HeightRequest="10" WidthRequest="200"/>
+                                <Label Text="$300" FontSize="14" TextColor="Green"/>
+                                <Label Text="⬆" FontSize="16" TextColor="Green"/>
+                            </HorizontalStackLayout>
+
+                            <HorizontalStackLayout>
+                                <Label Text="Easy Saver" FontSize="14" FontAttributes="Bold" WidthRequest="120"/>
+                                <ProgressBar Progress="0.2" HeightRequest="10" WidthRequest="200"/>
+                                <Label Text="$200" FontSize="14" TextColor="Green"/>
+                                <Label Text="⬆" FontSize="16" TextColor="Green"/>
+                            </HorizontalStackLayout>
+
+                            <HorizontalStackLayout>
+                                <Label Text="Club Lloyds Advantage Saver" FontSize="14" FontAttributes="Bold" WidthRequest="120"/>
+                                <ProgressBar Progress="0.1" HeightRequest="10" WidthRequest="200"/>
+                                <Label Text="$100" FontSize="14" TextColor="Green"/>
+                                <Label Text="⬆" FontSize="16" TextColor="Green"/>
+                            </HorizontalStackLayout>
+
+                            <HorizontalStackLayout>
+                                <Label Text="Interest" FontSize="14" FontAttributes="Bold" WidthRequest="120"/>
+                                <ProgressBar Progress="0.1" HeightRequest="10" WidthRequest="200"/>
+                                <Label Text="$100" FontSize="14" TextColor="Green"/>
+                                <Label Text="⬆" FontSize="16" TextColor="Green"/>
+                            </HorizontalStackLayout>
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Spacing="20">
+                        <Button Text="+ Add New Account" TextColor="White" BorderColor="Grey" BorderWidth="1" CornerRadius="20" FontAttributes="Bold"/>
+                    </StackLayout>
+
+                    <Label Margin="0,20,0,10" Text="Track your expenses across categories" FontSize="14" TextColor="Gray" HorizontalOptions="Center"/>
+
+                    <!-- Expenses -->
+                    <Frame BackgroundColor="LightGray" Padding="10" CornerRadius="10" Margin="10">
+                        <VerticalStackLayout>
+                            <Label Text="Expense Breakdown" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,0,0,10"/>
+
+                            <!-- Expense ProgressBars -->
+                            <HorizontalStackLayout>
+                                <Label Text="Faster Payment" FontSize="16" FontAttributes="Bold" WidthRequest="180"/>
+                                <ProgressBar Progress="0.3" HeightRequest="10" WidthRequest="200"/>
+                                <Label Text="$300" FontSize="16" TextColor="Red"/>
+                                <Label Text="⬇" FontSize="16" TextColor="Red"/>
+                            </HorizontalStackLayout>
+
+                            <HorizontalStackLayout>
+                                <Label Text="Direct Debit" FontSize="16" FontAttributes="Bold" WidthRequest="180"/>
+                                <ProgressBar Progress="0.25" HeightRequest="10" WidthRequest="200"/>
+                                <Label Text="$250" FontSize="16" TextColor="Red"/>
+                                <Label Text="⬇" FontSize="16" TextColor="Red"/>
+                            </HorizontalStackLayout>
+
+                            <HorizontalStackLayout>
+                                <Label Text="Standing Order" FontSize="16" FontAttributes="Bold" WidthRequest="180"/>
+                                <ProgressBar Progress="0.15" HeightRequest="10" WidthRequest="200"/>
+                                <Label Text="$150" FontSize="16" TextColor="Red"/>
+                                <Label Text="⬇" FontSize="16" TextColor="Red"/>
+                            </HorizontalStackLayout>
+
+                            <HorizontalStackLayout>
+                                <Label Text="Point of Sale" FontSize="16" FontAttributes="Bold" WidthRequest="180"/>
+                                <ProgressBar Progress="0.1" HeightRequest="10" WidthRequest="200"/>
+                                <Label Text="$100" FontSize="16" TextColor="Red"/>
+                                <Label Text="⬇" FontSize="16" TextColor="Red"/>
+                            </HorizontalStackLayout>
+
+                            <HorizontalStackLayout>
+                                <Label Text="ATM Withdrawal" FontSize="16" FontAttributes="Bold" WidthRequest="180"/>
+                                <ProgressBar Progress="0.2" HeightRequest="10" WidthRequest="200"/>
+                                <Label Text="$200" FontSize="16" TextColor="Red"/>
+                                <Label Text="⬇" FontSize="16" TextColor="Red"/>
+                            </HorizontalStackLayout>
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Spacing="20">
+                        <Button Text="+ Add New Payment Method" TextColor="White" BorderColor="Grey" BorderWidth="1" CornerRadius="20" FontAttributes="Bold"/>
+                    </StackLayout>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Financial Health Meter -->
+            <Frame CornerRadius="10" Padding="15" BackgroundColor="White">
+                <StackLayout>
+                    <Label Text="Financial Health Meter" FontAttributes="Bold" FontSize="22" HorizontalOptions="Center"/>
+                    <Label Text="Are you on track to meet your goals this week?" HorizontalTextAlignment="Center" Margin="0,10,0,10"/>
+                    <Grid>
+                        <Path StrokeThickness="15">
+                            <Path.Stroke>
+                                <LinearGradientBrush StartPoint="0,0.5" EndPoint="0.5,1">
+                                    <GradientStop Color="Red" Offset="0.0"/>
+                                    <GradientStop Color="Yellow" Offset="0.5"/>
+                                    <GradientStop Color="Green" Offset="1.0"/>
+                                </LinearGradientBrush>
+                            </Path.Stroke>
+                            <Path.Data>
+                                <PathGeometry>
+                                    <PathFigure StartPoint="50,100" IsClosed="False">
+                                        <ArcSegment Point="250,100"
+                                                    Size="100,100"
+                                                    SweepDirection="Clockwise"
+                                                    IsLargeArc="False"/>
+                                    </PathFigure>
+                                </PathGeometry>
+                            </Path.Data>
+                        </Path>
+
+                        <Ellipse WidthRequest="15" HeightRequest="15"
+                                 Fill="Black"
+                                 VerticalOptions="Start"
+                                 HorizontalOptions="Start"
+                                 TranslationX="50"
+                                 TranslationY="90"/>
+                    </Grid>
+                    <Label Text="74% on track" TextColor="Green" FontAttributes="Bold"/>
+                    <Label Text="see categorized spending >>>" HorizontalTextAlignment="Center" TextColor="Purple"/>
+                </StackLayout>
+            </Frame>
+
+            <!-- Budget Alerts -->
+            <Frame CornerRadius="10" Padding="15" BackgroundColor="White">
+                <StackLayout>
+                    <Label Text="Budget Alerts" FontAttributes="Bold"/>
+                    <StackLayout Orientation="Horizontal" Spacing="10">
+                        <Label Text="⚠" FontSize="18" FontAttributes="Bold" TextColor="DarkRed"/>
+                        <Label Text="You have used all your grocery budget"/>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal" Spacing="10">
+                        <Label Text="⚠" FontSize="18" FontAttributes="Bold" TextColor="DarkOrange"/>
+                        <Label Text="You're £3 away from your luxury budget"/>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal" Spacing="10">
+                        <Label Text="⚠" FontSize="18" FontAttributes="Bold" TextColor="DarkGreen"/>
+                        <Label Text="You're within your retail budget this week"/>
+                    </StackLayout>
+                </StackLayout>
+            </Frame>
+
+            <!-- Categorized Spending -->
+            <Frame CornerRadius="10" Padding="15" BackgroundColor="White">
+                <StackLayout>
+                    <Label Text="Categorized Spending" FontAttributes="Bold" Margin="0,5,0,20" FontSize="22" HorizontalOptions="Center"/>
+
+                    <!-- Repeat this block for each category -->
+                    <StackLayout Orientation="Horizontal" Spacing="10" Margin="0,0,0,10">
+                        <Label Text="Mortgage"/>
+                        <Label Text="$1200 / $1500"/>
+                    </StackLayout>
+                    <ProgressBar Margin="0,0,0,10" Progress="0.8" ProgressColor="Purple"/>
+
+                    <!-- Add more category rows here just like above -->
+
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" Spacing="20">
+                        <Button Margin="0,10,0,10" Text="+ Add New Category" TextColor="White" BorderColor="Grey" BorderWidth="1" CornerRadius="20" FontAttributes="Bold"/>
+                    </StackLayout>
+                </StackLayout>
+            </Frame>
+
+            <!-- Financial Goals -->
+            <Frame CornerRadius="10" Padding="15" BackgroundColor="White">
+                <StackLayout>
+                    <Label Text="Financial Goals:" FontSize="22" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,0,0,20"/>
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                        <Label Text="Vacation Fund" FontAttributes="Bold"/>
+                        <Image Source="edit_icon.png" HorizontalOptions="End" WidthRequest="20" HeightRequest="20"/>
+                    </StackLayout>
+                    <Label Text="Trip to Bali in December"/>
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                        <ProgressBar Progress="0.43" ProgressColor="Purple" WidthRequest="200" VerticalOptions="Center"/>
+                        <Label Text="3 months left" HorizontalOptions="EndAndExpand"/>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal" Spacing="10">
+                        <Label Text="43% complete" TextColor="Purple"/>
+                        <Label Text="£263 remaining" HorizontalOptions="EndAndExpand"/>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal" Spacing="20">
+                        <Button Text="+ Add New Goal" TextColor="White" BorderColor="Grey" BorderWidth="1" CornerRadius="20" FontAttributes="Bold"/>
+                        <Label Text="view all goals >>>" TextColor="Purple" VerticalOptions="Center"/>
+                    </StackLayout>
+                </StackLayout>
+            </Frame>
+
+        </StackLayout>
+    </ScrollView>
+
 </ContentPage>
