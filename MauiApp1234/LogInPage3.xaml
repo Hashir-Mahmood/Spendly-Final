@@ -23,7 +23,7 @@
                 </StackLayout>
             </StackLayout>
 
-            <!-- Tarjeta principal -->
+            <!-- Main white space -->
             <Frame Grid.Row="1" 
             BackgroundColor="White" 
             CornerRadius="12" 
@@ -32,7 +32,7 @@
             Margin="0,20,0,40">
 
                 <VerticalStackLayout Spacing="20">
-                    <!-- Botón de regreso -->
+                    <!-- return button -->
                     <Button Text="←" 
                      FontSize="20" 
                      HorizontalOptions="Start" 
@@ -44,7 +44,7 @@
                      Padding="0" 
                      BorderWidth="0" />
 
-                    <!-- Título y subtítulo -->
+                    <!-- Title and subtitle -->
                     <VerticalStackLayout Spacing="10" Margin="0,10,0,20">
                         <Label Text="Forgot Password" 
                         FontSize="32" 
@@ -57,7 +57,7 @@
                         LineBreakMode="WordWrap" />
                     </VerticalStackLayout>
 
-                    <!-- Formulario -->
+                    <!-- Formulary -->
                     <Border StrokeThickness="0" 
                      BackgroundColor="#F5F7FA" 
                      StrokeShape="RoundRectangle 12,12,12,12">
@@ -89,7 +89,7 @@
                         BackgroundColor="Transparent" />
                     </Border>
 
-                    <!-- Botón de enviar -->
+                    <!-- send button -->
                     <Button Text="Reset Password" 
                      BackgroundColor="#7E57FF" 
                      TextColor="White" 
