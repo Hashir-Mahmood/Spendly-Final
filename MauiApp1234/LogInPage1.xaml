@@ -4,7 +4,7 @@
              x:Class="MauiApp1234.LogInPage1"
              Title="LogInPage1">
 
-    <!-- Fondo con degradado -->
+    <!-- degrade background -->
     <ContentPage.Background>
         <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
             <GradientStop Color="#6A3DE8" Offset="0.0" />
