@@ -35,21 +35,21 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
-                    <!-- Título -->
+                    <!-- Title -->
                     <Label Grid.Row="0"
                     Text="Get Started"
                     FontSize="32"
                     FontAttributes="Bold"
                     Margin="0,0,0,5"/>
 
-                    <!-- Subtítulo -->
+                    <!-- Subtitles -->
                     <Label Grid.Row="1"
                     Text="Create an account by using the form below."
                     FontSize="16"
                     TextColor="#6B7280"
                     Margin="0,0,0,15"/>
 
-                    <!-- Campo Email -->
+                    <!--  Email field -->
                     <Frame Grid.Row="2"
                     BackgroundColor="#F3F4F6"
                     Padding="15,0"
@@ -64,7 +64,7 @@
                         VerticalOptions="Center"/>
                     </Frame>
 
-                    <!-- Campo Contraseña con icono -->
+                    <!-- Password and Icon -->
                     <Frame Grid.Row="3"
                     BackgroundColor="#F3F4F6"
                     Padding="15,0"
@@ -96,7 +96,7 @@
                         </Grid>
                     </Frame>
 
-                    <!-- Campo Nombre -->
+                    <!-- Name field -->
                     <Frame Grid.Row="4"
                     BackgroundColor="#F3F4F6"
                     Padding="15,0"
@@ -111,7 +111,7 @@
                         VerticalOptions="Center"/>
                     </Frame>
 
-                    <!-- Campo Apellido -->
+                    <!-- Last Name field -->
                     <Frame Grid.Row="5"
                     BackgroundColor="#F3F4F6"
                     Padding="15,0"
@@ -126,7 +126,7 @@
                         VerticalOptions="Center"/>
                     </Frame>
 
-                    <!-- Botón Crear Cuenta -->
+                    <!-- Create Account button -->
                     <Button Grid.Row="6"
                      Text="Create Account"
                      FontSize="16"
@@ -139,14 +139,14 @@
                      x:Name="CreateAccount"
                      Clicked="CreateAccount_Clicked"/>
 
-                    <!-- Separador "O registrarse con" -->
+                    <!-- Register with ... -->
                     <Label Grid.Row="7"
                     Text="Or sign up with"
                     HorizontalOptions="Center"
                     TextColor="#6B7280"
                     Margin="0,5"/>
 
-                    <!-- Botón Google -->
+                    <!-- Google button -->
                     <Frame Grid.Row="8"
                     BorderColor="#E5E7EB"
                     BackgroundColor="White"
@@ -176,7 +176,7 @@
                         </Grid>
                     </Frame>
 
-                    <!-- Enlace para iniciar sesión -->
+                    <!--Link to start your session -->
                     <StackLayout Grid.Row="9" 
                           Orientation="Horizontal" 
                           HorizontalOptions="Center"
