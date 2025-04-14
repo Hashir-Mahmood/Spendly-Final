@@ -9,22 +9,22 @@
 
     <TabBar>
         
-        <Tab Title="Dashboard" Icon="home_grey.png">
+        <Tab  Icon="home_grey.png">
             <ShellContent Title="Dashboard"
             ContentTemplate="{DataTemplate local:Dashboard}" Route="dashboardPage" />
         </Tab>
 
-        <Tab Title="Budgeting" Icon="budget_grey.png">
+        <Tab  Icon="budget_grey.png">
             <ShellContent Title="Budgeting"
             ContentTemplate="{DataTemplate local:Budgeting}" Route="budgetingPage" />
         </Tab>
         
-        <Tab Title="Investments" Icon="investment_grey.png">
+        <Tab Icon="investment_grey.png">
             <ShellContent Title="Investments"
             ContentTemplate="{DataTemplate local:Investing}" Route="investmentsPage" />
         </Tab>
         
-        <Tab Title="InfoHub" Icon="infohub_grey.png">
+        <Tab  Icon="infohub_grey.png">
             <ShellContent Title="InfoHub"
             ContentTemplate="{DataTemplate local:InfoHub1}" Route="infoHubPage" />
         </Tab>
