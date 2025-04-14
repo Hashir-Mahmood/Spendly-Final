@@ -17,4 +17,8 @@ public partial class QuizPage2 : ContentPage
         Navigation.PushAsync(new InfoHub1());
     }
 
+    private async void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
+    {
+        await Launcher.OpenAsync("https://www.sofi.com/learn/content/financial-literacy-quiz/");
+    }
 }

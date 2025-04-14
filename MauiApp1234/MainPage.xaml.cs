@@ -20,6 +20,7 @@
             Navigation.PushAsync(new InfoHub1());
         }
 
+       
     }
 
 }

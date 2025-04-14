@@ -44,11 +44,14 @@
                     <FormattedString>
                         <Span Text="In case you do not know your financial literacy levels, click this link:"
                            TextColor="Black"/>
-                        <Span Text="LINK TO ARTICLE EXPLAINING BUDGETING TYPES"
+                        <Span Text="FINANCIAL LITERACY"
                            TextDecorations="Underline"
                            TextColor="Blue"/>
                     </FormattedString>
                 </Label.FormattedText>
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
+                </Label.GestureRecognizers>
             </Label>
 
             <!-- Buttons -->

@@ -47,14 +47,7 @@
             <!-- Progress Bar -->
             <ProgressBar Progress="0.16" Margin="0,16,0,8"/>
 
-            <!-- Link to Article -->
-            <Label HorizontalOptions="Center">
-                <Label.FormattedText>
-                    <FormattedString>
-                        <Span Text="Explain Budgeting Types" TextDecorations="Underline" TextColor="Blue"/>
-                    </FormattedString>
-                </Label.FormattedText>
-            </Label>
+            
 
             <!-- Buttons -->
             <HorizontalStackLayout HorizontalOptions="Center" Margin="0,16,0,0" Spacing="8" VerticalOptions="EndAndExpand" Padding="0,0,0,30" >
