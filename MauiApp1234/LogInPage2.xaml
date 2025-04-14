@@ -5,7 +5,7 @@
              Title="LogInPage2"
              Shell.NavBarIsVisible="False">
 
-    <!-- Fondo con degradado -->
+    <!-- Degrade background -->
     <ContentPage.Background>
         <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
             <GradientStop Color="#6A3DE8" Offset="0.0" />
@@ -16,7 +16,7 @@
     <ScrollView>
 
         <Grid Padding="20">
-            <!-- Logo de Spendly -->
+            <!-- Spendly Logo -->
             <Image Source="spendly_logo.png"
            HorizontalOptions="Center"
            VerticalOptions="Start"
@@ -25,7 +25,7 @@
            Margin="0,60,0,0"/>
             <Label Text="Spendly" VerticalOptions="Start" TextColor="WhiteSmoke" FontSize="35" FontAttributes="Bold" HorizontalOptions="Center"/>
 
-            <!-- Contenedor principal (tarjeta blanca) -->
+            <!-- Primary container (White card) -->
             <Frame CornerRadius="20" 
            BackgroundColor="White" 
            Margin="10,150,10,10"
@@ -43,7 +43,7 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
-                    <!-- Título -->
+                    <!-- Title -->
                     <Label Grid.Row="0"
                    Text="Welcome Back"
                    FontSize="32"
@@ -51,14 +51,14 @@
                    TextColor="Black"
                    Margin="0,0,0,5"/>
 
-                    <!-- Subtítulo -->
+                    <!-- Subtitle -->
                     <Label Grid.Row="1"
                    Text="Fill out the information below in order to access your account."
                    FontSize="16"
                    TextColor="#6B7280"
                    Margin="0,0,0,10"/>
 
-                    <!-- Campo Email -->
+                    <!--  Email -->
                     <Frame Grid.Row="2"
                    BackgroundColor="#F3F4F6"
                    Padding="15,0"
@@ -73,7 +73,7 @@
                        VerticalOptions="Center"/>
                     </Frame>
 
-                    <!-- Campo Contraseña con icono -->
+                    <!-- Password and Icon -->
                     <Frame Grid.Row="3"
                    BackgroundColor="#F3F4F6"
                    Padding="15,0"
@@ -105,7 +105,7 @@
                         </Grid>
                     </Frame>
 
-                    <!-- Botón Iniciar Sesión -->
+                    <!-- Start session -->
                     <Button Grid.Row="4"
                     Text="Sign In"
                     FontSize="16"
@@ -117,14 +117,14 @@
                     Margin="0,5"
                     x:Name="SignIn" Clicked="SignIn_Clicked"/>
 
-                    <!-- Separador "O iniciar sesión con" -->
+                    <!-- Or start your session as... -->
                     <Label Grid.Row="5"
                    Text="Or sign in with"
                    HorizontalOptions="Center"
                    TextColor="#6B7280"
                    Margin="0,5"/>
 
-                    <!-- Botón Google -->
+                    <!--  Google button -->
                     <Frame Grid.Row="6"
                    BorderColor="#E5E7EB"
                    BackgroundColor="White"
@@ -154,9 +154,9 @@
                         </Grid>
                     </Frame>
 
-                    <!-- Botones de navegación adicionales -->
+                    <!-- Additonal navigation button -->
                     <StackLayout Grid.Row="7" Spacing="20" Margin="0,15,0,0">
-                        <!-- Enlace para crear cuenta -->
+                        <!-- Link to: Create an account -->
                         <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
                             <Label Text="Don't have an account? " 
                            TextColor="#6B7280" 
@@ -171,7 +171,7 @@
                             </Label>
                         </StackLayout>
 
-                        <!-- Botón de Olvidé contraseña -->
+                        <!-- "Forgot my password button" -->
                         <Button Text="Forgot password?"
                         BackgroundColor="#F3F4F6"
                         TextColor="#6B7280"
