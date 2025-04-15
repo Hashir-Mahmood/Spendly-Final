@@ -56,6 +56,21 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <AndroidResource Remove="NewFolder1\**" />
+	  <AndroidResource Remove="NewFolder2\**" />
+	  <Compile Remove="NewFolder1\**" />
+	  <Compile Remove="NewFolder2\**" />
+	  <EmbeddedResource Remove="NewFolder1\**" />
+	  <EmbeddedResource Remove="NewFolder2\**" />
+	  <MauiCss Remove="NewFolder1\**" />
+	  <MauiCss Remove="NewFolder2\**" />
+	  <MauiXaml Remove="NewFolder1\**" />
+	  <MauiXaml Remove="NewFolder2\**" />
+	  <None Remove="NewFolder1\**" />
+	  <None Remove="NewFolder2\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <None Remove="Resources\Images\ai.png" />
 	  <None Remove="Resources\Images\bell.png" />
 	  <None Remove="Resources\Images\budget_grey.png" />
@@ -72,56 +87,53 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Login\LogInPage3.xaml.cs">
+	  <Compile Update="Pages\Login\LogInPage3.xaml.cs">
 	    <SubType>Code</SubType>
 	    <DependentUpon>%(Filename)</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Budgeting.xaml">
+	  <MauiXaml Update="Pages\Budgeting\Budgeting.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Dashboard.xaml">
+	  <MauiXaml Update="Pages\Dashboard\Dashboard.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Debt.xaml">
+	  <MauiXaml Update="Pages\Invest\Debt.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="InfoHub\InfoHub1.xaml">
+	  <MauiXaml Update="Pages\InfoHub\InfoHub1.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="InfoHub\InfoHub2.xaml">
+	  <MauiXaml Update="Pages\InfoHub\InfoHub2.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Investing.xaml">
+	  <MauiXaml Update="Pages\Invest\Investing.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Login\LogInPage1.xaml">
+	  <MauiXaml Update="Pages\Login\LogInPage1.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Login\LogInPage2.xaml">
+	  <MauiXaml Update="Pages\Login\LogInPage2.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Login\LogInPage3.xaml">
+	  <MauiXaml Update="Pages\Login\LogInPage3.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="NewFolder1\NewPage1.xaml">
+	  <MauiXaml Update="Pages\Quiz\QuizPage2.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Quiz\QuizPage2.xaml">
+	  <MauiXaml Update="Pages\Quiz\QuizPage3.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Quiz\QuizPage3.xaml">
+	  <MauiXaml Update="Pages\Quiz\QuizPage4.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Quiz\QuizPage4.xaml">
+	  <MauiXaml Update="Pages\Quiz\QuizPage5.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Quiz\QuizPage5.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Quiz\QuizPage6.xaml">
+	  <MauiXaml Update="Pages\Quiz\QuizPage6.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Secuirty.xaml">
@@ -130,14 +142,13 @@
 	  <MauiXaml Update="Settings.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Subscription.xaml">
+	  <MauiXaml Update="Pages\Budgeting\Subscription.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="NewFolder1\" />
-	  <Folder Include="NewFolder\" />
+	  <Folder Include="Pages\Onboarding\" />
 	</ItemGroup>
 
 </Project>
