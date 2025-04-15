@@ -12,9 +12,8 @@ namespace MauiApp1234
         public onboardingPage()
         {
             InitializeComponent();
+            _onboardingItems = new ObservableCollection<OnboardingItem>();
             SetupOnboardingItems();
-
-            // Set the items source for the carousel
             onboardingCarousel.ItemsSource = _onboardingItems;
         }
 
