@@ -56,10 +56,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\Images\ai.png" />
+	  <None Remove="Resources\Images\bell.png" />
 	  <None Remove="Resources\Images\budget_grey.png" />
 	  <None Remove="Resources\Images\home_grey.png" />
 	  <None Remove="Resources\Images\infohub_grey.png" />
 	  <None Remove="Resources\Images\investment_grey.png" />
+	  <None Remove="Resources\Images\settings.png" />
 	</ItemGroup>
 
 	<ItemGroup>

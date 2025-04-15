@@ -6,17 +6,29 @@
     <Grid RowDefinitions="Auto,Auto,*,Auto">
         <!-- Header with Icons -->
         <Grid Grid.Row="0" Margin="20,10" ColumnDefinitions="Auto,*,Auto,Auto">
-            <Image Grid.Column="0" Source="sparkle.png" HeightRequest="24" WidthRequest="24" />
-            <Frame Grid.Column="2" CornerRadius="24" Padding="10" HasShadow="False" BackgroundColor="White">
-                <Image Source="notification.png" HeightRequest="20" WidthRequest="20" />
+            <!-- Icon on the left -->
+            <Frame Grid.Column="0" CornerRadius="24" Padding="10" HasShadow="False" BackgroundColor="White" HorizontalOptions="CenterAndExpand">
+                <Image Source="ai.png" HeightRequest="20" WidthRequest="20" />
             </Frame>
+
+            <!-- Space in the middle (will automatically expand) -->
+            <Grid Grid.Column="1" />
+
+            <!-- Notification icon on the right -->
+            <Frame Grid.Column="2" CornerRadius="24" Padding="10" HasShadow="False" BackgroundColor="White">
+                <Image Source="bell.png" HeightRequest="20" WidthRequest="20" />
+            </Frame>
+
+            <!-- Settings icon on the right -->
             <Frame Grid.Column="3" CornerRadius="20" Padding="10" HasShadow="False" BackgroundColor="White" Margin="10,0,0,0">
                 <Image Source="settings.png" HeightRequest="20" WidthRequest="20" />
             </Frame>
         </Grid>
 
+
+
         <!-- Dashboard Title -->
-        <Label Grid.Row="1" Text="Financial Dashboard" FontSize="22" FontAttributes="Bold"  
+        <Label Grid.Row="1" Text="Budgeting" FontSize="22" FontAttributes="Bold"  
            HorizontalOptions="Center" Margin="20,5,20,15" />
 
         <!-- Main Content -->
@@ -32,8 +44,8 @@
                                 <Label Text="Keep it going!" TextColor="#6b7280" FontSize="14" />
                             </StackLayout>
                             <StackLayout Grid.Column="1" Orientation="Horizontal" HorizontalOptions="End">
-                                <Label Text="🔥" FontSize="28" VerticalOptions="Center" />
-                                <Label Text="42" FontSize="28" TextColor="#6366f1" FontAttributes="Bold" VerticalOptions="Center" />
+                                <Label Text="🔥 " FontSize="57" VerticalOptions="Center" />
+                                <Label Text="42" FontSize="57" TextColor="#6366f1" FontAttributes="Bold" VerticalOptions="Center" />
                             </StackLayout>
                         </Grid>
                         <!-- Progress Indicators -->
