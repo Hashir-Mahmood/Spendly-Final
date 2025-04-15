@@ -72,6 +72,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Login\LogInPage3.xaml.cs">
+	    <SubType>Code</SubType>
+	    <DependentUpon>%(Filename)</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
 	  <MauiXaml Update="Budgeting.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -81,37 +88,40 @@
 	  <MauiXaml Update="Debt.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="InfoHub1.xaml">
+	  <MauiXaml Update="InfoHub\InfoHub1.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="InfoHub2.xaml">
+	  <MauiXaml Update="InfoHub\InfoHub2.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Investing.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="LogInPage1.xaml">
+	  <MauiXaml Update="Login\LogInPage1.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="LogInPage2.xaml">
+	  <MauiXaml Update="Login\LogInPage2.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="LogInPage3.xaml">
+	  <MauiXaml Update="Login\LogInPage3.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="QuizPage2.xaml">
+	  <MauiXaml Update="NewFolder1\NewPage1.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="QuizPage3.xaml">
+	  <MauiXaml Update="Quiz\QuizPage2.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="QuizPage4.xaml">
+	  <MauiXaml Update="Quiz\QuizPage3.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="QuizPage5.xaml">
+	  <MauiXaml Update="Quiz\QuizPage4.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="QuizPage6.xaml">
+	  <MauiXaml Update="Quiz\QuizPage5.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Quiz\QuizPage6.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Secuirty.xaml">
@@ -123,6 +133,11 @@
 	  <MauiXaml Update="Subscription.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="NewFolder1\" />
+	  <Folder Include="NewFolder\" />
 	</ItemGroup>
 
 </Project>
