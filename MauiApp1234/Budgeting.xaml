@@ -1,7 +1,127 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MauiApp1234.Budgeting"
-             Title="Budgeting">
-    
+             x:Class="MauiApp1234.Budgeting">
+
+    <Grid RowDefinitions="Auto,Auto,*,Auto">
+        <!-- Header with Icons -->
+        <Grid Grid.Row="0" Margin="20,10" ColumnDefinitions="Auto,*,Auto,Auto">
+            <Image Grid.Column="0" Source="sparkle.png" HeightRequest="24" WidthRequest="24" />
+            <Frame Grid.Column="2" CornerRadius="24" Padding="10" HasShadow="False" BackgroundColor="White">
+                <Image Source="notification.png" HeightRequest="20" WidthRequest="20" />
+            </Frame>
+            <Frame Grid.Column="3" CornerRadius="20" Padding="10" HasShadow="False" BackgroundColor="White" Margin="10,0,0,0">
+                <Image Source="settings.png" HeightRequest="20" WidthRequest="20" />
+            </Frame>
+        </Grid>
+
+        <!-- Dashboard Title -->
+        <Label Grid.Row="1" Text="Financial Dashboard" FontSize="22" FontAttributes="Bold"  
+           HorizontalOptions="Center" Margin="20,5,20,15" />
+
+        <!-- Main Content -->
+        <ScrollView Grid.Row="2">
+            <VerticalStackLayout Spacing="15" Padding="20,0,20,20">
+                <!-- Budget Streak Card -->
+                <Frame CornerRadius="15" Padding="15" HasShadow="False" BackgroundColor="White">
+                    <VerticalStackLayout Spacing="15">
+                        <!-- Header and streak info -->
+                        <Grid ColumnDefinitions="*,Auto">
+                            <StackLayout Grid.Column="0" Orientation="Vertical" Spacing="5">
+                                <Label Text="Budget Streak" TextColor="#6366f1" FontSize="18" FontAttributes="Bold" />
+                                <Label Text="Keep it going!" TextColor="#6b7280" FontSize="14" />
+                            </StackLayout>
+                            <StackLayout Grid.Column="1" Orientation="Horizontal" HorizontalOptions="End">
+                                <Label Text="🔥" FontSize="28" VerticalOptions="Center" />
+                                <Label Text="42" FontSize="28" TextColor="#6366f1" FontAttributes="Bold" VerticalOptions="Center" />
+                            </StackLayout>
+                        </Grid>
+                        <!-- Progress Indicators -->
+                        <Grid ColumnDefinitions="*,*,*,*,*,*,*" ColumnSpacing="5">
+                            <BoxView Grid.Column="0" HeightRequest="6" CornerRadius="3" BackgroundColor="#10b981" />
+                            <BoxView Grid.Column="1" HeightRequest="6" CornerRadius="3" BackgroundColor="#10b981" />
+                            <BoxView Grid.Column="2" HeightRequest="6" CornerRadius="3" BackgroundColor="#10b981" />
+                            <BoxView Grid.Column="3" HeightRequest="6" CornerRadius="3" BackgroundColor="#10b981" />
+                            <BoxView Grid.Column="4" HeightRequest="6" CornerRadius="3" BackgroundColor="#d1d5db" />
+                            <BoxView Grid.Column="5" HeightRequest="6" CornerRadius="3" BackgroundColor="#d1d5db" />
+                            <BoxView Grid.Column="6" HeightRequest="6" CornerRadius="3" BackgroundColor="#d1d5db" />
+                        </Grid>
+                        <!-- Buttons -->
+                        <HorizontalStackLayout Spacing="10">
+                            <Button Text="Subscription" BackgroundColor="#6366f1" TextColor="White" CornerRadius="20" HeightRequest="40" WidthRequest="140" />
+                            <Button Text="Freeze Streak" BackgroundColor="#a5f3fc" TextColor="#0891b2" CornerRadius="20" HeightRequest="40" WidthRequest="140" />
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- Monthly Budget Card -->
+                <Frame CornerRadius="15" Padding="15" HasShadow="False" BackgroundColor="White">
+                    <VerticalStackLayout Spacing="10">
+                        <Label Text="Monthly Budget" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center" />
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Grid.Column="0" Text="Remaining: $1,240" TextColor="#10b981" />
+                            <Label Grid.Column="1" Text="£2,500" TextColor="#6b7280" />
+                        </Grid>
+                        <Frame Padding="0" CornerRadius="5" HasShadow="False" HeightRequest="20" BackgroundColor="#f3f4f6">
+                            <BoxView HeightRequest="20" WidthRequest="200" HorizontalOptions="Start" BackgroundColor="#6366f1" />
+                        </Frame>
+                        <Label Text="50%" TextColor="#6366f1" FontAttributes="Bold" HorizontalOptions="Start" />
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- Spending Categories Section -->
+                <!-- Spending Categories Section -->
+                <Label Text="Spending Categories" FontSize="18" FontAttributes="Bold" Margin="0,10,0,5" />
+                <Frame CornerRadius="15" Padding="10" HasShadow="False" BackgroundColor="#f9fafb">
+                    <VerticalStackLayout Spacing="8">
+                        <!-- Food & Dining -->
+                        <Frame Padding="15" HasShadow="False" BackgroundColor="White" CornerRadius="12">
+                            <Grid ColumnDefinitions="Auto,*,Auto">
+                                <Label Grid.Column="0" Text="🍽️" FontSize="24" TextColor="#3B82F6" VerticalOptions="Center" Margin="0,0,15,0" />
+                                <VerticalStackLayout Grid.Column="1" Spacing="5">
+                                    <Label Text="Food &amp; Dining" FontAttributes="Bold" />
+                                    <Label Text="$460 spent" TextColor="#6b7280" FontSize="14" />
+                                </VerticalStackLayout>
+                                <Image Grid.Column="2" Source="chevron_down.png" HeightRequest="20" WidthRequest="20" VerticalOptions="Center" />
+                            </Grid>
+                        </Frame>
+
+                        <!-- Transportation -->
+                        <Frame Padding="15" HasShadow="False" BackgroundColor="White" CornerRadius="12">
+                            <Grid ColumnDefinitions="Auto,*,Auto">
+                                <Label Grid.Column="0" Text="🚗" FontSize="24" TextColor="#10B981" VerticalOptions="Center" Margin="0,0,15,0" />
+                                <VerticalStackLayout Grid.Column="1" Spacing="5">
+                                    <Label Text="Transportation" FontAttributes="Bold" />
+                                    <Label Text="$280 spent" TextColor="#6b7280" FontSize="14" />
+                                </VerticalStackLayout>
+                                <Image Grid.Column="2" Source="chevron_down.png" HeightRequest="20" WidthRequest="20" VerticalOptions="Center" />
+                            </Grid>
+                        </Frame>
+
+                        <!-- Shopping -->
+                        <Frame Padding="15" HasShadow="False" BackgroundColor="White" CornerRadius="12">
+                            <Grid ColumnDefinitions="Auto,*,Auto">
+                                <Label Grid.Column="0" Text="🛒" FontSize="24" TextColor="#F59E0B" VerticalOptions="Center" Margin="0,0,15,0" />
+                                <VerticalStackLayout Grid.Column="1" Spacing="5">
+                                    <Label Text="Shopping" FontAttributes="Bold" />
+                                    <Label Text="$520 spent" TextColor="#6b7280" FontSize="14" />
+                                </VerticalStackLayout>
+                                <Image Grid.Column="2" Source="chevron_down.png" HeightRequest="20" WidthRequest="20" VerticalOptions="Center" />
+                            </Grid>
+                        </Frame>
+                    </VerticalStackLayout>
+                </Frame>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Bottom Navigation -->
+        <Grid Grid.Row="3" BackgroundColor="White" HeightRequest="60" ColumnDefinitions="*,*,*,*">
+            <Image Grid.Column="0" Source="home.png" HeightRequest="24" HorizontalOptions="Center" VerticalOptions="Center" />
+            <Image Grid.Column="1" Source="chart.png" HeightRequest="24" HorizontalOptions="Center" VerticalOptions="Center" />
+            <Image Grid.Column="2" Source="stats.png" HeightRequest="24" HorizontalOptions="Center" VerticalOptions="Center" />
+            <Image Grid.Column="3" Source="menu.png" HeightRequest="24" HorizontalOptions="Center" VerticalOptions="Center" />
+        </Grid>
+    </Grid>
+
+
 </ContentPage>
