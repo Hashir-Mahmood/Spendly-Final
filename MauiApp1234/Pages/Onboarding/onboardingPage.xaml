@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiApp1234.onboardingPage"
+             BackgroundColor="White">
+
+    <Grid RowDefinitions="*,Auto"
+          Padding="20">
+
+        <!-- Carousel View for Onboarding Pages -->
+        <CarouselView x:Name="onboardingCarousel" 
+                     Grid.Row="0" 
+                     HorizontalOptions="Fill"
+                     VerticalOptions="Fill"
+                     CurrentItemChanged="OnCarouselItemChanged">
+            <CarouselView.ItemsSource>
+                <x:Array Type="{x:Type x:String}">
+                    <x:String>Page1</x:String>
+                    <x:String>Page2</x:String>
+                    <x:String>Page3</x:String>
+                </x:Array>
+            </CarouselView.ItemsSource>
+            <CarouselView.ItemTemplate>
+                <DataTemplate>
+                    <VerticalStackLayout VerticalOptions="Center" Spacing="24" Padding="20">
+                        <!-- Header Example/Column indicators -->
+                        <VerticalStackLayout HorizontalOptions="Center" Margin="0,0,0,20">
+                            <Label Text="Example" TextColor="#6B7280" FontSize="14" HorizontalOptions="Center" />
+                            <Image Source="arrow_down.png" HeightRequest="20" WidthRequest="20" Margin="0,5,0,0" />
+                            <Label Text="Column" TextColor="#6B7280" FontSize="14" HorizontalOptions="Center" Margin="0,5,0,0" />
+                        </VerticalStackLayout>
+
+                        <!-- Image Placeholder - Replace with your actual images -->
+                        <Image x:Name="OnboardingImage"
+                               Source="{Binding ImageSource}"
+                               HeightRequest="200"
+                               HorizontalOptions="Center"
+                               Aspect="AspectFit" />
+
+                        <!-- Content -->
+                        <VerticalStackLayout Spacing="12">
+                            <Label Text="{Binding Title}" 
+                                   TextColor="#1F2937" 
+                                   FontSize="32" 
+                                   FontAttributes="Bold" />
+
+                            <Label Text="{Binding Description}" 
+                                   TextColor="#4B5563" 
+                                   FontSize="18" />
+
+                            <!-- Pagination Indicators -->
+                            <HorizontalStackLayout x:Name="IndicatorsLayout"
+                                                  HorizontalOptions="Start" 
+                                                  Spacing="5" 
+                                                  Margin="0,20,0,0">
+                                <BoxView Color="{Binding Page1Color}" WidthRequest="20" HeightRequest="6" CornerRadius="3" />
+                                <BoxView Color="{Binding Page2Color}" WidthRequest="6" HeightRequest="6" CornerRadius="3" />
+                                <BoxView Color="{Binding Page3Color}" WidthRequest="6" HeightRequest="6" CornerRadius="3" />
+                            </HorizontalStackLayout>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                </DataTemplate>
+            </CarouselView.ItemTemplate>
+        </CarouselView>
+
+        <!-- Bottom Buttons -->
+        <VerticalStackLayout Grid.Row="1" Spacing="15" Margin="0,0,0,20">
+            <Button x:Name="NextButton" 
+                    Text="Next" 
+                    BackgroundColor="#1F2937" 
+                    TextColor="White" 
+                    FontSize="16"
+                    HeightRequest="50"
+                    CornerRadius="25"
+                    HorizontalOptions="Fill"
+                    Clicked="OnNextButtonClicked" />
+
+            <Button x:Name="SkipButton"
+                    Text="Skip" 
+                    BackgroundColor="Transparent" 
+                    TextColor="#1F2937" 
+                    FontSize="16"
+                    HeightRequest="40"
+                    BorderColor="Transparent"
+                    HorizontalOptions="Fill"
+                    Clicked="OnSkipButtonClicked" />
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>
