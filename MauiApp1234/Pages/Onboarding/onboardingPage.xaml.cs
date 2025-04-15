@@ -6,6 +6,7 @@ namespace MauiApp1234
 {
     public partial class onboardingPage : ContentPage
     {
+        private const string V = "#FFFFFF";
         private int _currentPageIndex = 0;
         private ObservableCollection<OnboardingItem> _onboardingItems;
 
@@ -26,27 +27,27 @@ namespace MauiApp1234
                     Title = "Simple Budgeting",
                     Description = "Budgeting That Fits Your Lifestyle",
                     ImageSource = "onboarding_image1.png",
-                    Page1Color = "#1F2937",
-                    Page2Color = "#E5E7EB",
-                    Page3Color = "#E5E7EB"
+                    Page1Color = V,
+                    Page2Color = V,
+                    Page3Color = V
                 },
                 new OnboardingItem
                 {
                     Title = "Smart Insights",
                     Description = "Enjoy having a tailored financial plan",
                     ImageSource = "onboarding_image2.png",
-                    Page1Color = "#E5E7EB",
-                    Page2Color = "#1F2937",
-                    Page3Color = "#E5E7EB"
+                    Page1Color = V,
+                    Page2Color = V,
+                    Page3Color = V
                 },
                 new OnboardingItem
                 {
                     Title = "Keep on Track",
                     Description = "Stay motivated with your streak",
                     ImageSource = "onboarding_image3.png",
-                    Page1Color = "#E5E7EB",
-                    Page2Color = "#E5E7EB",
-                    Page3Color = "#1F2937"
+                    Page1Color = V,
+                    Page2Color = V,
+                    Page3Color = V
                 }
             };
         }
