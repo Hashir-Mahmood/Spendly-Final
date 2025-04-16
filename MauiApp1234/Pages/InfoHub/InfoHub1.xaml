@@ -122,28 +122,22 @@
                 <StackLayout Padding="20,10">
                     <!-- Featured Articles Section -->
                     <Label Text="Featured Articles"
-                    FontSize="24"
-                    FontAttributes="Bold"
-                    HorizontalOptions="Center"
-                    Margin="0,20,0,10" />
+                       FontSize="24"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center"
+                       Margin="0,20,0,10" />
 
                     <!-- CarouselView for Articles -->
                     <CarouselView HeightRequest="200" 
-                           PeekAreaInsets="10"
-                           Margin="0,10">
-                        <CarouselView.ItemsSource>
-                            <x:Array Type="{x:Type x:String}">
-                                <x:String>Article1</x:String>
-                                <x:String>Article2</x:String>
-                                <x:String>Article3</x:String>
-                            </x:Array>
-                        </CarouselView.ItemsSource>
+                              PeekAreaInsets="10"
+                              Margin="0,10"
+                              ItemsSource="{Binding FeaturedArticles}">
                         <CarouselView.ItemTemplate>
                             <DataTemplate>
                                 <Frame BorderColor="LightGray"
-                                CornerRadius="10"
-                                HasShadow="True"
-                                Margin="5">
+                                   CornerRadius="10"
+                                   HasShadow="True"
+                                   Margin="5">
                                     <Grid>
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="*" />
@@ -151,23 +145,29 @@
                                         </Grid.RowDefinitions>
 
                                         <Label Grid.Row="0"
-                                        Text="Set goals for your money"
-                                        VerticalOptions="Center"
-                                        FontSize="20"
-                                        FontAttributes="Bold" />
+                                           Text="{Binding Title}"
+                                           VerticalOptions="Center"
+                                           FontSize="20"
+                                           FontAttributes="Bold" />
 
                                         <StackLayout Grid.Row="1" 
-                                              Orientation="Horizontal"
-                                              Spacing="5">
+                                                 Orientation="Horizontal"
+                                                 Spacing="5">
                                             <Image Source="clock_icon.png" 
-                                            HeightRequest="16" 
-                                            WidthRequest="16" />
-                                            <Label Text="5 min read" 
-                                            FontSize="14"
-                                            TextColor="Gray"
-                                            VerticalOptions="Center" />
+                                               HeightRequest="16" 
+                                               WidthRequest="16" />
+                                            <Label Text="{Binding ReadTime}" 
+                                               FontSize="14"
+                                               TextColor="Gray"
+                                               VerticalOptions="Center" />
                                         </StackLayout>
                                     </Grid>
+
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer 
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type local:InfoHubViewModel}}, Path=ArticleTappedCommand}"
+                                        CommandParameter="{Binding .}" />
+                                    </Frame.GestureRecognizers>
                                 </Frame>
                             </DataTemplate>
                         </CarouselView.ItemTemplate>
@@ -175,20 +175,14 @@
 
                     <!-- Latest Videos Section -->
                     <Label Text="Latest Videos"
-                    FontSize="24"
-                    FontAttributes="Bold"
-                    HorizontalOptions="Center"
-                    Margin="0,20,0,10" />
+                       FontSize="24"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center"
+                       Margin="0,20,0,10" />
 
-                    <!-- ListView for Videos -->
-                    <CollectionView HeightRequest="300">
-                        <CollectionView.ItemsSource>
-                            <x:Array Type="{x:Type x:String}">
-                                <x:String>Video1</x:String>
-                                <x:String>Video2</x:String>
-                                <x:String>Video3</x:String>
-                            </x:Array>
-                        </CollectionView.ItemsSource>
+                    <!-- CollectionView for Videos -->
+                    <CollectionView HeightRequest="300"
+                                ItemsSource="{Binding LatestVideos}">
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
                                 <Grid Padding="0,10">
@@ -199,39 +193,43 @@
 
                                     <!-- Video Thumbnail -->
                                     <Frame Grid.Column="0"
-                                    BackgroundColor="LightGray"
-                                    HeightRequest="100"
-                                    WidthRequest="120"
-                                    CornerRadius="5"
-                                    Padding="0">
-                                        <Image Aspect="AspectFill" />
+                                       BackgroundColor="LightGray"
+                                       HeightRequest="100"
+                                       WidthRequest="120"
+                                       CornerRadius="5"
+                                       Padding="0">
+                                        <Image Source="{Binding ThumbnailUrl}" Aspect="AspectFill" />
                                     </Frame>
 
                                     <!-- Video Info -->
                                     <StackLayout Grid.Column="1" Padding="10,0">
-                                        <Label Text="Does saving money mean not purchasing what you want?"
-                                        FontAttributes="Bold"
-                                        FontSize="16"
-                                        LineBreakMode="WordWrap" />
+                                        <Label Text="{Binding Title}"
+                                           FontAttributes="Bold"
+                                           FontSize="16"
+                                           LineBreakMode="WordWrap" />
 
-                                        <Label Text="Learn the fundamentals of long-term budgeting"
-                                        TextColor="Gray"
-                                        FontSize="14"
-                                        Margin="0,5,0,5" />
+                                        <Label Text="{Binding Description}"
+                                           TextColor="Gray"
+                                           FontSize="14"
+                                           Margin="0,5,0,5" />
 
                                         <StackLayout Orientation="Horizontal" Spacing="5">
                                             <Image Source="eye_icon.png" HeightRequest="16" WidthRequest="16" />
-                                            <Label Text="1.2K views" FontSize="14" TextColor="Gray" />
+                                            <Label Text="{Binding ViewCount}" FontSize="14" TextColor="Gray" />
                                         </StackLayout>
                                     </StackLayout>
+
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer 
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type local:InfoHubViewModel}}, Path=VideoTappedCommand}"
+                                        CommandParameter="{Binding .}" />
+                                    </Grid.GestureRecognizers>
                                 </Grid>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
                     </CollectionView>
-
                 </StackLayout>
             </ScrollView>
         </Grid>
-    </ScrollView>
-
+        </ScrollView>
 </ContentPage>
