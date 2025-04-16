@@ -2,11 +2,178 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiApp1234.Subscription"
-             Title="Subscription">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             BackgroundColor="#f8f9fa">
+
+    <Grid>
+        <ScrollView>
+            <VerticalStackLayout Spacing="10" Padding="20">
+
+                <!-- Header Section -->
+                <Grid Margin="0,10,0,20">
+                    <Label Text="Subscriptions" FontSize="24" FontAttributes="Bold" VerticalOptions="Center"/>
+                    <HorizontalStackLayout HorizontalOptions="End" Spacing="15">
+                        <Border BackgroundColor="#6c5ce7" StrokeShape="RoundRectangle 20" Padding="12">
+                            <Label Text="+" TextColor="White" FontSize="20" FontAttributes="Bold"/>
+                        </Border>
+                        <Picker Title="All Categories" HorizontalOptions="End" WidthRequest="150">
+                            <Picker.Items>
+                                <x:String>All Categories</x:String>
+                                <x:String>Entertainment</x:String>
+                                <x:String>Fitness</x:String>
+                                <x:String>Shopping</x:String>
+                                <x:String>Music</x:String>
+                                <x:String>Productivity</x:String>
+                            </Picker.Items>
+                        </Picker>
+                    </HorizontalStackLayout>
+                </Grid>
+
+                <!-- Warning Banner with Dismiss Button -->
+                <Border x:Name="WarningBanner" BackgroundColor="#FFF3E0" StrokeShape="RoundRectangle 12" Padding="15" Margin="0,0,0,10">
+                    <Grid ColumnDefinitions="*,Auto" VerticalOptions="Center">
+                        <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+                            <Image Source="warning_icon.png" HeightRequest="20" VerticalOptions="Center"/>
+                            <Label Text="Similar subscriptions detected" TextColor="#FF9800" 
+                                   FontAttributes="Bold" VerticalOptions="Center"/>
+                        </HorizontalStackLayout>
+                        <Button Grid.Column="1" Text="✕" BackgroundColor="Transparent" TextColor="#FF9800" 
+                                FontSize="16" />
+                    </Grid>
+                </Border>
+
+                <!-- Total Amount Display -->
+                <Border BackgroundColor="White" StrokeShape="RoundRectangle 12" Padding="15">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Label Text="$89.99" FontSize="24" FontAttributes="Bold" TextColor="Black" />
+                        <Label Grid.Column="1" Text="+12.4%" TextColor="#6c5ce7" FontAttributes="Bold" VerticalOptions="Center"/>
+                    </Grid>
+                </Border>
+
+                <!-- Category Filter Buttons (Hardcoded) -->
+                <CarouselView HeightRequest="40" Margin="0,5" HorizontalOptions="FillAndExpand">
+                    <CarouselView.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>All</x:String>
+                            <x:String>Entertainment</x:String>
+                            <x:String>Fitness</x:String>
+                            <x:String>Shopping</x:String>
+                            <x:String>Music</x:String>
+                            <x:String>Productivity</x:String>
+                        </x:Array>
+                    </CarouselView.ItemsSource>
+                    <CarouselView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Horizontal" ItemSpacing="0"/>
+                        <!-- Reduced spacing -->
+                    </CarouselView.ItemsLayout>
+                    <CarouselView.ItemTemplate>
+                        <DataTemplate>
+                            <Border BackgroundColor="#eeeeee"
+                    StrokeShape="RoundRectangle 15"
+                    Padding="6,4"
+                                HorizontalOptions="Center">
+                                <Label Text="{Binding}"
+                       TextColor="Black"
+                       FontSize="12"
+                       VerticalOptions="Center"
+                       HorizontalOptions="Center" />
+                            </Border>
+                        </DataTemplate>
+                    </CarouselView.ItemTemplate>
+                </CarouselView>
+
+
+                <!-- Subscription Items -->
+                <!-- Netflix Premium -->
+                <Border BackgroundColor="White" StrokeShape="RoundRectangle 12" Padding="15" Margin="0,5">
+                    <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="Auto,*,Auto">
+                        <Frame Grid.RowSpan="2" HasShadow="False" BackgroundColor="#f1f1f1" CornerRadius="8" HeightRequest="40" WidthRequest="40" Margin="0,0,15,0" />
+                        <Label Grid.Column="1" Text="Netflix Premium" FontAttributes="Bold" TextColor="Black"/>
+                        <Label Grid.Column="1" Grid.Row="1" Text="Renews Apr 15, 2024" TextColor="#666" FontSize="12"/>
+                        <VerticalStackLayout Grid.Column="2" Grid.RowSpan="2" HorizontalOptions="End" VerticalOptions="Center">
+                            <Label Text="$19.99/m" FontAttributes="Bold" TextColor="Black" HorizontalOptions="End"/>
+                            <Label Text="↑ +1.1" TextColor="#ff5252" FontSize="12" HorizontalOptions="End"/>
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+
+                <!-- Netflix Standard -->
+                <Border BackgroundColor="White" StrokeShape="RoundRectangle 12" Padding="15" Margin="0,5">
+                    <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="Auto,*,Auto">
+                        <Frame Grid.RowSpan="2" HasShadow="False" BackgroundColor="#f1f1f1" CornerRadius="8" HeightRequest="40" WidthRequest="40" Margin="0,0,15,0" />
+                        <Label Grid.Column="1" Text="Netflix Standard" FontAttributes="Bold" TextColor="Black"/>
+                        <Label Grid.Column="1" Grid.Row="1" Text="Renews May 3, 2024" TextColor="#666" FontSize="12"/>
+                        <VerticalStackLayout Grid.Column="2" Grid.RowSpan="2" HorizontalOptions="End" VerticalOptions="Center">
+                            <Label Text="$15.49/m" FontAttributes="Bold" TextColor="Black" HorizontalOptions="End"/>
+                            <Label Text="↑ +0.5" TextColor="#ff5252" FontSize="12" HorizontalOptions="End"/>
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+
+                <!-- Spotify -->
+                <Border BackgroundColor="White" StrokeShape="RoundRectangle 12" Padding="15" Margin="0,5">
+                    <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="Auto,*,Auto">
+                        <Frame Grid.RowSpan="2" HasShadow="False" BackgroundColor="#f1f1f1" CornerRadius="8" HeightRequest="40" WidthRequest="40" Margin="0,0,15,0" />
+                        <Label Grid.Column="1" Text="Spotify Family" FontAttributes="Bold" TextColor="Black"/>
+                        <Label Grid.Column="1" Grid.Row="1" Text="Renews Mar 28, 2024" TextColor="#666" FontSize="12"/>
+                        <VerticalStackLayout Grid.Column="2" Grid.RowSpan="2" HorizontalOptions="End" VerticalOptions="Center">
+                            <Label Text="$14.99/mo" FontAttributes="Bold" TextColor="Black" HorizontalOptions="End"/>
+                            <Label Text="↓ -5.01" TextColor="#4CAF50" FontSize="12" HorizontalOptions="End"/>
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+
+                <!-- Adobe -->
+                <Border BackgroundColor="White" StrokeShape="RoundRectangle 12" Padding="15" Margin="0,5">
+                    <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="Auto,*,Auto">
+                        <Frame Grid.RowSpan="2" HasShadow="False" BackgroundColor="#f1f1f1" CornerRadius="8" HeightRequest="40" WidthRequest="40" Margin="0,0,15,0" />
+                        <Label Grid.Column="1" Text="Adobe Creative Cloud" FontAttributes="Bold" TextColor="Black"/>
+                        <Label Grid.Column="1" Grid.Row="1" Text="Renews May 1, 2024" TextColor="#666" FontSize="12"/>
+                        <Label Grid.Column="2" Grid.RowSpan="2" Text="$55" FontAttributes="Bold" TextColor="Black" VerticalOptions="Center"/>
+                    </Grid>
+                </Border>
+
+                <!-- Monthly Spending Section -->
+                <Label Text="Monthly Spending" FontSize="18" FontAttributes="Bold" Margin="0,20,0,10"/>
+                <Label Text="Last 6 months" TextColor="#666" FontSize="14" Margin="0,-5,0,10"/>
+
+                <Grid HeightRequest="150" ColumnDefinitions="*,*,*,*,*,*" ColumnSpacing="10">
+                    <BoxView Grid.Column="0" BackgroundColor="#6c5ce7" CornerRadius="5" VerticalOptions="End" HeightRequest="50"/>
+                    <BoxView Grid.Column="1" BackgroundColor="#6c5ce7" CornerRadius="5" VerticalOptions="End" HeightRequest="90"/>
+                    <BoxView Grid.Column="2" BackgroundColor="#6c5ce7" CornerRadius="5" VerticalOptions="End" HeightRequest="60"/>
+                    <BoxView Grid.Column="3" BackgroundColor="#6c5ce7" CornerRadius="5" VerticalOptions="End" HeightRequest="100"/>
+                    <BoxView Grid.Column="4" BackgroundColor="#6c5ce7" CornerRadius="5" VerticalOptions="End" HeightRequest="80"/>
+                    <BoxView Grid.Column="5" BackgroundColor="#6c5ce7" CornerRadius="5" VerticalOptions="End" HeightRequest="120"/>
+                </Grid>
+
+                <Grid ColumnDefinitions="*,*,*,*,*,*" ColumnSpacing="10" Margin="0,5,0,0">
+                    <Label Grid.Column="0" Text="Jul" HorizontalOptions="Center" TextColor="#666" FontSize="12"/>
+                    <Label Grid.Column="1" Text="Aug" HorizontalOptions="Center" TextColor="#666" FontSize="12"/>
+                    <Label Grid.Column="2" Text="Sep" HorizontalOptions="Center" TextColor="#666" FontSize="12"/>
+                    <Label Grid.Column="3" Text="Oct" HorizontalOptions="Center" TextColor="#666" FontSize="12"/>
+                    <Label Grid.Column="4" Text="Nov" HorizontalOptions="Center" TextColor="#666" FontSize="12"/>
+                    <Label Grid.Column="5" Text="Dec" HorizontalOptions="Center" TextColor="#666" FontSize="12"/>
+                </Grid>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Tab Bar at Bottom with Months -->
+        <Grid VerticalOptions="End" BackgroundColor="White" HeightRequest="60" ColumnDefinitions="*,*,*,*">
+            <VerticalStackLayout Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center">
+                <Image Source="chart_icon.png" HeightRequest="24"/>
+                <Label Text="Jan" FontSize="12" TextColor="#666" HorizontalOptions="Center"/>
+            </VerticalStackLayout>
+            <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center">
+                <Image Source="pie_chart_icon.png" HeightRequest="24"/>
+                <Label Text="Feb" FontSize="12" TextColor="#666" HorizontalOptions="Center"/>
+            </VerticalStackLayout>
+            <VerticalStackLayout Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center">
+                <Image Source="analytics_icon.png" HeightRequest="24"/>
+                <Label Text="Mar" FontSize="12" TextColor="#666" HorizontalOptions="Center"/>
+            </VerticalStackLayout>
+            <VerticalStackLayout Grid.Column="3" HorizontalOptions="Center" VerticalOptions="Center">
+                <Image Source="menu_icon.png" HeightRequest="24"/>
+                <Label Text="Apr" FontSize="12" TextColor="#666" HorizontalOptions="Center"/>
+            </VerticalStackLayout>
+        </Grid>
+    </Grid>
 </ContentPage>
