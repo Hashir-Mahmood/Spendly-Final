@@ -8,11 +8,10 @@
         <Grid Grid.Row="0" Margin="20,10" ColumnDefinitions="Auto,*,Auto,Auto">
             <!-- Icon on the left -->
             <Frame Grid.Column="0" CornerRadius="24" Padding="10" HasShadow="False" BackgroundColor="White" HorizontalOptions="CenterAndExpand">
-                <Image Source="ai.png" HeightRequest="20" WidthRequest="20" x:Name="ChatbotIcon">
-                    <Image.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="ChatbotIcon_Tapped"/>
-                    </Image.GestureRecognizers>
-                </Image>
+                <Image Source="ai.png" HeightRequest="20" WidthRequest="20" x:Name="ChatbotIcon"/>
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="ChatbotIcon_Tapped"/>
+                </Frame.GestureRecognizers>
             </Frame>
 
             <!-- Space in the middle (will automatically expand) -->
@@ -20,20 +19,18 @@
 
             <!-- Notification icon on the right -->
             <Frame Grid.Column="2" CornerRadius="24" Padding="10" HasShadow="False" BackgroundColor="White" >
-                <Image Source="bell.png" HeightRequest="20" WidthRequest="20" x:Name="NotificationsIcon">
-                    <Image.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnNotificationsIconTapped"/>
-                    </Image.GestureRecognizers>
-                </Image>
+                <Image Source="bell.png" HeightRequest="20" WidthRequest="20" x:Name="NotificationsIcon"/>
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnNotificationsIconTapped"/>
+                </Frame.GestureRecognizers>
             </Frame>
 
             <!-- Settings icon on the right -->
             <Frame Grid.Column="3" CornerRadius="20" Padding="10" HasShadow="False" BackgroundColor="White" Margin="10,0,0,0">
-                <Image Source="settings.png" HeightRequest="20" WidthRequest="20" x:Name="SettingsIcon">
-                    <Image.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="SettingsIcon_Tapped"/>
-                    </Image.GestureRecognizers>
-                </Image>
+                <Image Source="settings.png" HeightRequest="20" WidthRequest="20" x:Name="SettingsIcon"/>
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="SettingsIcon_Tapped"/>
+                </Frame.GestureRecognizers>
             </Frame>
         </Grid>
 
