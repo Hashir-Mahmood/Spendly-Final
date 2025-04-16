@@ -12,6 +12,27 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
+            <!-- Header with Icons -->
+            <Grid Grid.Row="0" Margin="20,10" ColumnDefinitions="Auto,*,Auto,Auto">
+                <!-- Icon on the left -->
+                <Frame Grid.Column="0" CornerRadius="24" Padding="10" HasShadow="False" BackgroundColor="White" HorizontalOptions="CenterAndExpand">
+                    <Image Source="ai.png" HeightRequest="20" WidthRequest="20" />
+                </Frame>
+
+                <!-- Space in the middle (will automatically expand) -->
+                <Grid Grid.Column="1" />
+
+                <!-- Notification icon on the right -->
+                <Frame Grid.Column="2" CornerRadius="24" Padding="10" HasShadow="False" BackgroundColor="White">
+                    <Image Source="bell.png" HeightRequest="20" WidthRequest="20" />
+                </Frame>
+
+                <!-- Settings icon on the right -->
+                <Frame Grid.Column="3" CornerRadius="20" Padding="10" HasShadow="False" BackgroundColor="White" Margin="10,0,0,0">
+                    <Image Source="settings.png" HeightRequest="20" WidthRequest="20" />
+                </Frame>
+            </Grid>
+
             <!-- Header Section -->
             <Grid Grid.Row="0" BackgroundColor="#9C27B0" Padding="20">
                 <Grid.RowDefinitions>
