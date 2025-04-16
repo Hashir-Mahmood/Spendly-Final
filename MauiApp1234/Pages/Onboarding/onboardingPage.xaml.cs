@@ -26,7 +26,7 @@ namespace MauiApp1234
                 {
                     Title = "Simple Budgeting",
                     Description = "Budgeting That Fits Your Lifestyle",
-                    ImageSource = "onboarding_image1.png",
+                    ImageSource = "asian1.png",
                     Page1Color = Colour,
                     Page2Color = Colour,
                     Page3Color = Colour
@@ -35,7 +35,7 @@ namespace MauiApp1234
                 {
                     Title = "Smart Insights",
                     Description = "Enjoy having a tailored financial plan",
-                    ImageSource = "onboarding_image2.png",
+                    ImageSource = "wheelchair.png",
                     Page1Color = Colour,
                     Page2Color = Colour,
                     Page3Color = Colour
@@ -44,7 +44,7 @@ namespace MauiApp1234
                 {
                     Title = "Keep on Track",
                     Description = "Stay motivated with your streak",
-                    ImageSource = "onboarding_image3.png",
+                    ImageSource = "track.png",
                     Page1Color = Colour,
                     Page2Color = Colour,
                     Page3Color = Colour

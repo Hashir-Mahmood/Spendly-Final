@@ -23,12 +23,8 @@
             <CarouselView.ItemTemplate>
                 <DataTemplate>
                     <VerticalStackLayout VerticalOptions="Center" Spacing="24" Padding="20">
-                        <!-- Header Example/Column indicators -->
-                        <VerticalStackLayout HorizontalOptions="Center" Margin="0,0,0,20">
-                            <Label Text="Example" TextColor="#6B7280" FontSize="14" HorizontalOptions="Center" />
-                            <Image Source="arrow_down.png" HeightRequest="20" WidthRequest="20" Margin="0,5,0,0" />
-                            <Label Text="Column" TextColor="#6B7280" FontSize="14" HorizontalOptions="Center" Margin="0,5,0,0" />
-                        </VerticalStackLayout>
+                        
+                        
 
                         <!-- Image Placeholder - Replace with your actual images -->
                         <Image x:Name="OnboardingImage"

@@ -6,7 +6,7 @@
         {
             InitializeComponent();
 
-            MainPage = new Secuirty();
+            MainPage = new AppShell();
         }
     }
 }
