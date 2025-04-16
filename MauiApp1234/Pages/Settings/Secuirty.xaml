@@ -2,11 +2,112 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiApp1234.Secuirty"
-             Title="Secuirty">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             BackgroundColor="White"
+             Shell.TabBarIsVisible="True">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Grid Grid.Row="0" Padding="16" BackgroundColor="White">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Back Button with Arrow Character -->
+            <Button Grid.Column="0" Text="←" FontSize="24" 
+                    BackgroundColor="Transparent" Padding="0" Margin="0,0,16,0"
+                    CornerRadius="0" BorderWidth="0" VerticalOptions="Center"
+                    HorizontalOptions="Start" />
+
+            <Label Grid.Column="1" Text="Security Settings" FontSize="20" FontAttributes="Bold" 
+                   VerticalOptions="Center"/>
+        </Grid>
+
+        <!-- Content -->
+        <ScrollView Grid.Row="1" BackgroundColor="#F5F7FA">
+            <StackLayout Padding="16">
+
+                <!-- Biometric Authentication -->
+                <Frame BackgroundColor="White" CornerRadius="8" Padding="16" Margin="0,16,0,16"
+                       HasShadow="False" BorderColor="Transparent">
+                    <StackLayout>
+                        <Label Text="Biometric Authentication" FontSize="18" FontAttributes="Bold" Margin="0,0,0,16"/>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackLayout Grid.Column="0">
+                                <Label Text="Face ID / Touch ID" FontSize="16"/>
+                                <Label Text="Use biometrics to access your account" FontSize="12" TextColor="#666666" Margin="0,4,0,0"/>
+                            </StackLayout>
+
+                            <Switch Grid.Column="1" IsToggled="True" OnColor="#6979F8"/>
+                        </Grid>
+                    </StackLayout>
+                </Frame>
+
+                <!-- Two-Factor Authentication -->
+                <Frame BackgroundColor="White" CornerRadius="8" Padding="16" Margin="0,0,0,16"
+                       HasShadow="False" BorderColor="Transparent">
+                    <StackLayout>
+                        <Label Text="Two-Factor Authentication" FontSize="18" FontAttributes="Bold" Margin="0,0,0,16"/>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackLayout Grid.Column="0">
+                                <Label Text="Enable 2FA" FontSize="16"/>
+                                <Label Text="Extra layer of security to your account" FontSize="12" TextColor="#666666" Margin="0,4,0,0"/>
+                            </StackLayout>
+
+                            <Switch Grid.Column="1" IsToggled="True" OnColor="#6979F8"/>
+                        </Grid>
+
+                        <Frame BackgroundColor="#F0F0FF" CornerRadius="4" Padding="12" Margin="0,16,0,0"
+                               HasShadow="False" BorderColor="Transparent">
+                            <HorizontalStackLayout>
+                                <Label Text="⚠" FontSize="16" TextColor="#5555DD" VerticalOptions="Center" Margin="0,0,8,0"/>
+                                <StackLayout>
+                                    <Label Text="Important" FontSize="14" FontAttributes="Bold" TextColor="#5555DD"/>
+                                    <Label Text="You must have a UK number" FontSize="12" TextColor="#5555DD" Margin="0,2,0,0"/>
+                                </StackLayout>
+                            </HorizontalStackLayout>
+                        </Frame>
+                    </StackLayout>
+                </Frame>
+
+                <!-- Login Notifications -->
+                <Frame BackgroundColor="White" CornerRadius="8" Padding="16" Margin="0,0,0,16"
+                       HasShadow="False" BorderColor="Transparent">
+                    <StackLayout>
+                        <Label Text="Login Notifications" FontSize="18" FontAttributes="Bold" Margin="0,0,0,16"/>
+
+                        <StackLayout>
+                            <Label Text="New Device Login Alerts" FontSize="16"/>
+                            <Label Text="Get notified when your account is accessed from a new device" 
+                                   FontSize="12" TextColor="#666666" LineBreakMode="WordWrap" Margin="0,4,0,0"/>
+                        </StackLayout>
+                    </StackLayout>
+                </Frame>
+
+                <!-- Log Out of All Devices Button -->
+                <Button Text="Log Out of All Devices" FontSize="16" FontAttributes="Bold"
+                        BackgroundColor="#FF3B30" TextColor="White"
+                        CornerRadius="8" Padding="16" Margin="0,16,0,24"
+                        HorizontalOptions="Fill"/>
+
+            </StackLayout>
+        </ScrollView>
+    </Grid>
 </ContentPage>

@@ -5,5 +5,5 @@ public partial class Secuirty : ContentPage
 	public Secuirty()
 	{
 		InitializeComponent();
-	}
+    }
 }
