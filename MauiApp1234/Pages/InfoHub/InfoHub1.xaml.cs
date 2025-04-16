@@ -49,4 +49,19 @@ public partial class InfoHub1 : ContentPage
     {
         Navigation.PushAsync(new LogInPage1());
     }
+
+    private void ChatbotIcon_Tapped(object sender, TappedEventArgs e)
+    {
+
+    }
+
+    private void OnNotificationsIconTapped(object sender, TappedEventArgs e)
+    {
+
+    }
+
+    private void SettingsIcon_Tapped(object sender, TappedEventArgs e)
+    {
+        Navigation.PushAsync(new Settings());
+    }
 }
