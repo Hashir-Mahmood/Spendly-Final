@@ -14,6 +14,8 @@ public partial class InfoHub1 : ContentPage
     {
         public string Title { get; set; }
         public string URL { get; set; }
+
+        public string ImageUrl { get; set; }
     }
 
     public class InfoHubViewModel
@@ -30,6 +32,7 @@ public partial class InfoHub1 : ContentPage
         };
         }
     }
+
 
 
     private void Quiz_Clicked(object sender, EventArgs e)
