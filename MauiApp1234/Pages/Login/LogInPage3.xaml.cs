@@ -6,4 +6,14 @@ public partial class LogInPage3 : ContentPage
 	{
 		InitializeComponent();
 	}
+
+    private void ReturnButton_Clicked(object sender, EventArgs e)
+    {
+        Navigation.PushAsync(new LogInPage2());
+    }
+
+    private void ResetPasswordButton_Clicked(object sender, EventArgs e)
+    {
+        Navigation.PushAsync(new LogInPage2());
+    }
 }
