@@ -14,22 +14,22 @@
     <TabBar>
         
         <Tab  Icon="home_grey.png">
-            <ShellContent Title="Dashboard"
+            <ShellContent 
             ContentTemplate="{DataTemplate local:Dashboard}" Route="dashboardPage" />
         </Tab>
 
         <Tab  Icon="budget_grey.png">
-            <ShellContent Title="Budgeting"
+            <ShellContent 
             ContentTemplate="{DataTemplate local:Budgeting}" Route="budgetingPage" />
         </Tab>
         
         <Tab Icon="investment_grey.png">
-            <ShellContent Title="Investments"
+            <ShellContent 
             ContentTemplate="{DataTemplate local:Investing}" Route="investmentsPage" />
         </Tab>
         
         <Tab  Icon="infohub_grey.png">
-            <ShellContent Title="InfoHub"
+            <ShellContent 
             ContentTemplate="{DataTemplate local:InfoHub1}" Route="infoHubPage" />
         </Tab>
         
