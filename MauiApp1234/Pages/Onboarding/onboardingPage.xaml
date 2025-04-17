@@ -9,50 +9,54 @@
 
         <!-- Carousel View for Onboarding Pages -->
         <CarouselView x:Name="onboardingCarousel" 
-                     Grid.Row="0" 
-                     HorizontalOptions="Fill"
-                     VerticalOptions="Fill"
-                     CurrentItemChanged="OnCarouselItemChanged">
-            <CarouselView.ItemsSource>
-                <x:Array Type="{x:Type x:String}">
-                    <x:String>Page1</x:String>
-                    <x:String>Page2</x:String>
-                    <x:String>Page3</x:String>
-                </x:Array>
-            </CarouselView.ItemsSource>
+                      Grid.Row="0" 
+                      HorizontalOptions="Fill"
+                      VerticalOptions="Fill"
+                      CurrentItemChanged="OnCarouselItemChanged">
+
             <CarouselView.ItemTemplate>
                 <DataTemplate>
                     <VerticalStackLayout VerticalOptions="Center" Spacing="24" Padding="20">
-                        
-                        
 
-                        <!-- Image Placeholder - Replace with your actual images -->
+                        <!-- Onboarding Image -->
                         <Image x:Name="OnboardingImage"
                                Source="{Binding ImageSource}"
                                HeightRequest="200"
                                HorizontalOptions="Center"
                                Aspect="AspectFit" />
 
-                        <!-- Content -->
-                        <VerticalStackLayout Spacing="12">
+                        <!-- Title and Description -->
+                        <VerticalStackLayout Spacing="12" HorizontalOptions="Center">
                             <Label Text="{Binding Title}" 
                                    TextColor="#1F2937" 
                                    FontSize="32" 
-                                   FontAttributes="Bold" />
+                                   FontAttributes="Bold" 
+                                   HorizontalTextAlignment="Center"
+                                   HorizontalOptions="Center" />
 
                             <Label Text="{Binding Description}" 
                                    TextColor="#4B5563" 
-                                   FontSize="18" />
+                                   FontSize="18" 
+                                   HorizontalTextAlignment="Center"
+                                   HorizontalOptions="Center" />
 
-                            <!-- Pagination Indicators -->
+                            <!-- Pagination Dots -->
+
                             <HorizontalStackLayout x:Name="IndicatorsLayout"
-                                                  HorizontalOptions="Start" 
-                                                  Spacing="5" 
-                                                  Margin="0,20,0,0">
-                                <BoxView Color="{Binding Page1Color}" WidthRequest="20" HeightRequest="6" CornerRadius="3" />
-                                <BoxView Color="{Binding Page2Color}" WidthRequest="6" HeightRequest="6" CornerRadius="3" />
-                                <BoxView Color="{Binding Page3Color}" WidthRequest="6" HeightRequest="6" CornerRadius="3" />
+                       HorizontalOptions="Center"
+                       Spacing="5"
+                       Margin="0,20,0,0"
+                       BindableLayout.ItemsSource="{Binding IndicatorStates}">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate>
+                                        <BoxView WidthRequest="{Binding Width}"
+                     HeightRequest="6"
+                     Color="{Binding Color}"
+                     CornerRadius="3" />
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
                             </HorizontalStackLayout>
+
                         </VerticalStackLayout>
                     </VerticalStackLayout>
                 </DataTemplate>

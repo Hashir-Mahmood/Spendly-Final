@@ -1,41 +1,33 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Shell
-    Shell.TabBarForegroundColor="#6f61ef"
-    Shell.TabBarUnselectedColor="Gray"
-    Shell.TabBarBackgroundColor="#F1F4F8"
     x:Class="MauiApp1234.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:MauiApp1234"
+    xmlns:pages="clr-namespace:MauiApp1234"
     Shell.FlyoutBehavior="Disabled"
+    Shell.TabBarForegroundColor="#6f61ef"
+    Shell.TabBarUnselectedColor="Gray"
+    Shell.TabBarBackgroundColor="#F1F4F8"
     Title="MauiApp1234">
-    
 
     <TabBar>
-        
-        <Tab  Icon="home_grey.png">
-            <ShellContent 
-            ContentTemplate="{DataTemplate local:Dashboard}" Route="dashboardPage" />
+        <Tab Icon="home_grey.png">
+            <ShellContent ContentTemplate="{DataTemplate local:Dashboard}" Route="dashboardPage" />
         </Tab>
 
-        <Tab  Icon="budget_grey.png">
-            <ShellContent 
-            ContentTemplate="{DataTemplate local:Budgeting}" Route="budgetingPage" />
+        <Tab Icon="budget_grey.png">
+            <ShellContent ContentTemplate="{DataTemplate local:Budgeting}" Route="budgetingPage" />
         </Tab>
-        
+
         <Tab Icon="investment_grey.png">
-            <ShellContent 
-            ContentTemplate="{DataTemplate local:Investing}" Route="investmentsPage" />
+            <ShellContent ContentTemplate="{DataTemplate local:Investing}" Route="investmentsPage" />
         </Tab>
-        
-        <Tab  Icon="infohub_grey.png">
-            <ShellContent 
-            ContentTemplate="{DataTemplate local:InfoHub1}" Route="infoHubPage" />
+
+        <Tab Icon="infohub_grey.png">
+            <ShellContent ContentTemplate="{DataTemplate local:InfoHub1}" Route="infoHubPage" />
         </Tab>
-        
     </TabBar>
 
-
-
-
+ 
 </Shell>
