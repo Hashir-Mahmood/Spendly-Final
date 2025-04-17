@@ -55,6 +55,38 @@ public partial class LogInPage1 : ContentPage
             return;
         }
 
+        // Insert data into SQL database
+        string connString = "server=dbhost.cs.man.ac.uk;user=b66855mm;password=iTIfvSknLwQZHtrLaHMy4uTsM/UuEQvZfTqa0ei81+k;database=b66855mm";
+        using (var conn = new MySqlConnection(connString))
+        {
+            try
+            {
+                conn.Open();
+                string query = "INSERT INTO customer (email, password, name, surname) VALUES (@Email, @Password, @FirstName, @LastName)";
+                using (var cmd = new MySqlCommand(query, conn))
+                {
+                    // Add parameters to prevent SQL injection
+                    cmd.Parameters.AddWithValue("@Email", EmailEntry.Text);
+                    cmd.Parameters.AddWithValue("@Password", PasswordEntry.Text); // Consider hashing the password for security
+                    cmd.Parameters.AddWithValue("@FirstName", FirstNameEntry.Text);
+                    cmd.Parameters.AddWithValue("@LastName", LastNameEntry.Text);
+
+                    // Execute the query
+                    cmd.ExecuteNonQuery();
+                    DisplayAlert("Success", "Account created successfully!", "OK");
+
+                    // Navigate to login page
+                    Navigation.PushAsync(new LogInPage2());
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowError($"Database error: {ex.Message}");
+                return;
+            }
+        }
+
+
         Navigation.PushAsync(new LogInPage2());
     }
 
