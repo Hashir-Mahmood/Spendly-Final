@@ -1,5 +1,5 @@
 namespace MauiApp1234;
-
+using MySqlConnector;
 public partial class QuizPage4 : ContentPage
 {
 	public QuizPage4()

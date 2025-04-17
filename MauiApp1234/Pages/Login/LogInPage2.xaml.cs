@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 
 namespace MauiApp1234;
-
+using MySqlConnector;
 public partial class LogInPage2 : ContentPage
 {
 	public LogInPage2()

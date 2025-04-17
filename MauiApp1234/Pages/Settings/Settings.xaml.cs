@@ -1,7 +1,7 @@
 using MauiApp1234.Pages.Settings;
 
 namespace MauiApp1234;
-
+using MySqlConnector;
 public partial class Settings : ContentPage
 {
 	public Settings()

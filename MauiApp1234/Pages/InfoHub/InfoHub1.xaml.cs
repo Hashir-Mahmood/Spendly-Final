@@ -2,7 +2,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 
 namespace MauiApp1234;
-
+using MySqlConnector;
 public partial class InfoHub1 : ContentPage
 {
     private InfoHubViewModel _viewModel;

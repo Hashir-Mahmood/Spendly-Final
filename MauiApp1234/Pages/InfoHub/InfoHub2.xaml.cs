@@ -1,5 +1,5 @@
 namespace MauiApp1234;
-
+using MySqlConnector;
 public partial class InfoHub2 : ContentPage
 {
 	public InfoHub2()

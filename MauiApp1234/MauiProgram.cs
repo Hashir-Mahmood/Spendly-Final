@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
-
+using MySqlConnector;
 namespace MauiApp1234
 {
     public static class MauiProgram
