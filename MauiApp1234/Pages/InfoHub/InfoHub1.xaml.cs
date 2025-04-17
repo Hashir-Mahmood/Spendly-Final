@@ -224,7 +224,7 @@ public partial class InfoHub1 : ContentPage
                 new Article
                 {
                     Id = "2",
-                    Title = "Understanding investment basics",
+                    Title = "Understanding investments ",
                     Description = "A beginner's guide to investment concepts and strategies",
                     ImageUrl = "article_cover2.png",
                     WebUrl = "https://example.com/articles/investment-basics",
