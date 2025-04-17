@@ -14,41 +14,41 @@ public partial class LogInPage1 : ContentPage
         // Make previous errors invisible 
         ErrorLabel.IsVisible = false;
 
-        // Validar campo de email
+        // Verify email
         if (string.IsNullOrWhiteSpace(EmailEntry.Text))
         {
-            ShowError("No has llenado el campo de Email correctamente");
+            ShowError("You have not filled the e-mail field correctly");
             return;
         }
         else if (!IsValidEmail(EmailEntry.Text))
         {
-            ShowError("Por favor ingresa un email válido");
+            ShowError("Please input a valid e-mail");
             return;
         }
 
-        // Validar campo de contraseña
+        // Verify Password
         if (string.IsNullOrWhiteSpace(PasswordEntry.Text))
         {
-            ShowError("No has llenado el campo de Contraseña correctamente");
+            ShowError("Password is not filled correctly");
             return;
         }
         else if (PasswordEntry.Text.Length < 8)
         {
-            ShowError("La contraseña debe tener al menos 8 caracteres");
+            ShowError("Password must be at least 8 characters");
             return;
         }
 
-        // Validar campo de nombre
+        // Verify Name
         if (string.IsNullOrWhiteSpace(FirstNameEntry.Text))
         {
-            ShowError("No has llenado el campo de Nombre correctamente");
+            ShowError("You have not filled the Name field correctly");
             return;
         }
 
-        // Validar campo de apellido
+        // Verify Last Name
         if (string.IsNullOrWhiteSpace(LastNameEntry.Text))
         {
-            ShowError("No has llenado el campo de Apellido correctamente");
+            ShowError("You have not filled the Last Name field correctly");
             return;
         }
 
@@ -63,14 +63,14 @@ public partial class LogInPage1 : ContentPage
 
     private bool IsValidEmail(string email)
     {
-        // Expresión regular simple para validar formato de email
+        // Regular expression logic to verify email
         var regex = new RegularExpressionAttribute(@"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$");
         return regex.IsValid(email);
     }
 
     private void TogglePasswordButton_Clicked(object sender, EventArgs e)
     {
-        // Cambiar visibilidad de la contraseña
+        // Change Password visibility
         PasswordEntry.IsPassword = !PasswordEntry.IsPassword;
 
         // También podrías cambiar la imagen del botón aquí
