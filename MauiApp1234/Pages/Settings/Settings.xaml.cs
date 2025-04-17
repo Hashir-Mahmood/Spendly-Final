@@ -15,13 +15,8 @@ public partial class Settings : ContentPage
         Navigation.PushAsync(new PasswordResetInstructionsPage());
     }
 
-    private void SecurityExplain_Tapped(object sender, TappedEventArgs e)
-    {
-
-    }
-
     private void CancelSubscriptionsExplain_Tapped(object sender, TappedEventArgs e)
     {
-
+        Navigation.PushAsync(new CancelSubscriptionPage());
     }
 }
