@@ -1,6 +1,7 @@
 using Microsoft.Maui.Controls;
 using System;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 
 namespace MauiApp1234
 {
@@ -8,10 +9,8 @@ namespace MauiApp1234
     {
         private const string ActiveColor = "#1F2937";   // Dark color for selected dot
         private const string InactiveColor = "#E5E7EB"; // Light gray for unselected dots
-
         private int _currentPageIndex = 0;
         private ObservableCollection<OnboardingItem> _onboardingItems;
-
         public ObservableCollection<IndicatorModel> IndicatorStates { get; set; }
 
         public onboardingPage()
@@ -20,10 +19,8 @@ namespace MauiApp1234
             _onboardingItems = new ObservableCollection<OnboardingItem>();
             IndicatorStates = new ObservableCollection<IndicatorModel>();
             BindingContext = this;
-
             SetupOnboardingItems();
             onboardingCarousel.ItemsSource = _onboardingItems;
-
             UpdateIndicators();
         }
 
@@ -71,13 +68,12 @@ namespace MauiApp1234
             {
                 _currentPageIndex = _onboardingItems.IndexOf(item);
                 UpdateIndicators();
-
                 // Change button text depending on page
                 NextButton.Text = _currentPageIndex == _onboardingItems.Count - 1 ? "Get Started" : "Next";
             }
         }
 
-        private void OnNextButtonClicked(object sender, EventArgs e)
+        private async void OnNextButtonClicked(object sender, EventArgs e)
         {
             if (_currentPageIndex < _onboardingItems.Count - 1)
             {
@@ -85,19 +81,41 @@ namespace MauiApp1234
             }
             else
             {
-                NavigateToMainApp();
+                await NavigateToMainAppWithAnimation();
             }
         }
 
-        private void OnSkipButtonClicked(object sender, EventArgs e)
+        private async void OnSkipButtonClicked(object sender, EventArgs e)
         {
-            NavigateToMainApp();
+            await NavigateToMainAppWithAnimation();
         }
 
-        private void NavigateToMainApp()
+        private async Task NavigateToMainAppWithAnimation()
         {
-            // Replace the current page with a NavigationPage containing LogInPage1
-            Application.Current.MainPage = new NavigationPage(new LogInPage1());
+            // Disable buttons during animation
+            NextButton.IsEnabled = false;
+            SkipButton.IsEnabled = false;
+
+            // Create the login page wrapped in navigation
+            var loginPage = new NavigationPage(new LogInPage1());
+
+            // Animate current page fade out
+            await this.FadeTo(0, 250, Easing.CubicInOut);
+
+            // Set the main page (this happens instantly)
+            Application.Current.MainPage = loginPage;
+
+            // Ensure the login page starts invisible by setting opacity at the page level
+            if (loginPage.CurrentPage is LogInPage1 page)
+            {
+                page.Opacity = 0;
+
+                // Wait a tiny bit for the page to render
+                await Task.Delay(50);
+
+                // Fade in the login page
+                await page.FadeTo(1, 350, Easing.CubicInOut);
+            }
         }
     }
 
