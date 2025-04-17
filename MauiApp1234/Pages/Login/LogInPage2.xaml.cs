@@ -4,7 +4,12 @@ namespace MauiApp1234;
 using MySqlConnector;
 public partial class LogInPage2 : ContentPage
 {
-	public LogInPage2()
+    public class SignInDetails
+    {
+        public string Email { get; set; }
+        public string Password { get; set; }
+    }
+    public LogInPage2()
 	{
 		InitializeComponent();
         string connString = "server=dbhost.cs.man.ac.uk;user=b66855mm;password=iTIfvSknLwQZHtrLaHMy4uTsM/UuEQvZfTqa0ei81+k;database=b66855mm";
@@ -46,7 +51,42 @@ public partial class LogInPage2 : ContentPage
             return;
         }
 
-        Navigation.PushAsync(new Budgeting());
+        // Connect to the database and validate credentials
+        string connString = "server=dbhost.cs.man.ac.uk;user=b66855mm;password=iTIfvSknLwQZHtrLaHMy4uTsM/UuEQvZfTqa0ei81+k;database=b66855mm";
+        using (var conn = new MySqlConnection(connString))
+        {
+            try
+            {
+                conn.Open();
+                string query = "SELECT COUNT(*) FROM customer WHERE email = @Email AND password = @Password";
+                using (var cmd = new MySqlCommand(query, conn))
+                {
+                    // Add parameters to prevent SQL injection
+                    cmd.Parameters.AddWithValue("@Email", EmailEntry.Text);
+                    cmd.Parameters.AddWithValue("@Password", PasswordEntry.Text);
+
+                    // Execute query
+                    int count = Convert.ToInt32(cmd.ExecuteScalar());
+
+                    if (count > 0)
+                    {
+                        // Navigate to Budgeting page if credentials are valid
+                        Navigation.PushAsync(new Budgeting());
+                    }
+                    else
+                    {
+                        ShowError("Invalid email or password");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowError($"Database error: {ex.Message}");
+            }
+
+
+            Navigation.PushAsync(new Budgeting());
+        }
     }
 
     private void ShowError(string message)
