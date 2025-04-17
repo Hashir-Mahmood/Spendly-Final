@@ -208,8 +208,8 @@
             <Image Source="spendly_logo.png"
             HorizontalOptions="Center"
             VerticalOptions="Start"
-            HeightRequest="80"
-            WidthRequest="200"
+            HeightRequest="50"
+            WidthRequest="100"
             Margin="0,40,0,0"/>
 
             <Label Text="Spendly" VerticalOptions="StartAndExpand" TextColor="WhiteSmoke" FontSize="35" FontAttributes="Bold" HorizontalOptions="Center"/>

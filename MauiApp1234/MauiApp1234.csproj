@@ -71,10 +71,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiImage Remove="Resources\Images\spendly_logo.png" />
-	</ItemGroup>
-
-	<ItemGroup>
 	  <None Remove="Resources\Images\ai.png" />
 	  <None Remove="Resources\Images\Asian1.png" />
 	  <None Remove="Resources\Images\bell.png" />
@@ -83,7 +79,6 @@
 	  <None Remove="Resources\Images\infohub_grey.png" />
 	  <None Remove="Resources\Images\investment_grey.png" />
 	  <None Remove="Resources\Images\settings.png" />
-	  <None Remove="Resources\Images\spendlylogo.png" />
 	  <None Remove="Resources\Images\spendly_logo.png" />
 	  <None Remove="Resources\Images\track.png" />
 	  <None Remove="Resources\Images\wheelchair.png" />
