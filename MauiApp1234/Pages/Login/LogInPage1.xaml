@@ -33,101 +33,109 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
                     <!-- Title -->
                     <Label Grid.Row="0"
-                    Text="Get Started"
-                    FontSize="32"
-                    FontAttributes="Bold"
-                    Margin="0,0,0,5"/>
-
+                        Text="Get Started"
+                        FontSize="32"
+                        FontAttributes="Bold"
+                        Margin="0,0,0,5"/>
                     <!-- Subtitles -->
                     <Label Grid.Row="1"
-                    Text="Create an account by using the form below."
-                    FontSize="16"
-                    TextColor="#6B7280"
-                    Margin="0,0,0,15"/>
-
+                        Text="Create an account by using the form below."
+                        FontSize="16"
+                        TextColor="#6B7280"
+                        Margin="0,0,0,15"
+                        x:Name="Subtitles"/>
                     <!--  Email field -->
                     <Frame Grid.Row="2"
-                    BackgroundColor="#F3F4F6"
-                    Padding="15,0"
-                    HasShadow="False"
-                    BorderColor="Transparent"
-                    CornerRadius="10"
-                    HeightRequest="55">
+                        BackgroundColor="#F3F4F6"
+                        Padding="15,0"
+                        HasShadow="False"
+                        BorderColor="Transparent"
+                        CornerRadius="10"
+                        HeightRequest="55">
                         <Entry Placeholder="Email"
-                        PlaceholderColor="#6B7280"
-                        BackgroundColor="Transparent"
-                        TextColor="#1F2937"
-                        VerticalOptions="Center"/>
+                            PlaceholderColor="#6B7280"
+                            BackgroundColor="Transparent"
+                            TextColor="#1F2937"
+                            VerticalOptions="Center"
+                            x:Name="EmailEntry"/>
                     </Frame>
-
                     <!-- Password and Icon -->
                     <Frame Grid.Row="3"
-                    BackgroundColor="#F3F4F6"
-                    Padding="15,0"
-                    HasShadow="False"
-                    BorderColor="Transparent"
-                    CornerRadius="10"
-                    HeightRequest="55">
+                        BackgroundColor="#F3F4F6"
+                        Padding="15,0"
+                        HasShadow="False"
+                        BorderColor="Transparent"
+                        CornerRadius="10"
+                        HeightRequest="55">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
-
                             <Entry Grid.Column="0"
-                            Placeholder="Password"
-                            PlaceholderColor="#6B7280"
-                            IsPassword="True"
-                            BackgroundColor="Transparent"
-                            TextColor="#1F2937"
-                            VerticalOptions="Center"/>
-
+                                Placeholder="Password"
+                                PlaceholderColor="#6B7280"
+                                IsPassword="True"
+                                BackgroundColor="Transparent"
+                                TextColor="#1F2937"
+                                VerticalOptions="Center"
+                                x:Name="PasswordEntry"/>
                             <ImageButton Grid.Column="1"
-                                 Source="eye_icon.png"
-                                 BackgroundColor="Transparent"
-                                 WidthRequest="24"
-                                 HeightRequest="24"
-                                 Aspect="AspectFit"
-                                 VerticalOptions="Center"/>
+                                Source="eye_icon.png"
+                                BackgroundColor="Transparent"
+                                WidthRequest="24"
+                                HeightRequest="24"
+                                Aspect="AspectFit"
+                                VerticalOptions="Center"
+                                x:Name="TogglePasswordButton"
+                                Clicked="TogglePasswordButton_Clicked"/>
                         </Grid>
                     </Frame>
-
                     <!-- Name field -->
                     <Frame Grid.Row="4"
-                    BackgroundColor="#F3F4F6"
-                    Padding="15,0"
-                    HasShadow="False"
-                    BorderColor="Transparent"
-                    CornerRadius="10"
-                    HeightRequest="55">
+                        BackgroundColor="#F3F4F6"
+                        Padding="15,0"
+                        HasShadow="False"
+                        BorderColor="Transparent"
+                        CornerRadius="10"
+                        HeightRequest="55">
                         <Entry Placeholder="First Name"
-                        PlaceholderColor="#6B7280"
-                        BackgroundColor="Transparent"
-                        TextColor="#1F2937"
-                        VerticalOptions="Center"/>
+                            PlaceholderColor="#6B7280"
+                            BackgroundColor="Transparent"
+                            TextColor="#1F2937"
+                            VerticalOptions="Center"
+                            x:Name="FirstNameEntry"/>
                     </Frame>
-
                     <!-- Last Name field -->
                     <Frame Grid.Row="5"
-                    BackgroundColor="#F3F4F6"
-                    Padding="15,0"
-                    HasShadow="False"
-                    BorderColor="Transparent"
-                    CornerRadius="10"
-                    HeightRequest="55">
+                        BackgroundColor="#F3F4F6"
+                        Padding="15,0"
+                        HasShadow="False"
+                        BorderColor="Transparent"
+                        CornerRadius="10"
+                        HeightRequest="55">
                         <Entry Placeholder="Last Name"
-                        PlaceholderColor="#6B7280"
-                        BackgroundColor="Transparent"
-                        TextColor="#1F2937"
-                        VerticalOptions="Center"/>
+                            PlaceholderColor="#6B7280"
+                            BackgroundColor="Transparent"
+                            TextColor="#1F2937"
+                            VerticalOptions="Center"
+                            x:Name="LastNameEntry"/>
                     </Frame>
+                    <!-- Error message label -->
+                    <Label Grid.Row="6"
+                        TextColor="#DC2626"
+                        FontSize="14"
+                        IsVisible="false"
+                        x:Name="ErrorLabel"
+                        Margin="5,0,5,5"/>
 
                     <!-- Create Account button -->
-                    <Button Grid.Row="6"
+                    <Button Grid.Row="7"
                      Text="Create Account"
                      FontSize="16"
                      FontAttributes="Bold"
@@ -139,15 +147,34 @@
                      x:Name="CreateAccount"
                      Clicked="CreateAccount_Clicked"/>
 
+                    <!--Link to start your session -->
+                    <StackLayout Grid.Row="8" 
+                          Orientation="Horizontal" 
+                          HorizontalOptions="Center"
+                          Margin="0,20,0,0">
+                        <Label Text="Already have an account? " 
+                        TextColor="#6B7280" 
+                        VerticalOptions="Center"/>
+                        <Label Text="Sign in here" 
+                        TextColor="#7047EC" 
+                        FontAttributes="Bold" 
+                        VerticalOptions="Center"
+                        x:Name="StartSession" >
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="StartSession_Tapped"/>
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </StackLayout>
+
                     <!-- Register with ... -->
-                    <Label Grid.Row="7"
+                    <Label Grid.Row="9"
                     Text="Or sign up with"
                     HorizontalOptions="Center"
                     TextColor="#6B7280"
                     Margin="0,5"/>
 
                     <!-- Google button -->
-                    <Frame Grid.Row="8"
+                    <Frame Grid.Row="10"
                     BorderColor="#E5E7EB"
                     BackgroundColor="White"
                     HasShadow="False"
@@ -161,34 +188,20 @@
                             </Grid.ColumnDefinitions>
 
                             <Image Grid.Column="0"
-                            Source="google_icon.png"
-                            HeightRequest="24"
-                            WidthRequest="24"
-                            HorizontalOptions="Center"
-                            VerticalOptions="Center"/>
+                                Source="google_icon.png"
+                                HeightRequest="24"
+                                WidthRequest="24"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center"/>
 
                             <Label Grid.Column="1"
-                            Text="Continue with Google"
-                            TextColor="Black"
-                            FontSize="16"
-                            VerticalOptions="Center"
-                            HorizontalOptions="Start"/>
+                                Text="Continue with Google"
+                                TextColor="Black"
+                                FontSize="16"
+                                VerticalOptions="Center"
+                                HorizontalOptions="Start"/>
                         </Grid>
                     </Frame>
-
-                    <!--Link to start your session -->
-                    <StackLayout Grid.Row="9" 
-                          Orientation="Horizontal" 
-                          HorizontalOptions="Center"
-                          Margin="0,20,0,0">
-                        <Label Text="Already have an account? " 
-                        TextColor="#6B7280" 
-                        VerticalOptions="Center"/>
-                        <Label Text="Sign in here" 
-                        TextColor="#7047EC" 
-                        FontAttributes="Bold" 
-                        VerticalOptions="Center"/>
-                    </StackLayout>
                 </Grid>
             </Frame>
 
