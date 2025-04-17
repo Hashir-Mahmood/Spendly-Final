@@ -63,7 +63,8 @@
                     <Border StrokeThickness="0" 
                      BackgroundColor="#F5F7FA" 
                      StrokeShape="RoundRectangle 12,12,12,12">
-                        <Entry Placeholder="Email" 
+                        <Entry x:Name="EmailEntry"
+                        Placeholder="Email" 
                         TextColor="#333" 
                         PlaceholderColor="#999" 
                         Margin="15,5" 
@@ -73,7 +74,8 @@
                     <Border StrokeThickness="0" 
                      BackgroundColor="#F5F7FA" 
                      StrokeShape="RoundRectangle 12,12,12,12">
-                        <Entry Placeholder="Customer ID" 
+                        <Entry x:Name="CustomerIdEntry"
+                        Placeholder="Customer ID" 
                         TextColor="#333" 
                         PlaceholderColor="#999" 
                         Margin="15,5" 
@@ -83,7 +85,8 @@
                     <Border StrokeThickness="0" 
                      BackgroundColor="#F5F7FA" 
                      StrokeShape="RoundRectangle 12,12,12,12">
-                        <Entry Placeholder="New Password" 
+                        <Entry x:Name="NewPasswordEntry"
+                        Placeholder="New Password" 
                         IsPassword="True" 
                         TextColor="#333" 
                         PlaceholderColor="#999" 
