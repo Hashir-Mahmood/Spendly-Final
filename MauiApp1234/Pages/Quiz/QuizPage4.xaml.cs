@@ -5,7 +5,10 @@ public partial class QuizPage4 : ContentPage
 	public QuizPage4()
 	{
 		InitializeComponent();
-	}
+        string connString = "server=dbhost.cs.man.ac.uk;user=b66855mm;password=iTIfvSknLwQZHtrLaHMy4uTsM/UuEQvZfTqa0ei81+k;database=b66855mm";
+        MySqlConnection conn = new MySqlConnection(connString);
+        conn.Open();
+    }
 
     private void Button_Clicked(object sender, EventArgs e)
     {

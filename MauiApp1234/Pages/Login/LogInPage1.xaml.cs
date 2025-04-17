@@ -7,7 +7,10 @@ public partial class LogInPage1 : ContentPage
 	public LogInPage1()
 	{
 		InitializeComponent();
-	}
+        string connString = "server=dbhost.cs.man.ac.uk;user=b66855mm;password=iTIfvSknLwQZHtrLaHMy4uTsM/UuEQvZfTqa0ei81+k;database=b66855mm";
+        MySqlConnection conn = new MySqlConnection(connString);
+        conn.Open();
+    }
 
     private void CreateAccount_Clicked(object sender, EventArgs e)
     {

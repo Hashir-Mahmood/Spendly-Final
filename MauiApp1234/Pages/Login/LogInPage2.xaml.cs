@@ -7,7 +7,10 @@ public partial class LogInPage2 : ContentPage
 	public LogInPage2()
 	{
 		InitializeComponent();
-	}
+        string connString = "server=dbhost.cs.man.ac.uk;user=b66855mm;password=iTIfvSknLwQZHtrLaHMy4uTsM/UuEQvZfTqa0ei81+k;database=b66855mm";
+        MySqlConnection conn = new MySqlConnection(connString);
+        conn.Open();
+    }
 
     private void ForgotPassword_Clicked(object sender, EventArgs e)
     {
