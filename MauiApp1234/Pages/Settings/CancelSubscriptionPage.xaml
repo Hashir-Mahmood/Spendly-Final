@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiApp1234.Pages.Settings.CancelSubscriptionPage"
+             Title="CancelSubscriptionPage"
+             BackgroundColor="White">
+    
+    <!-- Fondo con gradiente de violeta a naranja como en otras páginas -->
+    <ContentPage.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#8A4FFF" Offset="0.0" />
+            <GradientStop Color="#E88D67" Offset="1.0" />
+        </LinearGradientBrush>
+    </ContentPage.Background>
+
+    <Grid RowDefinitions="Auto,*" Padding="20">
+        <!-- Logo superior -->
+        <StackLayout Grid.Row="0" HorizontalOptions="Center" Margin="0,40,0,0">
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                <Image Source="spendly_icon.png" HeightRequest="30" VerticalOptions="Center" />
+                <Label Text="Spendly" TextColor="White" FontSize="32" FontAttributes="Bold" VerticalOptions="Center" Margin="10,0,0,0" />
+            </StackLayout>
+        </StackLayout>
+
+        <!-- Tarjeta principal -->
+        <Frame Grid.Row="1" 
+               BackgroundColor="White" 
+               CornerRadius="12" 
+               HasShadow="True" 
+               Padding="20" 
+               Margin="0,20,0,40">
+
+            <ScrollView>
+                <VerticalStackLayout Spacing="20">
+                    <!-- Título -->
+                    <Label Text="How to Cancel Subscriptions" 
+                           FontSize="28" 
+                           FontAttributes="Bold" 
+                           TextColor="#333333" 
+                           HorizontalOptions="Center"
+                           Margin="0,10,0,0" />
+
+                    <!-- Introducción -->
+                    <Label Text="Managing your subscriptions is an important part of financial health. Here's how to cancel popular services like Netflix and Spotify." 
+                           FontSize="16" 
+                           TextColor="#666666" 
+                           HorizontalOptions="Center"
+                           HorizontalTextAlignment="Center" />
+
+                    <!-- Netflix -->
+                    <Frame BackgroundColor="#F5F7FA" 
+                           CornerRadius="12" 
+                           HasShadow="False" 
+                           Padding="15">
+                        
+                        <VerticalStackLayout Spacing="15">
+                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="15">
+                                <Image Grid.Column="0" 
+                                       Source="netflix_icon.png" 
+                                       WidthRequest="40" 
+                                       HeightRequest="40" 
+                                       VerticalOptions="Start" />
+                                <Label Grid.Column="1" 
+                                       Text="Canceling Netflix" 
+                                       FontSize="20" 
+                                       FontAttributes="Bold" 
+                                       TextColor="#333333"
+                                       VerticalOptions="Center" />
+                            </Grid>
+
+                            <VerticalStackLayout Spacing="10">
+                                <!-- Paso 1 -->
+                                <Grid ColumnDefinitions="Auto,*" RowSpacing="0" ColumnSpacing="15">
+                                    <Frame Grid.Column="0"
+                                           BackgroundColor="#7E57FF"
+                                           CornerRadius="15"
+                                           HeightRequest="30"
+                                           WidthRequest="30"
+                                           Padding="0"
+                                           VerticalOptions="Start">
+                                        <Label Text="1" 
+                                               TextColor="White" 
+                                               FontSize="16" 
+                                               FontAttributes="Bold" 
+                                               HorizontalOptions="Center" 
+                                               VerticalOptions="Center" />
+                                    </Frame>
+                                    <Label Grid.Column="1" 
+                                           Text="Log in to your Netflix account on their website (not the app)" 
+                                           FontSize="16" 
+                                           TextColor="#666666" />
+                                </Grid>
+
+                                <!-- Paso 2 -->
+                                <Grid ColumnDefinitions="Auto,*" RowSpacing="0" ColumnSpacing="15">
+                                    <Frame Grid.Column="0"
+                                           BackgroundColor="#7E57FF"
+                                           CornerRadius="15"
+                                           HeightRequest="30"
+                                           WidthRequest="30"
+                                           Padding="0"
+                                           VerticalOptions="Start">
+                                        <Label Text="2" 
+                                               TextColor="White" 
+                                               FontSize="16" 
+                                               FontAttributes="Bold" 
+                                               HorizontalOptions="Center" 
+                                               VerticalOptions="Center" />
+                                    </Frame>
+                                    <Label Grid.Column="1" 
+                                           Text="Click on your profile icon in the upper right corner" 
+                                           FontSize="16" 
+                                           TextColor="#666666" />
+                                </Grid>
+
+                                <!-- Paso 3 -->
+                                <Grid ColumnDefinitions="Auto,*" RowSpacing="0" ColumnSpacing="15">
+                                    <Frame Grid.Column="0"
+                                           BackgroundColor="#7E57FF"
+                                           CornerRadius="15"
+                                           HeightRequest="30"
+                                           WidthRequest="30"
+                                           Padding="0"
+                                           VerticalOptions="Start">
+                                        <Label Text="3" 
+                                               TextColor="White" 
+                                               FontSize="16" 
+                                               FontAttributes="Bold" 
+                                               HorizontalOptions="Center" 
+                                               VerticalOptions="Center" />
+                                    </Frame>
+                                    <Label Grid.Column="1" 
+                                           Text="Select 'Account' and scroll to 'Membership and Billing'" 
+                                           FontSize="16" 
+                                           TextColor="#666666" />
+                                </Grid>
+
+                                <!-- Paso 4 -->
+                                <Grid ColumnDefinitions="Auto,*" RowSpacing="0" ColumnSpacing="15">
+                                    <Frame Grid.Column="0"
+                                           BackgroundColor="#7E57FF"
+                                           CornerRadius="15"
+                                           HeightRequest="30"
+                                           WidthRequest="30"
+                                           Padding="0"
+                                           VerticalOptions="Start">
+                                        <Label Text="4" 
+                                               TextColor="White" 
+                                               FontSize="16" 
+                                               FontAttributes="Bold" 
+                                               HorizontalOptions="Center" 
+                                               VerticalOptions="Center" />
+                                    </Frame>
+                                    <Label Grid.Column="1" 
+                                           Text="Click 'Cancel Membership' and follow the confirmation steps" 
+                                           FontSize="16" 
+                                           TextColor="#666666" />
+                                </Grid>
+                            </VerticalStackLayout>
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <!-- Spotify -->
+                    <Frame BackgroundColor="#F5F7FA" 
+                           CornerRadius="12" 
+                           HasShadow="False" 
+                           Padding="15">
+                        <VerticalStackLayout Spacing="15">
+                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="15">
+                                <Image Grid.Column="0" 
+                                       Source="spotify_icon.png" 
+                                       WidthRequest="40" 
+                                       HeightRequest="40" 
+                                       VerticalOptions="Start" />
+                                <Label Grid.Column="1" 
+                                       Text="Canceling Spotify" 
+                                       FontSize="20" 
+                                       FontAttributes="Bold" 
+                                       TextColor="#333333"
+                                       VerticalOptions="Center" />
+                            </Grid>
+
+                            <VerticalStackLayout Spacing="10">
+                                <!-- Paso 1 -->
+                                <Grid ColumnDefinitions="Auto,*" RowSpacing="0" ColumnSpacing="15">
+                                    <Frame Grid.Column="0"
+                                           BackgroundColor="#7E57FF"
+                                           CornerRadius="15"
+                                           HeightRequest="30"
+                                           WidthRequest="30"
+                                           Padding="0"
+                                           VerticalOptions="Start">
+                                        <Label Text="1" 
+                                               TextColor="White" 
+                                               FontSize="16" 
+                                               FontAttributes="Bold" 
+                                               HorizontalOptions="Center" 
+                                               VerticalOptions="Center" />
+                                    </Frame>
+                                    <Label Grid.Column="1" 
+                                           Text="Log in to your Spotify account at spotify.com/account" 
+                                           FontSize="16" 
+                                           TextColor="#666666" />
+                                </Grid>
+
+                                <!-- Paso 2 -->
+                                <Grid ColumnDefinitions="Auto,*" RowSpacing="0" ColumnSpacing="15">
+                                    <Frame Grid.Column="0"
+                                           BackgroundColor="#7E57FF"
+                                           CornerRadius="15"
+                                           HeightRequest="30"
+                                           WidthRequest="30"
+                                           Padding="0"
+                                           VerticalOptions="Start">
+                                        <Label Text="2" 
+                                               TextColor="White" 
+                                               FontSize="16" 
+                                               FontAttributes="Bold" 
+                                               HorizontalOptions="Center" 
+                                               VerticalOptions="Center" />
+                                    </Frame>
+                                    <Label Grid.Column="1" 
+                                           Text="Under 'Your Plan', click 'Change Plan'" 
+                                           FontSize="16" 
+                                           TextColor="#666666" />
+                                </Grid>
+
+                                <!-- Paso 3 -->
+                                <Grid ColumnDefinitions="Auto,*" RowSpacing="0" ColumnSpacing="15">
+                                    <Frame Grid.Column="0"
+                                           BackgroundColor="#7E57FF"
+                                           CornerRadius="15"
+                                           HeightRequest="30"
+                                           WidthRequest="30"
+                                           Padding="0"
+                                           VerticalOptions="Start">
+                                        <Label Text="3" 
+                                               TextColor="White" 
+                                               FontSize="16" 
+                                               FontAttributes="Bold" 
+                                               HorizontalOptions="Center" 
+                                               VerticalOptions="Center" />
+                                    </Frame>
+                                    <Label Grid.Column="1" 
+                                           Text="Scroll down to 'Spotify Free' and click 'Cancel Premium'" 
+                                           FontSize="16" 
+                                           TextColor="#666666" />
+                                </Grid>
+
+                                <!-- Paso 4 -->
+                                <Grid ColumnDefinitions="Auto,*" RowSpacing="0" ColumnSpacing="15">
+                                    <Frame Grid.Column="0"
+                                           BackgroundColor="#7E57FF"
+                                           CornerRadius="15"
+                                           HeightRequest="30"
+                                           WidthRequest="30"
+                                           Padding="0"
+                                           VerticalOptions="Start">
+                                        <Label Text="4" 
+                                               TextColor="White" 
+                                               FontSize="16" 
+                                               FontAttributes="Bold" 
+                                               HorizontalOptions="Center" 
+                                               VerticalOptions="Center" />
+                                    </Frame>
+                                    <Label Grid.Column="1" 
+                                           Text="Continue through the confirmation process to complete" 
+                                           FontSize="16" 
+                                           TextColor="#666666" />
+                                </Grid>
+                            </VerticalStackLayout>
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <!-- Tips -->
+                    <Frame BackgroundColor="#F5F7FA" 
+                    CornerRadius="12" 
+                    HasShadow="False" 
+                    Padding="15">
+                        <VerticalStackLayout Spacing="15">
+                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="15">
+                                <Image Grid.Column="0" 
+                   Source="spotify_icon.png" 
+                   WidthRequest="40" 
+                   HeightRequest="40" 
+                   VerticalOptions="Start" />
+                                <Label Grid.Column="1" 
+                   Text="Additional Tips" 
+                   FontSize="20" 
+                   FontAttributes="Bold" 
+                   TextColor="#333333"
+                   VerticalOptions="Center" />
+                            </Grid>
+
+                            <VerticalStackLayout Spacing="10">
+                                <!-- Paso 1 -->
+                                <Grid ColumnDefinitions="Auto,*" RowSpacing="0" ColumnSpacing="15">
+                                    <Frame Grid.Column="0"
+                       BackgroundColor="#7E57FF"
+                       CornerRadius="15"
+                       HeightRequest="30"
+                       WidthRequest="30"
+                       Padding="0"
+                       VerticalOptions="Start">
+                                        <Label Text="1" 
+                           TextColor="White" 
+                           FontSize="16" 
+                           FontAttributes="Bold" 
+                           HorizontalOptions="Center" 
+                           VerticalOptions="Center" />
+                                    </Frame>
+                                    <Label Grid.Column="1" 
+                       Text="Track your billing dates to cancel before renewal" 
+                       FontSize="16" 
+                       TextColor="#666666" />
+                                </Grid>
+
+                                <!-- Paso 2 -->
+                                <Grid ColumnDefinitions="Auto,*" RowSpacing="0" ColumnSpacing="15">
+                                    <Frame Grid.Column="0"
+                       BackgroundColor="#7E57FF"
+                       CornerRadius="15"
+                       HeightRequest="30"
+                       WidthRequest="30"
+                       Padding="0"
+                       VerticalOptions="Start">
+                                        <Label Text="2" 
+                           TextColor="White" 
+                           FontSize="16" 
+                           FontAttributes="Bold" 
+                           HorizontalOptions="Center" 
+                           VerticalOptions="Center" />
+                                    </Frame>
+                                    <Label Grid.Column="1" 
+                       Text="Check for any early cancellation fees" 
+                       FontSize="16" 
+                       TextColor="#666666" />
+                                </Grid>
+
+                                <!-- Paso 3 -->
+                                <Grid ColumnDefinitions="Auto,*" RowSpacing="0" ColumnSpacing="15">
+                                    <Frame Grid.Column="0"
+                       BackgroundColor="#7E57FF"
+                       CornerRadius="15"
+                       HeightRequest="30"
+                       WidthRequest="30"
+                       Padding="0"
+                       VerticalOptions="Start">
+                                        <Label Text="3" 
+                           TextColor="White" 
+                           FontSize="16" 
+                           FontAttributes="Bold" 
+                           HorizontalOptions="Center" 
+                           VerticalOptions="Center" />
+                                    </Frame>
+                                    <Label Grid.Column="1" 
+                       Text="Services may offer discounts when you try to cancel, ignore them" 
+                       FontSize="16" 
+                       TextColor="#666666" />
+                                </Grid>
+                            </VerticalStackLayout>
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <!-- Botón para ir a la página de gestión de suscripciones -->
+                    <Button Text="Manage My Subscriptions" 
+                            BackgroundColor="#7E57FF" 
+                            TextColor="White" 
+                            FontSize="16" 
+                            FontAttributes="Bold"
+                            CornerRadius="24" 
+                            HeightRequest="50" 
+                            Margin="0,10,0,10"
+                            x:Name="ManageSubscriptionsButton"
+                            Clicked="ManageSubscriptionsButton_Clicked" />
+
+                </VerticalStackLayout>
+            </ScrollView>
+        </Frame>
+    </Grid>
+</ContentPage>

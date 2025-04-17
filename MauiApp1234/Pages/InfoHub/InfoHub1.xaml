@@ -137,16 +137,20 @@
                                    Margin="5">
                                     <Grid>
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="Auto" />
                                             <RowDefinition Height="Auto" />
                                         </Grid.RowDefinitions>
 
-                                        <Label Grid.Row="0"
+                                        <StackLayout Grid.Row="0">
+                                        <Label 
                                            Text="{Binding Title}"
                                            VerticalOptions="Center"
                                            FontSize="20"
                                            FontAttributes="Bold" />
-
+                                            <Image Source="article_cover1.png" 
+                                                HeightRequest="100" 
+                                                WidthRequest="200" />
+                                        </StackLayout>
                                         <StackLayout Grid.Row="1" 
                                                  Orientation="Horizontal"
                                                  Spacing="5">

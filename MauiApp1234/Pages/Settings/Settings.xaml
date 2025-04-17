@@ -37,9 +37,20 @@
 
             <!-- FAQ -->
             <Label Text="Frequently Asked Questions" />
-            <Label Text="How do I reset my password?" />
-            <Label Text="Where can I update my profile?" />
-            <Label Text="How do I cancel my subscription?" />
+            <Label Text="How do I reset my password?" x:Name="ResetExplain" 
+                           TextDecorations="Underline"
+                           TextColor="Blue">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="ResetExplain_Tapped"></TapGestureRecognizer>
+                </Label.GestureRecognizers>
+            </Label>
+            <Label Text="How do I cancel conflicting subscriptions?" x:Name="CancelSubscriptionsExplain" 
+                           TextDecorations="Underline"
+                           TextColor="Blue">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="CancelSubscriptionsExplain_Tapped"/>
+                </Label.GestureRecognizers>
+            </Label>
         </VerticalStackLayout>
     </ScrollView>
 

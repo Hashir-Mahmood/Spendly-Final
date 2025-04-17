@@ -1,3 +1,5 @@
+using MauiApp1234.Pages.Settings;
+
 namespace MauiApp1234;
 
 public partial class Settings : ContentPage
@@ -7,4 +9,14 @@ public partial class Settings : ContentPage
 		InitializeComponent();
 
 	}
+
+    private void ResetExplain_Tapped(object sender, TappedEventArgs e)
+    {
+        Navigation.PushAsync(new PasswordResetInstructionsPage());
+    }
+
+    private void CancelSubscriptionsExplain_Tapped(object sender, TappedEventArgs e)
+    {
+        Navigation.PushAsync(new CancelSubscriptionPage());
+    }
 }
