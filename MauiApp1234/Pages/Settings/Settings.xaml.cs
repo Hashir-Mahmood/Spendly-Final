@@ -7,4 +7,19 @@ public partial class Settings : ContentPage
 		InitializeComponent();
 
 	}
+
+    private void ResetExplain_Tapped(object sender, TappedEventArgs e)
+    {
+
+    }
+
+    private void SecurityExplain_Tapped(object sender, TappedEventArgs e)
+    {
+
+    }
+
+    private void CancelSubscriptionsExplain_Tapped(object sender, TappedEventArgs e)
+    {
+
+    }
 }
