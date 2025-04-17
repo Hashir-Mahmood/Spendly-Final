@@ -37,17 +37,23 @@
 
             <!-- FAQ -->
             <Label Text="Frequently Asked Questions" />
-            <Label Text="How do I reset my password?" x:Name="ResetExplain">
+            <Label Text="How do I reset my password?" x:Name="ResetExplain" 
+                           TextDecorations="Underline"
+                           TextColor="Blue">
                 <Label.GestureRecognizers>
                     <TapGestureRecognizer Tapped="ResetExplain_Tapped"></TapGestureRecognizer>
                 </Label.GestureRecognizers>
                 </Label>
-            <Label Text="How do I modify my security settings?" x:Name="SecurityExplain">
+            <Label Text="How do I modify my security settings?" x:Name="SecurityExplain" 
+                           TextDecorations="Underline"
+                           TextColor="Blue">
                 <Label.GestureRecognizers>
                     <TapGestureRecognizer Tapped="SecurityExplain_Tapped"/>
                 </Label.GestureRecognizers>
             </Label>
-            <Label Text="How do I cancel conflicting subscriptions?" x:Name="CancelSubscriptionsExplain">
+            <Label Text="How do I cancel conflicting subscriptions?" x:Name="CancelSubscriptionsExplain" 
+                           TextDecorations="Underline"
+                           TextColor="Blue">
                 <Label.GestureRecognizers>
                     <TapGestureRecognizer Tapped="CancelSubscriptionsExplain_Tapped"/>
                 </Label.GestureRecognizers>
