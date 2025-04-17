@@ -76,6 +76,7 @@ public partial class LogInPage2 : ContentPage
                     else
                     {
                         ShowError("Invalid email or password");
+                        return;
                     }
                 }
             }
