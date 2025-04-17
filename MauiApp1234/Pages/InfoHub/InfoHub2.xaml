@@ -19,6 +19,7 @@
         </Picker>
         <Picker Title="Complexity Level" FontAttributes="Italic" FontSize="Subtitle">
             <Picker.Items>
+                <x:String>Beginner</x:String>
                 <x:String>Easy to Understand</x:String>
                 <x:String>Medium Complexity</x:String>
                 <x:String>Complex</x:String>
