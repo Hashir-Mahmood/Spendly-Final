@@ -2,6 +2,97 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiApp1234.Debt"
-             Title="Debt">
-    
+             BackgroundColor="#F1F4F8">
+    <ScrollView>
+        <StackLayout Padding="20">
+            <Frame BackgroundColor="#FFFFFF" CornerRadius="20" BorderColor="Transparent" Margin="0,0,0,20">
+                <StackLayout>
+                    <Label 
+                        Text="Debt Overview" 
+                        FontSize="20" 
+                        FontAttributes="Bold" 
+                        TextColor="#6200EA"
+                        HorizontalTextAlignment="Center"
+                        Margin="0,0,0,5"
+                    />
+                    <BoxView HeightRequest="200" BackgroundColor="White" CornerRadius="20" Margin="0,0,0,20"/>
+                    <FlexLayout Direction="Row">
+                        <HorizontalStackLayout Margin="0,0,0,5" FlexLayout.Grow="1">
+                            <BoxView WidthRequest="10" HeightRequest="10" BackgroundColor="#F01010" CornerRadius="5" Margin="0,0,5,0"/>
+                            <Label Text="High Piority" FontSize="16" Margin="0,0,5,0"/>
+                        </HorizontalStackLayout>
+                        <Label Text="$12,450" FontSize="16" FontAttributes="Bold"/>
+                    </FlexLayout>
+                    <FlexLayout Direction="Row">
+                        <HorizontalStackLayout Margin="0,0,0,5" FlexLayout.Grow="1">
+                            <BoxView WidthRequest="10" HeightRequest="10" BackgroundColor="Gold" CornerRadius="5" Margin="0,0,5,0"/>
+                            <Label Text="Medium Piority" FontSize="16"/>
+                        </HorizontalStackLayout>
+                        <Label Text="$12,450" FontSize="16" FontAttributes="Bold"/>
+                    </FlexLayout>
+                    <FlexLayout Direction="Row">
+                        <HorizontalStackLayout Margin="0,0,0,5" FlexLayout.Grow="1">
+                            <BoxView WidthRequest="10" HeightRequest="10" BackgroundColor="LimeGreen" CornerRadius="5" Margin="0,0,5,0"/>
+                            <Label Text="Low Piority" FontSize="16"/>
+                        </HorizontalStackLayout>
+                        <Label Text="$12,450" FontSize="16" FontAttributes="Bold"/>
+                    </FlexLayout>
+                </StackLayout>
+            </Frame>
+            <Frame BackgroundColor="#FFFFFF" CornerRadius="20" BorderColor="Transparent" Margin="0,0,0,20">
+                <StackLayout>
+                    <Label 
+                        Text="Loan Status"
+                        FontSize="20" 
+                        FontAttributes="Bold" 
+                        TextColor="#6200EA"
+                        HorizontalTextAlignment="Center"
+                        Margin="0,0,0,5"
+                    />
+                    <BoxView HeightRequest="200" BackgroundColor="White" CornerRadius="20" Margin="0,0,0,20"/>
+                </StackLayout>
+            </Frame>
+            <Frame BackgroundColor="#FFFFFF" CornerRadius="20" BorderColor="Transparent" Margin="0,0,0,20">
+                <StackLayout>
+                    <Label 
+                        Text="Loans"
+                        FontSize="20" 
+                        FontAttributes="Bold" 
+                        TextColor="#6200EA"
+                        HorizontalTextAlignment="Center"
+                        Margin="0,0,0,5"
+                    />
+                    <Frame Margin="0,0,0,5" BackgroundColor="#FFE4E4" BorderColor="Transparent" Padding="10">
+                        <FlexLayout Direction="Row">
+                            <VerticalStackLayout Padding="10,0" FlexLayout.Grow="1">
+                                <Label Text="Car Loan" FontSize="16" FontAttributes="Bold"/>
+                                <Label Text="Due in 5 Days" FontSize="12" TextColor="Red"/>
+                            </VerticalStackLayout>
+                            <Label VerticalTextAlignment="Center" Margin="0,0,8,0" Text="$800" FontSize="16" FontAttributes="Bold" TextColor="Red"/>
+                        </FlexLayout>
+                    </Frame>
+                    <Frame Margin="0,0,0,5" BackgroundColor="#FFFFC0" BorderColor="Transparent" Padding="10">
+                        <FlexLayout Direction="Row">
+                            <VerticalStackLayout Padding="10,0" FlexLayout.Grow="1">
+                                <Label Text="Personal Loan" FontSize="16" FontAttributes="Bold"/>
+                                <Label Text="Due in 15 Days" FontSize="12" TextColor="#DFC700"/>
+                            </VerticalStackLayout>
+                            <Label VerticalTextAlignment="Center" Margin="0,0,8,0" Text="$800" FontSize="16" FontAttributes="Bold" TextColor="#DFC700"/>
+                        </FlexLayout>
+                    </Frame>
+                    <Frame Margin="0,0,0,5" BackgroundColor="#E0FFE0" BorderColor="Transparent" Padding="10">
+                        <FlexLayout Direction="Row">
+                            <VerticalStackLayout Padding="10,0" FlexLayout.Grow="1">
+                                <Label Text="Home Loan" FontSize="16" FontAttributes="Bold"/>
+                                <Label Text="Due in 25 Days" FontSize="12" TextColor="LimeGreen"/>
+                            </VerticalStackLayout>
+                            <Label VerticalTextAlignment="Center" Margin="0,0,8,0" Text="$800" FontSize="16" FontAttributes="Bold" TextColor="LimeGreen"/>
+                        </FlexLayout>
+                    </Frame>
+                </StackLayout>
+            </Frame>
+        </StackLayout>
+    </ScrollView>
 </ContentPage>
+
+
