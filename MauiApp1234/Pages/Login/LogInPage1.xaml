@@ -210,7 +210,7 @@
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                             <Image Grid.Column="0"
-                                   Source="google_icon.png"
+                                   Source="google.png"
                                    HeightRequest="24"
                                    WidthRequest="24"
                                    HorizontalOptions="Center"
