@@ -14,23 +14,35 @@
     </ContentPage.Background>
 
     <ScrollView>
-
         <Grid Padding="20">
-            <!-- Spendly Logo -->
-            <Image Source="spendly_logo.png"
-           HorizontalOptions="Center"
-           VerticalOptions="Start"
-           HeightRequest="80"
-           WidthRequest="200"
-           Margin="0,60,0,0"/>
-            <Label Text="Spendly" VerticalOptions="Start" TextColor="WhiteSmoke" FontSize="35" FontAttributes="Bold" HorizontalOptions="Center"/>
+            <!-- Horizontal Layout for Logo and Text -->
+            <HorizontalStackLayout 
+                HorizontalOptions="Center" 
+                VerticalOptions="Start" 
+                Spacing="10" 
+                Margin="0,60,0,0">
+                <!-- Logo -->
+                <Image 
+                    Source="spendly_logo.png"
+                    HeightRequest="70"
+                    WidthRequest="70" />
+
+                <!-- "Spendly" Text -->
+                <Label 
+                    Text="Spendly" 
+                    VerticalOptions="Center" 
+                    TextColor="WhiteSmoke" 
+                    FontSize="35" 
+                    FontAttributes="Bold" />
+            </HorizontalStackLayout>
 
             <!-- Primary container (White card) -->
-            <Frame CornerRadius="20" 
-           BackgroundColor="White" 
-           Margin="10,150,10,10"
-           HasShadow="True"
-           Padding="20">
+            <Frame 
+                CornerRadius="20"  
+                BackgroundColor="White"  
+                Margin="10,150,10,10"
+                HasShadow="True"
+                Padding="20">
                 <Grid RowSpacing="15">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -46,42 +58,43 @@
 
                     <!-- Title -->
                     <Label Grid.Row="0"
-                   Text="Welcome Back"
-                   FontSize="32"
-                   FontAttributes="Bold"
-                   TextColor="Black"
-                   Margin="0,0,0,5"/>
+                           Text="Welcome Back"
+                           FontSize="32"
+                           FontAttributes="Bold"
+                           TextColor="Black"
+                           Margin="0,0,0,5"/>
 
                     <!-- Subtitle -->
                     <Label Grid.Row="1"
-                   Text="Fill out the information below in order to access your account."
-                   FontSize="16"
-                   TextColor="#6B7280"
-                   Margin="0,0,0,10"/>
+                           Text="Fill out the information below in order to access your account."
+                           FontSize="16"
+                           TextColor="#6B7280"
+                           Margin="0,0,0,10"/>
 
-                    <!--  Email -->
+                    <!-- Email -->
                     <Frame Grid.Row="2"
-                   BackgroundColor="#F3F4F6"
-                   Padding="15,0"
-                   HasShadow="False"
-                   BorderColor="Transparent"
-                   CornerRadius="10"
-                   HeightRequest="55" >
+                           BackgroundColor="#F3F4F6"
+                           Padding="15,0"
+                           HasShadow="False"
+                           BorderColor="Transparent"
+                           CornerRadius="10"
+                           HeightRequest="55">
                         <Entry Placeholder="Email"
-                       PlaceholderColor="#6B7280"
-                       BackgroundColor="Transparent"
-                       TextColor="#1F2937"
-                       VerticalOptions="Center" x:Name="EmailEntry"/>
+                               PlaceholderColor="#6B7280"
+                               BackgroundColor="Transparent"
+                               TextColor="#1F2937"
+                               VerticalOptions="Center" 
+                               x:Name="EmailEntry"/>
                     </Frame>
 
                     <!-- Password and Icon -->
                     <Frame Grid.Row="3"
-                   BackgroundColor="#F3F4F6"
-                   Padding="15,0"
-                   HasShadow="False"
-                   BorderColor="Transparent"
-                   CornerRadius="10"
-                   HeightRequest="55">
+                           BackgroundColor="#F3F4F6"
+                           Padding="15,0"
+                           HasShadow="False"
+                           BorderColor="Transparent"
+                           CornerRadius="10"
+                           HeightRequest="55">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
@@ -89,58 +102,60 @@
                             </Grid.ColumnDefinitions>
 
                             <Entry Grid.Column="0"
-                           Placeholder="Password"
-                           PlaceholderColor="#6B7280"
-                           IsPassword="True"
-                           BackgroundColor="Transparent"
-                           TextColor="#1F2937"
-                           VerticalOptions="Center" x:Name="PasswordEntry"/>
+                                   Placeholder="Password"
+                                   PlaceholderColor="#6B7280"
+                                   IsPassword="True"
+                                   BackgroundColor="Transparent"
+                                   TextColor="#1F2937"
+                                   VerticalOptions="Center" 
+                                   x:Name="PasswordEntry"/>
 
                             <ImageButton Grid.Column="1"
-                                 Source="eye_icon.png"
-                                 BackgroundColor="Transparent"
-                                 WidthRequest="24"
-                                 HeightRequest="24"
-                                 Aspect="AspectFit"
-                                 VerticalOptions="Center"/>
+                                         Source="eye_icon.png"
+                                         BackgroundColor="Transparent"
+                                         WidthRequest="24"
+                                         HeightRequest="24"
+                                         Aspect="AspectFit"
+                                         VerticalOptions="Center"/>
                         </Grid>
                     </Frame>
 
                     <!-- Error message label -->
                     <Label Grid.Row="4"
-                        TextColor="#DC2626"
-                        FontSize="14"
-                        IsVisible="false"
-                        x:Name="ErrorLabel"
-                        Margin="5,0,5,5"/>
+                           TextColor="#DC2626"
+                           FontSize="14"
+                           IsVisible="false"
+                           x:Name="ErrorLabel"
+                           Margin="5,0,5,5"/>
 
                     <!-- Start session -->
                     <Button Grid.Row="5"
-                    Text="Sign In"
-                    FontSize="16"
-                    FontAttributes="Bold"
-                    TextColor="White"
-                    BackgroundColor="#7047EC"
-                    CornerRadius="25"
-                    HeightRequest="50"
-                    Margin="0,5"
-                    x:Name="SignIn" Clicked="SignIn_Clicked"/>
+                            Text="Sign In"
+                            FontSize="16"
+                            FontAttributes="Bold"
+                            TextColor="White"
+                            BackgroundColor="#7047EC"
+                            CornerRadius="25"
+                            HeightRequest="50"
+                            Margin="0,5"
+                            x:Name="SignIn" 
+                            Clicked="SignIn_Clicked"/>
 
                     <!-- Or start your session as... -->
                     <Label Grid.Row="6"
-                   Text="Or sign in with"
-                   HorizontalOptions="Center"
-                   TextColor="#6B7280"
-                   Margin="0,5"/>
+                           Text="Or sign in with"
+                           HorizontalOptions="Center"
+                           TextColor="#6B7280"
+                           Margin="0,5"/>
 
-                    <!--  Google button -->
+                    <!-- Google button -->
                     <Frame Grid.Row="7"
-                   BorderColor="#E5E7EB"
-                   BackgroundColor="White"
-                   HasShadow="False"
-                   CornerRadius="25"
-                   HeightRequest="50"
-                   Padding="0">
+                           BorderColor="#E5E7EB"
+                           BackgroundColor="White"
+                           HasShadow="False"
+                           CornerRadius="25"
+                           HeightRequest="50"
+                           Padding="0">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="50" />
@@ -148,32 +163,32 @@
                             </Grid.ColumnDefinitions>
 
                             <Image Grid.Column="0"
-                           Source="google_icon.png"
-                           HeightRequest="24"
-                           WidthRequest="24"
-                           HorizontalOptions="Center"
-                           VerticalOptions="Center"/>
+                                   Source="google_icon.png"
+                                   HeightRequest="24"
+                                   WidthRequest="24"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"/>
 
                             <Label Grid.Column="1"
-                           Text="Continue with Google"
-                           TextColor="Black"
-                           FontSize="16"
-                           VerticalOptions="Center"
-                           HorizontalOptions="Start"/>
+                                   Text="Continue with Google"
+                                   TextColor="Black"
+                                   FontSize="16"
+                                   VerticalOptions="Center"
+                                   HorizontalOptions="Start"/>
                         </Grid>
                     </Frame>
 
-                    <!-- Additonal navigation button -->
+                    <!-- Additional navigation button -->
                     <StackLayout Grid.Row="8" Spacing="20" Margin="0,15,0,0">
                         <!-- Link to: Create an account -->
                         <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
                             <Label Text="Don't have an account? " 
-                           TextColor="#6B7280" 
-                           VerticalOptions="Center"/>
+                                   TextColor="#6B7280" 
+                                   VerticalOptions="Center"/>
                             <Label Text="Create Account" 
-                           TextColor="#7047EC" 
-                           FontAttributes="Bold" 
-                           VerticalOptions="Center">
+                                   TextColor="#7047EC" 
+                                   FontAttributes="Bold" 
+                                   VerticalOptions="Center">
                                 <Label.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
                                 </Label.GestureRecognizers>
@@ -182,19 +197,16 @@
 
                         <!-- "Forgot my password button" -->
                         <Button Text="Forgot password?"
-                        BackgroundColor="#F3F4F6"
-                        TextColor="#6B7280"
-                        CornerRadius="15"
-                        HeightRequest="40"
-                        FontSize="14"
-                        x:Name="ForgotPassword"
-                        Clicked="ForgotPassword_Clicked"/>
+                                BackgroundColor="#F3F4F6"
+                                TextColor="#6B7280"
+                                CornerRadius="15"
+                                HeightRequest="40"
+                                FontSize="14"
+                                x:Name="ForgotPassword"
+                                Clicked="ForgotPassword_Clicked"/>
                     </StackLayout>
                 </Grid>
             </Frame>
         </Grid>
-
     </ScrollView>
-
-
 </ContentPage>
