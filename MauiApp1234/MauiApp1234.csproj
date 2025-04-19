@@ -58,16 +58,22 @@
 	<ItemGroup>
 	  <AndroidResource Remove="NewFolder1\**" />
 	  <AndroidResource Remove="NewFolder2\**" />
+	  <AndroidResource Remove="Pages\NewFolder\**" />
 	  <Compile Remove="NewFolder1\**" />
 	  <Compile Remove="NewFolder2\**" />
+	  <Compile Remove="Pages\NewFolder\**" />
 	  <EmbeddedResource Remove="NewFolder1\**" />
 	  <EmbeddedResource Remove="NewFolder2\**" />
+	  <EmbeddedResource Remove="Pages\NewFolder\**" />
 	  <MauiCss Remove="NewFolder1\**" />
 	  <MauiCss Remove="NewFolder2\**" />
+	  <MauiCss Remove="Pages\NewFolder\**" />
 	  <MauiXaml Remove="NewFolder1\**" />
 	  <MauiXaml Remove="NewFolder2\**" />
+	  <MauiXaml Remove="Pages\NewFolder\**" />
 	  <None Remove="NewFolder1\**" />
 	  <None Remove="NewFolder2\**" />
+	  <None Remove="Pages\NewFolder\**" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -159,6 +165,10 @@
 	  <MauiXaml Update="Pages\Budgeting\Subscription.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Pages\NewFolder1\" />
 	</ItemGroup>
 
 </Project>
