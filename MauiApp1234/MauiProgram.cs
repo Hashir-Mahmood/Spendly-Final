@@ -9,6 +9,7 @@ namespace MauiApp1234
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .ConfigureSyncfusionCore()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("Outfit-Regular.ttf", "OpenSansRegular");
