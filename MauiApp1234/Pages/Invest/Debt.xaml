@@ -2,6 +2,157 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiApp1234.Debt"
-             Title="Debt">
-    
+             Title="Debt"
+             BackgroundColor="#f5f5f8">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20">
+
+            <!-- Header with Icons -->
+            <Grid Grid.Row="0" Margin="20,10" ColumnDefinitions="Auto,*,Auto,Auto">
+                <!-- Icon on the left -->
+                <Frame Grid.Column="0" CornerRadius="24" Padding="10" HasShadow="False" BackgroundColor="White" HorizontalOptions="CenterAndExpand">
+                    <Image Source="ai.png" HeightRequest="20" WidthRequest="20" x:Name="ChatbotIcon"/>
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="ChatbotIcon_Tapped"/>
+                    </Frame.GestureRecognizers>
+                </Frame>
+
+                <!-- Space in the middle (will automatically expand) -->
+                <Grid Grid.Column="1" />
+
+                <!-- Notification icon on the right -->
+                <Frame Grid.Column="2" CornerRadius="24" Padding="10" HasShadow="False" BackgroundColor="White" >
+                    <Image Source="bell.png" HeightRequest="20" WidthRequest="20" x:Name="NotificationsIcon"/>
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnNotificationsIconTapped"/>
+                    </Frame.GestureRecognizers>
+                </Frame>
+
+                <!-- Settings icon on the right -->
+                <Frame Grid.Column="3" CornerRadius="20" Padding="10" HasShadow="False" BackgroundColor="White" Margin="10,0,0,0">
+                    <Image Source="settings.png" HeightRequest="20" WidthRequest="20" x:Name="SettingsIcon"/>
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="SettingsIcon_Tapped"/>
+                    </Frame.GestureRecognizers>
+                </Frame>
+            </Grid>
+
+            <!-- Debt Header -->
+            <Label Text="Debt Overview" FontSize="24" FontAttributes="Bold" TextColor="#6200EA" Margin="0,20,0,0"/>
+            <Label Text="$37,350.00" FontSize="32" FontAttributes="Bold" TextColor="#6200EA"/>
+            <Label Text="-1.8% this month" FontSize="16" TextColor="Green"/>
+            <Label Text="Debt distribution" FontSize="20" TextColor="#6200EA" Margin="0,40,0,40"/>
+
+            <!-- Debt Chart Frame -->
+            <Frame BackgroundColor="#FFFFFF" CornerRadius="20" Padding="10" BorderColor="Transparent" Margin="0,0,0,20" HeightRequest="250">
+                <VerticalStackLayout>
+                    <Label Text="Debt Distribution" FontAttributes="Bold" />
+                    <BoxView HeightRequest="150" BackgroundColor="White" />
+                    <FlexLayout Direction="Row" Margin="0,10,0,5">
+                        <HorizontalStackLayout Margin="0,0,0,5" FlexLayout.Grow="1">
+                            <BoxView WidthRequest="10" HeightRequest="10" BackgroundColor="#F01010" CornerRadius="5" Margin="0,0,5,0"/>
+                            <Label Text="High Priority" FontSize="16" Margin="0,0,5,0"/>
+                        </HorizontalStackLayout>
+                        <Label Text="$12,450" FontSize="16" FontAttributes="Bold"/>
+                    </FlexLayout>
+                    <FlexLayout Direction="Row">
+                        <HorizontalStackLayout Margin="0,0,0,5" FlexLayout.Grow="1">
+                            <BoxView WidthRequest="10" HeightRequest="10" BackgroundColor="Gold" CornerRadius="5" Margin="0,0,5,0"/>
+                            <Label Text="Medium Priority" FontSize="16"/>
+                        </HorizontalStackLayout>
+                        <Label Text="$12,450" FontSize="16" FontAttributes="Bold"/>
+                    </FlexLayout>
+                    <FlexLayout Direction="Row">
+                        <HorizontalStackLayout Margin="0,0,0,5" FlexLayout.Grow="1">
+                            <BoxView WidthRequest="10" HeightRequest="10" BackgroundColor="LimeGreen" CornerRadius="5" Margin="0,0,5,0"/>
+                            <Label Text="Low Priority" FontSize="16"/>
+                        </HorizontalStackLayout>
+                        <Label Text="$12,450" FontSize="16" FontAttributes="Bold"/>
+                    </FlexLayout>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Loan Status -->
+            <Frame BackgroundColor="#FFFFFF" CornerRadius="20" BorderColor="Transparent" Margin="0,0,0,20">
+                <StackLayout>
+                    <Label Text="Loan Status" FontSize="20" FontAttributes="Bold" TextColor="#6200EA" HorizontalTextAlignment="Center" Margin="0,0,0,5"/>
+                    <Frame Padding="10" BorderColor="Transparent">
+                        <VerticalStackLayout>
+                            <Label Text="Chart (Loan Progress)" FontAttributes="Bold" />
+                            <BoxView HeightRequest="150" BackgroundColor="White" />
+                        </VerticalStackLayout>
+                    </Frame>
+                </StackLayout>
+            </Frame>
+
+            <!-- Loans List -->
+            <Frame BackgroundColor="#FFFFFF" CornerRadius="20" BorderColor="Transparent" Margin="0,0,0,20">
+                <StackLayout>
+                    <Label Text="Active Loans" FontSize="20" FontAttributes="Bold" TextColor="#6200EA" HorizontalTextAlignment="Center" Margin="0,0,0,5"/>
+
+                    <Frame Margin="0,0,0,5" BackgroundColor="#FFE4E4" BorderColor="Transparent" Padding="10">
+                        <FlexLayout Direction="Row">
+                            <HorizontalStackLayout FlexLayout.Grow="1">
+                                <BoxView WidthRequest="40" HeightRequest="40" BackgroundColor="Gray" CornerRadius="20"/>
+                                <VerticalStackLayout Padding="10,0">
+                                    <Label Text="Car Loan" FontSize="16" FontAttributes="Bold"/>
+                                    <Label Text="Due in 5 Days" FontSize="12" TextColor="Red"/>
+                                </VerticalStackLayout>
+                            </HorizontalStackLayout>
+                            <Label VerticalTextAlignment="Center" Margin="0,0,8,0" Text="$800" FontSize="16" FontAttributes="Bold" TextColor="Red"/>
+                        </FlexLayout>
+                    </Frame>
+
+                    <Frame Margin="0,0,0,5" BackgroundColor="#FFFFC0" BorderColor="Transparent" Padding="10">
+                        <FlexLayout Direction="Row">
+                            <HorizontalStackLayout FlexLayout.Grow="1">
+                                <BoxView WidthRequest="40" HeightRequest="40" BackgroundColor="Gray" CornerRadius="20"/>
+                                <VerticalStackLayout Padding="10,0">
+                                    <Label Text="Personal Loan" FontSize="16" FontAttributes="Bold"/>
+                                    <Label Text="Due in 15 Days" FontSize="12" TextColor="#DFC700"/>
+                                </VerticalStackLayout>
+                            </HorizontalStackLayout>
+                            <Label VerticalTextAlignment="Center" Margin="0,0,8,0" Text="$800" FontSize="16" FontAttributes="Bold" TextColor="#DFC700"/>
+                        </FlexLayout>
+                    </Frame>
+
+                    <Frame Margin="0,0,0,5" BackgroundColor="#E0FFE0" BorderColor="Transparent" Padding="10">
+                        <FlexLayout Direction="Row">
+                            <HorizontalStackLayout FlexLayout.Grow="1">
+                                <BoxView WidthRequest="40" HeightRequest="40" BackgroundColor="Gray" CornerRadius="20"/>
+                                <VerticalStackLayout Padding="10,0">
+                                    <Label Text="Home Loan" FontSize="16" FontAttributes="Bold"/>
+                                    <Label Text="Due in 25 Days" FontSize="12" TextColor="LimeGreen"/>
+                                </VerticalStackLayout>
+                            </HorizontalStackLayout>
+                            <Label VerticalTextAlignment="Center" Margin="0,0,8,0" Text="$800" FontSize="16" FontAttributes="Bold" TextColor="LimeGreen"/>
+                        </FlexLayout>
+                    </Frame>
+                </StackLayout>
+            </Frame>
+
+            <!-- Payment Recommendations -->
+            <Frame BackgroundColor="#FFFFFF" CornerRadius="20" BorderColor="Transparent">
+                <StackLayout>
+                    <Label Text="Payment Recommendations" FontSize="20" FontAttributes="Bold" TextColor="#6200EA" HorizontalTextAlignment="Center" Margin="0,0,0,5"/>
+
+                    <VerticalStackLayout>
+                        <Label Text="Make an extra payment on Car Loan to reduce interest." FontSize="16"/>
+                        <HorizontalStackLayout Margin="0,0,0,10">
+                            <Button Text="Pay Now" BackgroundColor="#6200EA" TextColor="White" FontAttributes="Bold" CornerRadius="18" HeightRequest="40" Margin="0,0,10,0"/>
+                            <Button Text="Remind Later" BackgroundColor="#FF0000" TextColor="White" FontAttributes="Bold" CornerRadius="18" HeightRequest="40"/>
+                        </HorizontalStackLayout>
+
+                        <Label Text="Consider refinancing your Home Loan for better rates." FontSize="16"/>
+                        <HorizontalStackLayout Margin="0,0,0,4">
+                            <Button Text="Explore Options" BackgroundColor="#6200EA" TextColor="White" FontAttributes="Bold" CornerRadius="18" HeightRequest="40" Margin="0,0,10,0"/>
+                            <Button Text="Dismiss" BackgroundColor="#FF0000" TextColor="White" FontAttributes="Bold" CornerRadius="18" HeightRequest="40"/>
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </StackLayout>
+            </Frame>
+
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>
