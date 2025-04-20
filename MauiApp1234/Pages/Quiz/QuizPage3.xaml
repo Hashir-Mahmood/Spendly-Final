@@ -29,12 +29,12 @@
 
             <!-- Options with Checkboxes -->
             <StackLayout HorizontalOptions="Center" VerticalOptions="CenterAndExpand">
-                <RadioButton Content="To start Investing"/>
-                <RadioButton Content="Saving for a large purchase (house, car)"/>
-                <RadioButton Content="Build an emergency fund"/>
-                <RadioButton Content="To start a business"/>
-                <RadioButton Content="To pay off debts"/>
-                <RadioButton Content="To Budget Easier"/>
+                <RadioButton Content="To start Investing" GroupName="interest" CheckedChanged="RadioButton_CheckedChanged"/>
+                <RadioButton Content="Saving for a large purchase (house, car)" GroupName="interest" CheckedChanged="RadioButton_CheckedChanged"/>
+                <RadioButton Content="Build an emergency fund" GroupName="interest" CheckedChanged="RadioButton_CheckedChanged"/>
+                <RadioButton Content="To start a business" GroupName="interest" CheckedChanged="RadioButton_CheckedChanged"/>
+                <RadioButton Content="To pay off debts" GroupName="interest" CheckedChanged="RadioButton_CheckedChanged"/>
+                <RadioButton Content="To Budget Easier" GroupName="interest" CheckedChanged="RadioButton_CheckedChanged"/>
             </StackLayout>
 
             <!-- Progress Bar -->

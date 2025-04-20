@@ -35,10 +35,10 @@
 
             <!-- Options (Checkboxes) -->
             <StackLayout>
-                <RadioButton Content="Budgetary Constraints" IsChecked="True"/>
-                <RadioButton Content="Over-Spending/Impulsive Shopping"/>
-                <RadioButton Content="Debt"/>
-                <RadioButton Content="Life Events"/>
+                <RadioButton Content="Budgetary Constraints" GroupName="difficulty" CheckedChanged="RadioButton_CheckedChanged"/>
+                <RadioButton Content="Over-Spending/Impulsive Shopping" GroupName="difficulty" CheckedChanged="RadioButton_CheckedChanged"/>
+                <RadioButton Content="Debt" GroupName="difficulty" CheckedChanged="RadioButton_CheckedChanged"/>
+                <RadioButton Content="Life Events" GroupName="difficulty" CheckedChanged="RadioButton_CheckedChanged"/>
             </StackLayout>
 
             <!-- Progress Bar -->

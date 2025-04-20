@@ -6,7 +6,7 @@
         {
             InitializeComponent();
 
-            MainPage = new onboardingPage();
+            MainPage = new AppShell();
         }
     }
 }

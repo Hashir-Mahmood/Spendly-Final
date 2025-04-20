@@ -28,11 +28,11 @@
 
             <!-- Options -->
             <StackLayout>
-                <RadioButton Content="1" GroupName="FinancialLiteracy" IsChecked="True"/>
-                <RadioButton Content="2" GroupName="FinancialLiteracy"/>
-                <RadioButton Content="3" GroupName="FinancialLiteracy"/>
-                <RadioButton Content="4" GroupName="FinancialLiteracy"/>
-                <RadioButton Content="5" GroupName="FinancialLiteracy"/>
+                <RadioButton Content="1" GroupName="FinancialLiteracy" CheckedChanged="RadioButton_CheckedChanged"/>
+                <RadioButton Content="2" GroupName="FinancialLiteracy" CheckedChanged="RadioButton_CheckedChanged"/>
+                <RadioButton Content="3" GroupName="FinancialLiteracy" CheckedChanged="RadioButton_CheckedChanged"/>
+                <RadioButton Content="4" GroupName="FinancialLiteracy" CheckedChanged="RadioButton_CheckedChanged"/>
+                <RadioButton Content="5" GroupName="FinancialLiteracy" CheckedChanged="RadioButton_CheckedChanged"/>
             </StackLayout>
 
             <!-- Progress Bar -->

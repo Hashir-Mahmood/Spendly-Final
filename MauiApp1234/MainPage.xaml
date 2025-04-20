@@ -35,13 +35,13 @@
 
             <!-- Options -->
             <StackLayout>
-                <RadioButton Content="The Impulsive Spender" GroupName="BudgetType" IsChecked="True"/>
-                <RadioButton Content="The Over-Spender" GroupName="BudgetType"/>
-                <RadioButton Content="The Under Planner" GroupName="BudgetType"/>
-                <RadioButton Content="The Expert Budgeter" GroupName="BudgetType"/>
-                <RadioButton Content="The Debt Snowball Budgeter" GroupName="BudgetType"/>
-                <RadioButton Content="The Savings-Oriented Budgeter" GroupName="BudgetType"/>
-                <RadioButton Content="I'm Unsure" GroupName="BudgetType"/>
+                <RadioButton Content="The Impulsive Spender" GroupName="BudgetType" CheckedChanged="RadioButton_CheckedChanged"/>
+                <RadioButton Content="The Over-Spender" GroupName="BudgetType" CheckedChanged="RadioButton_CheckedChanged"/>
+                <RadioButton Content="The Under Planner" GroupName="BudgetType" CheckedChanged="RadioButton_CheckedChanged"/>
+                <RadioButton Content="The Expert Budgeter" GroupName="BudgetType" CheckedChanged="RadioButton_CheckedChanged"/>
+                <RadioButton Content="The Debt Snowball Budgeter" GroupName="BudgetType" CheckedChanged="RadioButton_CheckedChanged"/>
+                <RadioButton Content="The Savings-Oriented Budgeter" GroupName="BudgetType" CheckedChanged="RadioButton_CheckedChanged"/>
+                <RadioButton Content="I'm Unsure" GroupName="BudgetType" CheckedChanged="RadioButton_CheckedChanged"/>
             </StackLayout>
 
             <!-- Progress Bar -->
