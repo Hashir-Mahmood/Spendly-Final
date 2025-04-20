@@ -2,6 +2,118 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiApp1234.Pages.AI.Ai"
-             Title="Ai">
-    
+             BackgroundColor="#F8F9FC">
+
+    <Grid RowDefinitions="Auto,*,Auto">
+        <!-- Header -->
+        <Grid Grid.Row="0" Padding="20,15" ColumnDefinitions="*,Auto">
+            <Label Text="Ai Chat" 
+                   FontSize="24" 
+                   FontAttributes="Bold" 
+                   VerticalOptions="Center"/>
+
+            <Button Grid.Column="1"
+                    Text="←"
+                    FontSize="20"
+                    BackgroundColor="#E6E1FF"
+                    TextColor="Black"
+                    CornerRadius="10"
+                    WidthRequest="40"
+                    HeightRequest="40"
+                    Command="{Binding BackCommand}"/>
+        </Grid>
+
+        <!-- Chat Area -->
+        <CollectionView Grid.Row="1" 
+                        Margin="10,0"
+                        ItemsSource="{Binding Messages}"
+                        RemainingItemsThreshold="2"
+                        ItemsUpdatingScrollMode="KeepLastItemInView">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Padding="5" ColumnDefinitions="*,*">
+                        <!-- User Message -->
+                        <Frame IsVisible="{Binding IsUser}"
+                               Grid.Column="0"
+                               BackgroundColor="#E6E1FF"
+                               CornerRadius="15"
+                               Padding="15,10"
+                               HasShadow="False"
+                               Margin="0,5,50,5"
+                               HorizontalOptions="FillAndExpand">
+                            <StackLayout Spacing="5">
+                                <Label Text="{Binding Content}" 
+                                       TextColor="Black"/>
+                                <Label Text="Copy response" 
+                                       TextColor="#616161"
+                                       FontSize="12"
+                                       IsVisible="{Binding IsUser}"/>
+                            </StackLayout>
+                        </Frame>
+
+                        <!-- AI Message -->
+                        <Frame IsVisible="{Binding IsNotUser}"
+                               Grid.Column="1"
+                               BackgroundColor="Transparent"
+                               BorderColor="Transparent"
+                               CornerRadius="15"
+                               Padding="15,10"
+                               HasShadow="False"
+                               Margin="50,5,0,5"
+                               HorizontalOptions="FillAndExpand">
+                            <Label Text="{Binding Content}" 
+                                   TextColor="Black"/>
+                        </Frame>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- Input Area -->
+        <Frame Grid.Row="2"
+               Padding="10,5"
+               Margin="10"
+               HasShadow="False"
+               BorderColor="#E5E5E5"
+               BackgroundColor="White"
+               CornerRadius="20">
+            <Grid ColumnDefinitions="*,Auto">
+                <Entry Grid.Column="0"
+                       Placeholder="Type something..."
+                       PlaceholderColor="#6B7280"
+                       TextColor="Black"
+                       BackgroundColor="Transparent"
+                       Text="{Binding CurrentMessage}"
+                       VerticalOptions="Center"/>
+
+                <Button Grid.Column="1"
+                        Text="➤"
+                        FontSize="18"
+                        TextColor="White"
+                        BackgroundColor="#8B80FF"
+                        CornerRadius="15"
+                        WidthRequest="40"
+                        HeightRequest="40"
+                        Command="{Binding SendCommand}"/>
+            </Grid>
+        </Frame>
+
+        <!-- More options button at bottom -->
+        <Frame Grid.Row="2" 
+               VerticalOptions="Start" 
+               HorizontalOptions="Center"
+               Margin="0,-25,0,0"
+               HasShadow="False"
+               BackgroundColor="#8B80FF"
+               CornerRadius="15"
+               Padding="10,5"
+               WidthRequest="50"
+               HeightRequest="30">
+            <StackLayout Orientation="Horizontal" Spacing="2">
+                <BoxView Color="White" CornerRadius="5" WidthRequest="5" HeightRequest="5"/>
+                <BoxView Color="White" CornerRadius="5" WidthRequest="5" HeightRequest="5"/>
+                <BoxView Color="White" CornerRadius="5" WidthRequest="5" HeightRequest="5"/>
+            </StackLayout>
+        </Frame>
+    </Grid>
 </ContentPage>
