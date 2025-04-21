@@ -103,26 +103,17 @@ namespace MauiApp1234
             NextButton.IsEnabled = false;
             SkipButton.IsEnabled = false;
 
-            // Create the login page wrapped in navigation
-            var loginPage = new NavigationPage(new LogInPage1());
+            // Mark onboarding as seen
+            Preferences.Set("HasSeenOnboarding", true);
 
             // Animate current page fade out
             await this.FadeTo(0, 250, Easing.CubicInOut);
 
-            // Set the main page (this happens instantly)
-            Application.Current.MainPage = loginPage;
+            // Navigate to login within Shell
+            await Shell.Current.GoToAsync("///loginPage");
 
-            // Ensure the login page starts invisible by setting opacity at the page level
-            if (loginPage.CurrentPage is LogInPage1 page)
-            {
-                page.Opacity = 0;
-
-                // Wait a tiny bit for the page to render
-                await Task.Delay(50);
-
-                // Fade in the login page
-                await page.FadeTo(1, 350, Easing.CubicInOut);
-            }
+            // You can add animation for the page appearance if needed
+            // This would require handling the appearing event in the login page itself
         }
     }
 
