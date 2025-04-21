@@ -1,5 +1,6 @@
 ﻿using Microsoft.Maui.Controls;
 using MySqlConnector;
+using System.Reflection.Metadata.Ecma335;
 namespace MauiApp1234
 {
     public partial class MainPage : ContentPage
@@ -16,13 +17,24 @@ namespace MauiApp1234
 
         private void Button_Clicked(object sender, EventArgs e)
         {
-           
+            if (Preferences.Default.ContainsKey("customer_id"))
+            {
+                string ni = Preferences.Default.Get("customer_id", "");
+                
+            }
+            else
+            {
+               DisplayAlert("Error", "Please Log In with a valid user before proceeding.", "OK");
+                return;
+            }
 
+            string n = Preferences.Default.Get("customer_id", "0");
+            int id = 1;
 
+            // Ensure a difficulty is selected
             if (string.IsNullOrWhiteSpace(selectedBudgetType))
             {
-                // Show an error message if no radio button was selected
-                DisplayAlert("Error", "Please select a budget type before proceeding.", "OK");
+                DisplayAlert("Error", "Please select a primary Financial Goal before proceeding.", "OK");
                 return;
             }
 
@@ -35,29 +47,44 @@ namespace MauiApp1234
                 {
                     conn.Open();
 
-                    // SQL Insert Query
-                    string query = "INSERT INTO quiz (budgeterType) VALUES (@BudgetType)";
+                    // SQL query to check if a row exists for the current customerId
+                    string query = @"
+                INSERT INTO quiz (customerId, budgeterType) 
+                VALUES (@customerId, @BudgetType)
+                ON DUPLICATE KEY UPDATE 
+                    budgeterType = @BudgetType";
+
                     using (var cmd = new MySqlCommand(query, conn))
                     {
-                        // Add parameter to avoid SQL injection
+                        // Add parameters to prevent SQL injection
+                        cmd.Parameters.AddWithValue("@customerId", id); 
                         cmd.Parameters.AddWithValue("@BudgetType", selectedBudgetType);
 
                         // Execute the query
-                        cmd.ExecuteNonQuery();
+                        int rowsAffected = cmd.ExecuteNonQuery();
+                        Console.WriteLine($"Rows affected: {rowsAffected}");
+
+                        DisplayAlert("Success", "Your selection has been saved successfully!", "OK");
+                        Navigation.PushAsync(new QuizPage2());
                     }
-
-                    // Notify the user
-                    DisplayAlert("Success", "Your selection has been saved successfully!", "OK");
-
-                    // Navigate to the next page
-                    Navigation.PushAsync(new QuizPage2());
                 }
                 catch (Exception ex)
                 {
-                    // Show error message in case of a database error
+                    // Log and display database error
+                    Console.WriteLine($"Database error: {ex.Message}");
                     DisplayAlert("Error", $"Database error: {ex.Message}", "OK");
                 }
             }
+        
+                if (string.IsNullOrWhiteSpace(selectedBudgetType))
+            {
+                // Show an error message if no radio button was selected
+                DisplayAlert("Error", "Please select a budget type before proceeding.", "OK");
+                return;
+            }
+
+          
+            
         }
 
         private void Button1_Clicked(object sender, EventArgs e)

@@ -81,13 +81,17 @@
                     <VerticalStackLayout Spacing="10">
                         <Label Text="Monthly Budget" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center" />
                         <Grid ColumnDefinitions="*,Auto">
-                            <Label Grid.Column="0" Text="Remaining: $1,240" TextColor="#10b981" />
+                            <Label Grid.Column="0" Text="Remaining: £1,240" TextColor="#10b981" />
                             <Label Grid.Column="1" Text="£2,500" TextColor="#6b7280" />
                         </Grid>
-                        <Frame Padding="0" CornerRadius="5" HasShadow="False" HeightRequest="20" BackgroundColor="#f3f4f6">
-                            <BoxView HeightRequest="20" WidthRequest="200" HorizontalOptions="Start" BackgroundColor="#6366f1" />
-                        </Frame>
-                        <Label Text="50%" TextColor="#6366f1" FontAttributes="Bold" HorizontalOptions="Start" />
+                        <Grid HeightRequest="20">
+                            <Frame Padding="0" CornerRadius="5" HasShadow="False" HeightRequest="20" BackgroundColor="#f3f4f6">
+                                <BoxView HeightRequest="20" WidthRequest="200" HorizontalOptions="Start" BackgroundColor="#6366f1" />
+                            </Frame>
+                            <!-- Position the label at the right end of the filled portion of the bar -->
+                            <Label Text="50%" TextColor="#6366f1" FontAttributes="Bold" VerticalOptions="Center" 
+                   HorizontalOptions="Start" Margin="205,0,0,0" />
+                        </Grid>
                     </VerticalStackLayout>
                 </Frame>
 
@@ -102,7 +106,7 @@
                                 <Label Grid.Column="0" Text="🍽️" FontSize="24" TextColor="#3B82F6" VerticalOptions="Center" Margin="0,0,15,0" />
                                 <VerticalStackLayout Grid.Column="1" Spacing="5">
                                     <Label Text="Food &amp; Dining" FontAttributes="Bold" />
-                                    <Label Text="$460 spent" TextColor="#6b7280" FontSize="14" />
+                                    <Label Text="£460 spent" TextColor="#6b7280" FontSize="14" />
                                 </VerticalStackLayout>
                                 <Image Grid.Column="2" Source="chevron_down.png" HeightRequest="20" WidthRequest="20" VerticalOptions="Center" />
                             </Grid>
@@ -114,7 +118,7 @@
                                 <Label Grid.Column="0" Text="🚗" FontSize="24" TextColor="#10B981" VerticalOptions="Center" Margin="0,0,15,0" />
                                 <VerticalStackLayout Grid.Column="1" Spacing="5">
                                     <Label Text="Transportation" FontAttributes="Bold" />
-                                    <Label Text="$280 spent" TextColor="#6b7280" FontSize="14" />
+                                    <Label Text="£280 spent" TextColor="#6b7280" FontSize="14" />
                                 </VerticalStackLayout>
                                 <Image Grid.Column="2" Source="chevron_down.png" HeightRequest="20" WidthRequest="20" VerticalOptions="Center" />
                             </Grid>
@@ -126,7 +130,7 @@
                                 <Label Grid.Column="0" Text="🛒" FontSize="24" TextColor="#F59E0B" VerticalOptions="Center" Margin="0,0,15,0" />
                                 <VerticalStackLayout Grid.Column="1" Spacing="5">
                                     <Label Text="Shopping" FontAttributes="Bold" />
-                                    <Label Text="$520 spent" TextColor="#6b7280" FontSize="14" />
+                                    <Label Text="£520 spent" TextColor="#6b7280" FontSize="14" />
                                 </VerticalStackLayout>
                                 <Image Grid.Column="2" Source="chevron_down.png" HeightRequest="20" WidthRequest="20" VerticalOptions="Center" />
                             </Grid>
