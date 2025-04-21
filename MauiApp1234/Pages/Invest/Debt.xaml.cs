@@ -19,12 +19,12 @@ namespace MauiApp1234
         {
             DebtChartData = new ObservableCollection<DebtChartDataModel>
             {
-                new DebtChartDataModel { Month = "Nov", Value = 3000 },
-                new DebtChartDataModel { Month = "Dec", Value = 1000 },
-                new DebtChartDataModel { Month = "Jan", Value = 5430 },
-                new DebtChartDataModel { Month = "Feb", Value = 4329 },
-                new DebtChartDataModel { Month = "Mar", Value = 6800 },
-                new DebtChartDataModel { Month = "Apr", Value = 6400 }
+                new DebtChartDataModel { Month = "Nov", Value = 6000 },
+                new DebtChartDataModel { Month = "Dec", Value = 10000 },
+                new DebtChartDataModel { Month = "Jan", Value = 5000 },
+                new DebtChartDataModel { Month = "Feb", Value = 3000 },
+                new DebtChartDataModel { Month = "Mar", Value = 12000 },
+                new DebtChartDataModel { Month = "Apr", Value = 13000 }
             };
         }
 

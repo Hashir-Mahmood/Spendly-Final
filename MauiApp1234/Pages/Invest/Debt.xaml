@@ -35,7 +35,7 @@
 
             <!-- Debt Header -->
             <Label Text="Debt Overview" FontSize="24" FontAttributes="Bold" TextColor="#6200EA" Margin="0,20,0,0"/>
-            <Label Text="£18,750.00" FontSize="32" FontAttributes="Bold" TextColor="#6200EA"/>
+            <Label Text="£130000" FontSize="32" FontAttributes="Bold" TextColor="#6200EA"/>
             <Label Text="-1.8% this month" FontSize="16" TextColor="Green"/>
             <Label Text="Debt distribution" FontSize="20" TextColor="#6200EA" Margin="0,40,0,10"/>
 
