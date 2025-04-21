@@ -1,4 +1,6 @@
 namespace MauiApp1234;
+
+using MauiApp1234.Pages.Dashboard;
 using MySqlConnector;
 public partial class Dashboard : ContentPage
 {
@@ -23,5 +25,10 @@ public partial class Dashboard : ContentPage
     private void SettingsIcon_Tapped(object sender, TappedEventArgs e)
     {
         Navigation.PushAsync(new Settings());
+    }
+
+    private void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
+    {
+        Navigation.PushAsync(new Diagnostics());
     }
 }
