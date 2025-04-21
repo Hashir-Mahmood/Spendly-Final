@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using MySqlConnector;
 
+
 namespace MauiApp1234
 {
     public partial class LogInPage2 : ContentPage
@@ -63,21 +64,24 @@ namespace MauiApp1234
                 {
                     conn.Open();
 
-                    // SQL query to validate credentials against all records
-                    string query = "SELECT COUNT(*) FROM customer WHERE LOWER(email) = LOWER(@Email) AND password = @Password";
+                    // SQL query to validate credentials and fetch customerId
+                    string query = "SELECT customer_id FROM customer WHERE LOWER(email) = LOWER(@Email) AND password = @Password";
                     using (var cmd = new MySqlCommand(query, conn))
                     {
                         // Add parameters to prevent SQL injection
                         cmd.Parameters.AddWithValue("@Email", EmailEntry.Text.Trim());
                         cmd.Parameters.AddWithValue("@Password", PasswordEntry.Text.Trim());
 
-                        // Execute query
-                        int count = Convert.ToInt32(cmd.ExecuteScalar());
-                        Console.WriteLine($"Query result count: {count}"); // Debugging log
-
-                        if (count > 0)
+                        // Execute query and fetch customerId
+                        var customer_id = cmd.ExecuteScalar();
+                        if (customer_id != null)
                         {
-                            // Navigate to Budgeting page if credentials are valid
+                            // Save customerId in app memory using Preferences
+                            Preferences.Set("customer_id", customer_id.ToString());
+
+                            Console.WriteLine($"Logged in user ID: {customer_id}"); // Debugging log
+
+                            // Navigate to Budgeting page
                             Navigation.PushAsync(new Budgeting());
                         }
                         else

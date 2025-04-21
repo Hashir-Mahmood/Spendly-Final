@@ -4,7 +4,7 @@
              x:Class="MauiApp1234.InfoHub2"
              Title="InfoHub2">
 
-    <StackLayout Padding="40,40,40,60" BackgroundColor="#f1f4f8">
+    <StackLayout Padding="40,40,40,60" BackgroundColor="#f4f6f9">
         <Label Text="Modify Preferences"
            FontSize="32"
            HorizontalOptions="Center"

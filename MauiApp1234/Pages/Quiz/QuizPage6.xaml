@@ -5,7 +5,7 @@
              Title="QuizPage6"
              Shell.NavBarIsVisible="False">
 
-    <ScrollView BackgroundColor="#f1f4f8">
+    <ScrollView BackgroundColor="#f4f6f9">
         <StackLayout Padding="40">
             <!-- Header with Icons -->
             <HorizontalStackLayout HorizontalOptions="FillAndExpand" Spacing="8">
