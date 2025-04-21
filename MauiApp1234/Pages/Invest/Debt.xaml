@@ -53,9 +53,8 @@
             <!-- Chart -->
             <Frame BackgroundColor="#FFFFFF" CornerRadius="20" Padding="10" BorderColor="Transparent" Margin="0,0,0,20" HeightRequest="280">
                 <syncfusion:SfCartesianChart x:Name="DebtOverviewChart">
-                    <syncfusion:SfCartesianChart.Title>
-                        <syncfusion:ChartTitle Text="Portfolio Performance (Last 6 Months)" FontAttributes="Bold" TextColor="#333333" FontSize="16"/>
-                    </syncfusion:SfCartesianChart.Title>
+                    <syncfusion:SfCartesianChart.Title Text="Portfolio Performance (Last 6 Months)" FontAttributes="Bold" TextColor="#333333" FontSize="16"/>
+                    
 
                     <syncfusion:SfCartesianChart.XAxes>
                         <syncfusion:CategoryAxis>
