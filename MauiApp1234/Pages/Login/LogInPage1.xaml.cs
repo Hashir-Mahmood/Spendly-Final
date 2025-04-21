@@ -66,10 +66,10 @@ public partial class LogInPage1 : ContentPage
                 using (var cmd = new MySqlCommand(query, conn))
                 {
                     // Add parameters to prevent SQL injection
-                    cmd.Parameters.AddWithValue("@Email", EmailEntry.Text);
-                    cmd.Parameters.AddWithValue("@Password", PasswordEntry.Text); // Consider hashing the password for security
-                    cmd.Parameters.AddWithValue("@FirstName", FirstNameEntry.Text);
-                    cmd.Parameters.AddWithValue("@LastName", LastNameEntry.Text);
+                    cmd.Parameters.AddWithValue("@Email", EmailEntry.Text.Trim());
+                    cmd.Parameters.AddWithValue("@Password", PasswordEntry.Text.Trim()); // Consider hashing the password for security
+                    cmd.Parameters.AddWithValue("@FirstName", FirstNameEntry.Text.Trim());
+                    cmd.Parameters.AddWithValue("@LastName", LastNameEntry.Text.Trim());
 
                     // Execute the query
                     cmd.ExecuteNonQuery();
