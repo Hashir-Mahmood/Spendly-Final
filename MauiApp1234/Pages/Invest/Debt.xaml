@@ -14,7 +14,7 @@
                 <Frame Grid.Column="0" CornerRadius="24" Padding="10" HasShadow="False" BackgroundColor="White" HorizontalOptions="CenterAndExpand">
                     <Image Source="ai.png" HeightRequest="20" WidthRequest="20" x:Name="ChatbotIcon"/>
                     <Frame.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="ChatbotIcon_Tapped"/>
+                        <TapGestureRecognizer />
                     </Frame.GestureRecognizers>
                 </Frame>
 
@@ -25,7 +25,7 @@
                 <Frame Grid.Column="2" CornerRadius="24" Padding="10" HasShadow="False" BackgroundColor="White" >
                     <Image Source="bell.png" HeightRequest="20" WidthRequest="20" x:Name="NotificationsIcon"/>
                     <Frame.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnNotificationsIconTapped"/>
+                        <TapGestureRecognizer />
                     </Frame.GestureRecognizers>
                 </Frame>
 
@@ -33,7 +33,7 @@
                 <Frame Grid.Column="3" CornerRadius="20" Padding="10" HasShadow="False" BackgroundColor="White" Margin="10,0,0,0">
                     <Image Source="settings.png" HeightRequest="20" WidthRequest="20" x:Name="SettingsIcon"/>
                     <Frame.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="SettingsIcon_Tapped"/>
+                        <TapGestureRecognizer />
                     </Frame.GestureRecognizers>
                 </Frame>
             </Grid>

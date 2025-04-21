@@ -23,6 +23,13 @@ namespace MauiApp1234
             onboardingCarousel.ItemsSource = _onboardingItems;
             UpdateIndicators();
         }
+        private async void OnGetStartedClicked(object sender, EventArgs e)
+        {
+            Preferences.Set("HasSeenOnboarding", true);
+
+            // Navigate to dashboard tab (or any tab)
+            await Shell.Current.GoToAsync("//dashboardPage");
+        }
 
         private void SetupOnboardingItems()
         {

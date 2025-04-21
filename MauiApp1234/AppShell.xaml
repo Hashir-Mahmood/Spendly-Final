@@ -11,6 +11,8 @@
     Shell.TabBarBackgroundColor="#F1F4F8"
     Title="MauiApp1234">
 
+    <ShellContent Route="onboarding" ContentTemplate="{DataTemplate local:onboardingPage}" />
+
     <TabBar>
         <Tab Icon="home_grey.png">
             <ShellContent ContentTemplate="{DataTemplate local:Dashboard}" Route="dashboardPage" />
