@@ -3,10 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiApp1234.Dashboard"
              BackgroundColor="#f4f6f9"
-             xmlns:sfRadialGauge="clr-namespace:Syncfusion.Maui.Gauges;assembly=Syncfusion.Maui.Gauges"
->
-
- 
+             xmlns:gauge="clr-namespace:Syncfusion.Maui.Gauges;assembly=Syncfusion.Maui.Gauges">
 
     <ScrollView>
         <StackLayout Padding="20" Spacing="20">
@@ -49,11 +46,14 @@
                 <StackLayout>
                     <Label Text="Total Balance:" FontAttributes="Bold" HorizontalTextAlignment="Center" FontSize="24"/>
                     <Label Text="£2000" FontSize="30" FontAttributes="Bold" HorizontalTextAlignment="Center" Margin="0,10,0,10"/>
-                    <Label Text="see financial diagnostics >>" TextColor="Purple" HorizontalTextAlignment="Center"/>
+                    <Label Text="see financial diagnostics >>" TextColor="Purple" HorizontalTextAlignment="Center">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"></TapGestureRecognizer>
+                        </Label.GestureRecognizers>
+                    </Label>
+                    
                 </StackLayout>
             </Frame>
-
-
 
             <!-- Financial Health Meter -->
             <Frame CornerRadius="10" Padding="15" BackgroundColor="White">
@@ -61,31 +61,36 @@
                     <Label Text="Financial Health Meter" FontAttributes="Bold" FontSize="22" HorizontalOptions="Center"/>
                     <Label Text="Are you on track to meet your goals this week?" HorizontalTextAlignment="Center" Margin="0,10,0,10"/>
 
-                    <!-- Syncfusion Radial Gauge -->
-                    <sfRadialGauge:SfRadialGauge HeightRequest="200" WidthRequest="200">
-                        <sfRadialGauge:SfRadialGauge.Axes>
-                            <sfRadialGauge:RadialAxis Minimum="0" Maximum="100"
+                    <!-- Syncfusion Radial Gauge (Fixed) -->
+                    <gauge:SfRadialGauge HeightRequest="200">
+                        <gauge:SfRadialGauge.Axes>
+                            <gauge:RadialAxis Minimum="0" Maximum="100"
                                           StartAngle="180" EndAngle="0"
                                           ShowTicks="False" ShowLabels="False"
-                                          RadiusFactor="0.8" CanScaleToFit="True">
-                                <sfRadialGauge:RadialAxis.Ranges>
-                                    <sfRadialGauge:GaugeRange StartValue="0" EndValue="50" Color="Red" />
-                                    <sfRadialGauge:GaugeRange StartValue="50" EndValue="75" Color="Yellow" />
-                                    <sfRadialGauge:GaugeRange StartValue="75" EndValue="100" Color="Green" />
-                                </sfRadialGauge:RadialAxis.Ranges>
+                                          RadiusFactor="0.8">
+                                <gauge:RadialAxis.Ranges>
+                                    <gauge:RadialRange StartValue="0" EndValue="50" Fill="Red" />
+                                    <gauge:RadialRange StartValue="50" EndValue="75" Fill="Yellow" />
+                                    <gauge:RadialRange StartValue="75" EndValue="100" Fill="Green" />
+                                </gauge:RadialAxis.Ranges>
 
-                                <sfRadialGauge:RadialAxis.Pointers>
-                                    <sfRadialGauge:NeedlePointer Value="74" KnobRadius="0.1" Thickness="3" LengthFactor="0.8" />
-                                </sfRadialGauge:RadialAxis.Pointers>
-                            </sfRadialGauge:RadialAxis>
-                        </sfRadialGauge:SfRadialGauge.Axes>
-                    </sfRadialGauge:SfRadialGauge>
+                                <gauge:RadialAxis.Pointers>
+                                    <gauge:NeedlePointer Value="74" 
+                                                  KnobRadius="0.1" 
+                                                  NeedleLength="0.8"
+                                                  NeedleStartWidth="3"
+                                                  NeedleEndWidth="3"
+                                                  KnobStroke="DimGray" 
+                                                  />
+                                </gauge:RadialAxis.Pointers>
+                            </gauge:RadialAxis>
+                        </gauge:SfRadialGauge.Axes>
+                    </gauge:SfRadialGauge>
 
-                    <Label Text="74% on track" TextColor="Green" FontAttributes="Bold"/>
+                    <Label Text="74% on track" TextColor="Green" FontAttributes="Bold" HorizontalOptions="Center"/>
                     <Label Text="see categorized spending >>>" HorizontalTextAlignment="Center" TextColor="Purple"/>
                 </StackLayout>
             </Frame>
-
 
             <!-- Budget Alerts -->
             <Frame CornerRadius="10" Padding="15" BackgroundColor="White">
@@ -114,14 +119,14 @@
                     <!-- Repeat this block for each category -->
                     <StackLayout Orientation="Horizontal" Spacing="10" Margin="0,0,0,10">
                         <Label Text="Mortgage"/>
-                        <Label Text="$1200 / $1500"/>
+                        <Label Text="$1200 / $1500" HorizontalOptions="EndAndExpand"/>
                     </StackLayout>
                     <ProgressBar Margin="0,0,0,10" Progress="0.8" ProgressColor="Purple"/>
 
                     <!-- Add more category rows here just like above -->
 
                     <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" Spacing="20">
-                        <Button Margin="0,10,0,10" Text="+ Add New Category" TextColor="White" BorderColor="Grey" BorderWidth="1" CornerRadius="20" FontAttributes="Bold"/>
+                        <Button Margin="0,10,0,10" Text="+ Add New Category" TextColor="White" BackgroundColor="Purple" BorderColor="Grey" BorderWidth="1" CornerRadius="20" FontAttributes="Bold"/>
                     </StackLayout>
                 </StackLayout>
             </Frame>
@@ -144,7 +149,7 @@
                         <Label Text="£263 remaining" HorizontalOptions="EndAndExpand"/>
                     </StackLayout>
                     <StackLayout Orientation="Horizontal" Spacing="20">
-                        <Button Text="+ Add New Goal" TextColor="White" BorderColor="Grey" BorderWidth="1" CornerRadius="20" FontAttributes="Bold"/>
+                        <Button Text="+ Add New Goal" TextColor="White" BackgroundColor="Purple" BorderColor="Grey" BorderWidth="1" CornerRadius="20" FontAttributes="Bold"/>
                         <Label Text="view all goals >>>" TextColor="Purple" VerticalOptions="Center"/>
                     </StackLayout>
                 </StackLayout>
