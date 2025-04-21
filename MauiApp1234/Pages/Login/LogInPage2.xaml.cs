@@ -81,6 +81,8 @@ namespace MauiApp1234
 
                             Console.WriteLine($"Logged in user ID: {customer_id}"); // Debugging log
 
+                            DisplayAlert("Your customer ID is:", $"Logged in user ID: {customer_id}", "OK");
+
                             // Navigate to Budgeting page
                             Navigation.PushAsync(new Budgeting());
                         }

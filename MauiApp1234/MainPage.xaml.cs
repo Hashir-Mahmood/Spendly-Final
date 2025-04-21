@@ -16,6 +16,9 @@ namespace MauiApp1234
 
         private void Button_Clicked(object sender, EventArgs e)
         {
+           
+
+
             if (string.IsNullOrWhiteSpace(selectedBudgetType))
             {
                 // Show an error message if no radio button was selected
