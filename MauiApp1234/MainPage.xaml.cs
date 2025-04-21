@@ -17,9 +17,12 @@ namespace MauiApp1234
 
         private void Button_Clicked(object sender, EventArgs e)
         {
+            int id = 0;
+
             if (Preferences.Default.ContainsKey("customer_id"))
             {
-                string ni = Preferences.Default.Get("customer_id", "");
+                string n = Preferences.Default.Get("customer_id", "");
+                id = Convert.ToInt16(n); 
                 
             }
             else
@@ -28,8 +31,11 @@ namespace MauiApp1234
                 return;
             }
 
-            string n = Preferences.Default.Get("customer_id", "0");
-            int id = 1;
+            if(id>=0)
+            {
+                DisplayAlert("Error", "Please Log In with a valid user before proceeding.", "OK");
+                return;
+            }
 
             // Ensure a difficulty is selected
             if (string.IsNullOrWhiteSpace(selectedBudgetType))
@@ -65,7 +71,7 @@ namespace MauiApp1234
                         Console.WriteLine($"Rows affected: {rowsAffected}");
 
                         DisplayAlert("Success", "Your selection has been saved successfully!", "OK");
-                        Navigation.PushAsync(new QuizPage2());
+                        Navigation.PushAsync(new InfoHub1());
                     }
                 }
                 catch (Exception ex)
