@@ -2,6 +2,7 @@
 using MySqlConnector;
 using Syncfusion.Maui.Core.Hosting;
 namespace MauiApp1234
+
 {
     public static class MauiProgram
     {
