@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:syncfusion="clr-namespace:Syncfusion.Maui.Charts;assembly=Syncfusion.Maui.Charts"
+             xmlns:local="clr-namespace:MauiApp1234"
              x:Class="MauiApp1234.Investing"
              Title="Investment"
              BackgroundColor="#f4f6f9">
@@ -40,16 +42,61 @@
 
             <!-- Portfolio Header -->
             <Label Text="Investment Portfolio" FontSize="24" FontAttributes="Bold" TextColor="#6200EA" Margin="0,20,0,0"/>
-            <Label Text="$247,892.50" FontSize="32" FontAttributes="Bold" TextColor="#6200EA"/>
-            <Label Text="+2.4% this month" FontSize="16" TextColor="Green"/>
-            <Label Text="Portfolio performance" FontSize="20" TextColor="#6200EA" Margin="0,40,0,40"/>
+            <Label Text="£6200" FontSize="32" FontAttributes="Bold" TextColor="#6200EA"/>
+            <Label Text="+4.3% this month" FontSize="16" TextColor="Green"/>
+            <Label Text="Portfolio performance" FontSize="20" TextColor="#6200EA" Margin="0,40,0,10"/>
 
-            <!-- Placeholder for Chart -->
-            <Frame BackgroundColor="#FFFFFF" CornerRadius="20" Padding="10" BorderColor="Transparent" Margin="0,0,0,20" HeightRequest="250">
-                <VerticalStackLayout>
-                    <Label Text="Chart (Last 6 Months)" FontAttributes="Bold" />
-                    <BoxView HeightRequest="150" BackgroundColor="White" />
-                </VerticalStackLayout>
+            <!-- Go to Debt Page Button -->
+            <Button Text="Go to Debt Page" 
+                    BackgroundColor="#6200EA" 
+                    TextColor="White" 
+                    FontAttributes="Bold" 
+                    CornerRadius="18" 
+                    HeightRequest="40" 
+                    HorizontalOptions="End"
+                    Margin="0,0,0,10"
+                    Clicked="DebtPageButton_Clicked"/>
+
+            <!-- Syncfusion Chart with Direct Data -->
+            <Frame BackgroundColor="#FFFFFF" CornerRadius="20" Padding="10" BorderColor="Transparent" Margin="0,0,0,20" HeightRequest="280">
+                <syncfusion:SfCartesianChart x:Name="InvestmentChart">
+                    <syncfusion:SfCartesianChart.Title>
+                        <Label Text="Portfolio Performance (Last 6 Months)" FontAttributes="Bold" TextColor="#333333" FontSize="16"/>
+                    </syncfusion:SfCartesianChart.Title>
+
+                    <syncfusion:SfCartesianChart.XAxes>
+                        <syncfusion:CategoryAxis>
+                            <syncfusion:CategoryAxis.Title>
+                                <syncfusion:ChartAxisTitle Text="Month"/>
+                            </syncfusion:CategoryAxis.Title>
+                        </syncfusion:CategoryAxis>
+                    </syncfusion:SfCartesianChart.XAxes>
+
+                    <syncfusion:SfCartesianChart.YAxes>
+                        <syncfusion:NumericalAxis>
+                            <syncfusion:NumericalAxis.Title>
+                                <syncfusion:ChartAxisTitle Text="Value (£)"/>
+                            </syncfusion:NumericalAxis.Title>
+                        </syncfusion:NumericalAxis>
+                    </syncfusion:SfCartesianChart.YAxes>
+
+                    <syncfusion:SfCartesianChart.Series>
+                        <syncfusion:SplineSeries 
+                        ItemsSource="{Binding ChartData}" 
+                        XBindingPath="Month" 
+                            YBindingPath="Value"
+                        
+                         StrokeWidth="3"
+                            EnableTooltip="True" />
+
+                        <syncfusion:SplineAreaSeries 
+                            ItemsSource="{Binding ChartData}" 
+                            XBindingPath="Month" 
+                            YBindingPath="Value"
+                            Fill="#6200EA"
+                            Opacity="0.3" />
+                    </syncfusion:SfCartesianChart.Series>
+                </syncfusion:SfCartesianChart>
             </Frame>
 
             <!-- Top Investments -->
@@ -59,28 +106,32 @@
 
                     <FlexLayout Direction="Row" Margin="0,0,0,5">
                         <HorizontalStackLayout FlexLayout.Grow="1">
-                            <BoxView WidthRequest="40" HeightRequest="40" BackgroundColor="Gray" CornerRadius="20"/>
+                            <Frame CornerRadius="20" Padding="0" HasShadow="False" IsClippedToBounds="True" WidthRequest="40" HeightRequest="40">
+                                <Image Source="applelogo.png" Aspect="AspectFill" HeightRequest="40" WidthRequest="40"/>
+                            </Frame>
                             <VerticalStackLayout Padding="10,0">
                                 <Label Text="Apple Inc." FontSize="16" FontAttributes="Bold"/>
                                 <Label Text="AAPL • Tech" FontSize="12" TextColor="Gray"/>
                             </VerticalStackLayout>
                         </HorizontalStackLayout>
                         <VerticalStackLayout>
-                            <Label Text="$12,450" FontSize="16" FontAttributes="Bold"/>
+                            <Label Text="£3000" FontSize="16" FontAttributes="Bold"/>
                             <Label Text="+5.2%" FontSize="12" TextColor="Green"/>
                         </VerticalStackLayout>
                     </FlexLayout>
 
                     <FlexLayout Direction="Row" Margin="0,0,0,5">
                         <HorizontalStackLayout FlexLayout.Grow="1">
-                            <BoxView WidthRequest="40" HeightRequest="40" BackgroundColor="Gray" CornerRadius="20"/>
+                            <Frame CornerRadius="20" Padding="0" HasShadow="False" IsClippedToBounds="True" WidthRequest="40" HeightRequest="40">
+                                <Image Source="microsoft.png" Aspect="AspectFill" HeightRequest="40" WidthRequest="40"/>
+                            </Frame>
                             <VerticalStackLayout Padding="10,0">
                                 <Label Text="Microsoft" FontSize="16" FontAttributes="Bold"/>
                                 <Label Text="MSFT • Tech" FontSize="12" TextColor="Gray"/>
                             </VerticalStackLayout>
                         </HorizontalStackLayout>
                         <VerticalStackLayout>
-                            <Label Text="$10,280" FontSize="16" FontAttributes="Bold"/>
+                            <Label Text="£2400" FontSize="16" FontAttributes="Bold"/>
                             <Label Text="+3.5%" FontSize="12" TextColor="Green"/>
                         </VerticalStackLayout>
                     </FlexLayout>

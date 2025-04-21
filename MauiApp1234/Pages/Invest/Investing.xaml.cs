@@ -1,27 +1,62 @@
-namespace MauiApp1234;
-using MySqlConnector;
-public partial class Investing : ContentPage
+using Microsoft.Maui.Controls;
+using System.Collections.ObjectModel;
+
+namespace MauiApp1234
 {
-	public Investing()
-	{
-		InitializeComponent();
-        string connString = "server=dbhost.cs.man.ac.uk;user=b66855mm;password=iTIfvSknLwQZHtrLaHMy4uTsM/UuEQvZfTqa0ei81+k;database=b66855mm";
-        MySqlConnection conn = new MySqlConnection(connString);
-        conn.Open();
+    public partial class Investing : ContentPage
+    {
+        public ObservableCollection<ChartDataModel> ChartData { get; set; }
+
+        public Investing()
+        {
+            // Initialize chart data before InitializeComponent
+            InitializeChartData();
+
+            InitializeComponent();
+
+            // Set binding context for the page
+            this.BindingContext = this;
+        }
+
+        private void InitializeChartData()
+        {
+            ChartData = new ObservableCollection<ChartDataModel>
+            {
+                new ChartDataModel { Month = "Nov", Value = 3000 },
+                new ChartDataModel { Month = "Dec", Value = 1000 },
+                new ChartDataModel { Month = "Jan", Value = 5430 },
+                new ChartDataModel { Month = "Feb", Value = 4329 },
+                new ChartDataModel { Month = "Mar", Value = 6800 },
+                new ChartDataModel { Month = "Apr", Value = 6400 }
+            };
+        }
+
+        private void ChatbotIcon_Tapped(object sender, EventArgs e)
+        {
+            // Handle chatbot icon tap
+        }
+
+        private void OnNotificationsIconTapped(object sender, EventArgs e)
+        {
+            // Handle notifications icon tap
+        }
+
+        private void SettingsIcon_Tapped(object sender, EventArgs e)
+        {
+            // Handle settings icon tap
+        }
+
+        private async void DebtPageButton_Clicked(object sender, EventArgs e)
+        {
+            // Navigate to the Debt page
+            await Navigation.PushAsync(new Debt());
+        }
     }
 
-    private void ChatbotIcon_Tapped(object sender, TappedEventArgs e)
+    // Data model for chart points
+    public class ChartDataModel
     {
-
-    }
-
-    private void OnNotificationsIconTapped(object sender, TappedEventArgs e)
-    {
-
-    }
-
-    private void SettingsIcon_Tapped(object sender, TappedEventArgs e)
-    {
-        Navigation.PushAsync(new Settings());
+        public string Month { get; set; }
+        public double Value { get; set; }
     }
 }
