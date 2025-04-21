@@ -46,12 +46,12 @@
                 <StackLayout>
                     <Label Text="Total Balance:" FontAttributes="Bold" HorizontalTextAlignment="Center" FontSize="24"/>
                     <Label Text="£2000" FontSize="30" FontAttributes="Bold" HorizontalTextAlignment="Center" Margin="0,10,0,10"/>
-                    <Label Text="see financial diagnostics >>" TextColor="Purple" HorizontalTextAlignment="Center">
+                    <Label Text="see financial diagnostics >>" TextColor="#6f61ef" HorizontalTextAlignment="Center">
                         <Label.GestureRecognizers>
                             <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"></TapGestureRecognizer>
                         </Label.GestureRecognizers>
                     </Label>
-                    
+
                 </StackLayout>
             </Frame>
 
@@ -61,17 +61,19 @@
                     <Label Text="Financial Health Meter" FontAttributes="Bold" FontSize="22" HorizontalOptions="Center"/>
                     <Label Text="Are you on track to meet your goals this week?" HorizontalTextAlignment="Center" Margin="0,10,0,10"/>
 
-                    <!-- Syncfusion Radial Gauge (Fixed) -->
+                    <!-- Updated Syncfusion Radial Gauge with numbers and proportionate ranges -->
                     <gauge:SfRadialGauge HeightRequest="200">
                         <gauge:SfRadialGauge.Axes>
                             <gauge:RadialAxis Minimum="0" Maximum="100"
                                           StartAngle="180" EndAngle="0"
-                                          ShowTicks="False" ShowLabels="False"
+                                          ShowTicks="True" ShowLabels="True"
+                                          TickOffset="0.05" LabelOffset="0.15"
+                                          MinorTicksPerInterval="3"
                                           RadiusFactor="0.8">
                                 <gauge:RadialAxis.Ranges>
-                                    <gauge:RadialRange StartValue="0" EndValue="50" Fill="Red" />
-                                    <gauge:RadialRange StartValue="50" EndValue="75" Fill="Yellow" />
-                                    <gauge:RadialRange StartValue="75" EndValue="100" Fill="Green" />
+                                    <gauge:RadialRange StartValue="0" EndValue="33" Fill="Red" />
+                                    <gauge:RadialRange StartValue="33" EndValue="67" Fill="Yellow" />
+                                    <gauge:RadialRange StartValue="67" EndValue="100" Fill="Green" />
                                 </gauge:RadialAxis.Ranges>
 
                                 <gauge:RadialAxis.Pointers>
@@ -88,7 +90,7 @@
                     </gauge:SfRadialGauge>
 
                     <Label Text="74% on track" TextColor="Green" FontAttributes="Bold" HorizontalOptions="Center"/>
-                    <Label Text="see categorized spending >>>" HorizontalTextAlignment="Center" TextColor="Purple"/>
+                    <Label Text="see categorized spending >>>" HorizontalTextAlignment="Center" TextColor="#6f61ef"/>
                 </StackLayout>
             </Frame>
 
@@ -121,12 +123,12 @@
                         <Label Text="Mortgage"/>
                         <Label Text="$1200 / $1500" HorizontalOptions="EndAndExpand"/>
                     </StackLayout>
-                    <ProgressBar Margin="0,0,0,10" Progress="0.8" ProgressColor="Purple"/>
+                    <ProgressBar Margin="0,0,0,10" Progress="0.8" ProgressColor="#6f61ef"/>
 
                     <!-- Add more category rows here just like above -->
 
                     <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" Spacing="20">
-                        <Button Margin="0,10,0,10" Text="+ Add New Category" TextColor="White" BackgroundColor="Purple" BorderColor="Grey" BorderWidth="1" CornerRadius="20" FontAttributes="Bold"/>
+                        <Button Margin="0,10,0,10" Text="+ Add New Category" TextColor="White" BackgroundColor="#6f61ef" BorderColor="Grey" BorderWidth="1" CornerRadius="20" FontAttributes="Bold"/>
                     </StackLayout>
                 </StackLayout>
             </Frame>
@@ -141,16 +143,16 @@
                     </StackLayout>
                     <Label Text="Trip to Bali in December"/>
                     <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-                        <ProgressBar Progress="0.43" ProgressColor="Purple" WidthRequest="200" VerticalOptions="Center"/>
+                        <ProgressBar Progress="0.43" ProgressColor="#6f61ef" WidthRequest="200" VerticalOptions="Center"/>
                         <Label Text="3 months left" HorizontalOptions="EndAndExpand"/>
                     </StackLayout>
                     <StackLayout Orientation="Horizontal" Spacing="10">
-                        <Label Text="43% complete" TextColor="Purple"/>
+                        <Label Text="43% complete" TextColor="#6f61ef"/>
                         <Label Text="£263 remaining" HorizontalOptions="EndAndExpand"/>
                     </StackLayout>
                     <StackLayout Orientation="Horizontal" Spacing="20">
-                        <Button Text="+ Add New Goal" TextColor="White" BackgroundColor="Purple" BorderColor="Grey" BorderWidth="1" CornerRadius="20" FontAttributes="Bold"/>
-                        <Label Text="view all goals >>>" TextColor="Purple" VerticalOptions="Center"/>
+                        <Button Text="+ Add New Goal" TextColor="White" BackgroundColor="#6f61ef" BorderColor="Grey" BorderWidth="1" CornerRadius="20" FontAttributes="Bold"/>
+                        <Label Text="view all goals >>>" TextColor="#6f61ef" VerticalOptions="Center"/>
                     </StackLayout>
                 </StackLayout>
             </Frame>
