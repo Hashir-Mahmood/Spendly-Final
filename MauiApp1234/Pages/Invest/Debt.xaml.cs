@@ -1,32 +1,30 @@
 using Microsoft.Maui.Controls;
 using System.Collections.ObjectModel;
 using System;
-
 namespace MauiApp1234
 {
     public partial class Debt : ContentPage
     {
-        public ObservableCollection<ChartDataModel> ChartData { get; set; }
+        public ObservableCollection<DebtChartDataModel> DebtChartData { get; set; }
 
         public Debt()
         {
             InitializeComponent();
             InitializeChartData();
-
             // Set the binding context to this page
             this.BindingContext = this;
         }
 
         private void InitializeChartData()
         {
-            ChartData = new ObservableCollection<ChartDataModel>
+            DebtChartData = new ObservableCollection<DebtChartDataModel>
             {
-                new ChartDataModel { Month = "Nov", Value = 3000 },
-                new ChartDataModel { Month = "Dec", Value = 1000 },
-                new ChartDataModel { Month = "Jan", Value = 5430 },
-                new ChartDataModel { Month = "Feb", Value = 4329 },
-                new ChartDataModel { Month = "Mar", Value = 6800 },
-                new ChartDataModel { Month = "Apr", Value = 6400 }
+                new DebtChartDataModel { Month = "Nov", Value = 3000 },
+                new DebtChartDataModel { Month = "Dec", Value = 1000 },
+                new DebtChartDataModel { Month = "Jan", Value = 5430 },
+                new DebtChartDataModel { Month = "Feb", Value = 4329 },
+                new DebtChartDataModel { Month = "Mar", Value = 6800 },
+                new DebtChartDataModel { Month = "Apr", Value = 6400 }
             };
         }
 
@@ -51,7 +49,7 @@ namespace MauiApp1234
         }
     }
 
-    public class ChartDataModel
+    public class DebtChartDataModel
     {
         public string Month { get; set; }
         public double Value { get; set; }
