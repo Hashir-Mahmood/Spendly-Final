@@ -2,7 +2,9 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiApp1234.Dashboard"
-             BackgroundColor="#f4f6f9">
+             BackgroundColor="#f4f6f9"
+             xmlns:sfRadialGauge="clr-namespace:Syncfusion.Maui.Gauges;assembly=Syncfusion.Maui.Gauges"
+>
 
  
 
@@ -51,45 +53,39 @@
                 </StackLayout>
             </Frame>
 
-            
+
 
             <!-- Financial Health Meter -->
             <Frame CornerRadius="10" Padding="15" BackgroundColor="White">
                 <StackLayout>
                     <Label Text="Financial Health Meter" FontAttributes="Bold" FontSize="22" HorizontalOptions="Center"/>
                     <Label Text="Are you on track to meet your goals this week?" HorizontalTextAlignment="Center" Margin="0,10,0,10"/>
-                    <Grid>
-                        <Path StrokeThickness="15">
-                            <Path.Stroke>
-                                <LinearGradientBrush StartPoint="0,0.5" EndPoint="0.5,1">
-                                    <GradientStop Color="Red" Offset="0.0"/>
-                                    <GradientStop Color="Yellow" Offset="0.5"/>
-                                    <GradientStop Color="Green" Offset="1.0"/>
-                                </LinearGradientBrush>
-                            </Path.Stroke>
-                            <Path.Data>
-                                <PathGeometry>
-                                    <PathFigure StartPoint="50,100" IsClosed="False">
-                                        <ArcSegment Point="250,100"
-                                                    Size="100,100"
-                                                    SweepDirection="Clockwise"
-                                                    IsLargeArc="False"/>
-                                    </PathFigure>
-                                </PathGeometry>
-                            </Path.Data>
-                        </Path>
 
-                        <Ellipse WidthRequest="15" HeightRequest="15"
-                                 Fill="Black"
-                                 VerticalOptions="Start"
-                                 HorizontalOptions="Start"
-                                 TranslationX="50"
-                                 TranslationY="90"/>
-                    </Grid>
+                    <!-- Syncfusion Radial Gauge -->
+                    <sfRadialGauge:SfRadialGauge HeightRequest="200" WidthRequest="200">
+                        <sfRadialGauge:SfRadialGauge.Axes>
+                            <sfRadialGauge:RadialAxis Minimum="0" Maximum="100"
+                                          StartAngle="180" EndAngle="0"
+                                          ShowTicks="False" ShowLabels="False"
+                                          RadiusFactor="0.8" CanScaleToFit="True">
+                                <sfRadialGauge:RadialAxis.Ranges>
+                                    <sfRadialGauge:GaugeRange StartValue="0" EndValue="50" Color="Red" />
+                                    <sfRadialGauge:GaugeRange StartValue="50" EndValue="75" Color="Yellow" />
+                                    <sfRadialGauge:GaugeRange StartValue="75" EndValue="100" Color="Green" />
+                                </sfRadialGauge:RadialAxis.Ranges>
+
+                                <sfRadialGauge:RadialAxis.Pointers>
+                                    <sfRadialGauge:NeedlePointer Value="74" KnobRadius="0.1" Thickness="3" LengthFactor="0.8" />
+                                </sfRadialGauge:RadialAxis.Pointers>
+                            </sfRadialGauge:RadialAxis>
+                        </sfRadialGauge:SfRadialGauge.Axes>
+                    </sfRadialGauge:SfRadialGauge>
+
                     <Label Text="74% on track" TextColor="Green" FontAttributes="Bold"/>
                     <Label Text="see categorized spending >>>" HorizontalTextAlignment="Center" TextColor="Purple"/>
                 </StackLayout>
             </Frame>
+
 
             <!-- Budget Alerts -->
             <Frame CornerRadius="10" Padding="15" BackgroundColor="White">
