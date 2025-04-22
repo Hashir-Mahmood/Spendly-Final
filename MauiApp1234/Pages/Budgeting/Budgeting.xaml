@@ -70,7 +70,7 @@
                         </Grid>
                         <!-- Buttons -->
                         <HorizontalStackLayout Spacing="10">
-                            <Button Text="Subscription" BackgroundColor="#6366f1" TextColor="White" CornerRadius="20" HeightRequest="40" WidthRequest="140" />
+                            <Button Text="Subscription" BackgroundColor="#6366f1" TextColor="White" CornerRadius="20" HeightRequest="40" WidthRequest="140" Clicked="Button_Clicked"  />
                             <Button Text="Freeze Streak" BackgroundColor="#a5f3fc" TextColor="#0891b2" CornerRadius="20" HeightRequest="40" WidthRequest="140" />
                         </HorizontalStackLayout>
                     </VerticalStackLayout>

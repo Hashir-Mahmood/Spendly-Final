@@ -40,4 +40,9 @@ public partial class Budgeting : ContentPage
     {
         Navigation.PushAsync(new Settings());
     }
+
+    private void Button_Clicked(object sender, EventArgs e)
+    {
+        Navigation.PushAsync(new Subscription());
+    }
 }
