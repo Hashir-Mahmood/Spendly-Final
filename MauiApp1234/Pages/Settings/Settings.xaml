@@ -2,56 +2,194 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiApp1234.Settings"
-             Title="Settings">
+             BackgroundColor="#f4f6f9">
+
     <ScrollView>
-        <VerticalStackLayout Padding="16" Spacing="24">
-            <!-- Title -->
-            <Label Text="Settings" FontSize="24" FontAttributes="Bold" />
+        <StackLayout Padding="20" Spacing="20">
+
+            <!-- Header with Back Button and Title -->
+            <Grid Margin="0,10,0,20" ColumnDefinitions="Auto,*,Auto">
+
+                <!-- Title -->
+                <Label Grid.Column="1" Text="Settings" FontSize="28" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"/>
+
+                <!-- Placeholder to balance layout -->
+                <Frame Grid.Column="2" CornerRadius="24" Padding="10" HasShadow="False" BackgroundColor="Transparent" IsVisible="False">
+                    <BoxView WidthRequest="20" HeightRequest="20"/>
+                </Frame>
+            </Grid>
+
+            <!-- Account Settings -->
+            <Frame CornerRadius="10" Padding="15" BackgroundColor="White">
+                <StackLayout>
+                    <Label Text="Account Settings" FontSize="22" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,0,0,15"/>
+
+                    <Button Text="Change Password" TextColor="#6f61ef" BackgroundColor="Transparent" BorderColor="#6f61ef" BorderWidth="1" CornerRadius="25" Padding="0,12" FontAttributes="Bold" Margin="0,5,0,10"/>
+
+                    <Button Text="Update Personal Information" TextColor="#6f61ef" BackgroundColor="Transparent" BorderColor="#6f61ef" BorderWidth="1" CornerRadius="25" Padding="0,12" FontAttributes="Bold" Margin="0,5,0,10"/>
+
+                    <!-- Security Button -->
+                    <Button Text="Security" 
+                            TextColor="#6f61ef" 
+                            BackgroundColor="Transparent" 
+                            BorderColor="#6f61ef" 
+                            BorderWidth="1" 
+                            CornerRadius="25" 
+                            Padding="0,12" 
+                            FontAttributes="Bold" 
+                            Margin="0,5,0,10"
+                            x:Name="SecurityButton">
+                        <Button.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
+                        </Button.GestureRecognizers>
+                    </Button>
+
+                    <Button Text="Logout" TextColor="White" BackgroundColor="#6f61ef" CornerRadius="25" Padding="0,12" FontAttributes="Bold" Margin="0,5,0,0"/>
+                </StackLayout>
+            </Frame>
 
             <!-- Accessibility Settings -->
-            <Label Text="Accessibility Settings" FontSize="18" FontAttributes="Bold" Margin="0,24,0,8" />
+            <Frame CornerRadius="10" Padding="15" BackgroundColor="White">
+                <StackLayout>
+                    <Label Text="Accessibility Settings" FontSize="22" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,0,0,15"/>
 
-            <!-- Screen Contrast -->
-            <Label Text="Screen Contrast" />
-            <Slider Minimum="0" Maximum="1" />
+                    <!-- Screen Contrast -->
+                    <Label Text="Screen Contrast" FontAttributes="Bold" Margin="0,5,0,5"/>
+                    <Grid ColumnDefinitions="Auto,*,Auto" Margin="0,0,0,15">
+                        <Label Grid.Column="0" Text="Low" VerticalOptions="Center"/>
+                        <Slider Grid.Column="1" Minimum="0" Maximum="1" Value="0.5" MinimumTrackColor="#6f61ef" MaximumTrackColor="#e0e0e0"/>
+                        <Label Grid.Column="2" Text="High" VerticalOptions="Center"/>
+                    </Grid>
 
-            <!-- Text Size -->
-            <Label Text="Text Size" />
-            <Slider Minimum="0" Maximum="1" />
+                    <!-- Text Size -->
+                    <Label Text="Text Size" FontAttributes="Bold" Margin="0,5,0,5"/>
+                    <Grid ColumnDefinitions="Auto,*,Auto" Margin="0,0,0,15">
+                        <Label Grid.Column="0" Text="Small" VerticalOptions="Center"/>
+                        <Slider Grid.Column="1" Minimum="0" Maximum="1" Value="0.3" MinimumTrackColor="#6f61ef" MaximumTrackColor="#e0e0e0"/>
+                        <Label Grid.Column="2" Text="Large" VerticalOptions="Center"/>
+                    </Grid>
 
-            <!-- Text-to-Speech -->
-            <Grid ColumnDefinitions="*,Auto">
-                <Label Text="Text-to-Speech" Grid.Column="0" VerticalOptions="Center" />
-                <Switch Grid.Column="1" />
-            </Grid>
+                    <!-- Text-to-Speech -->
+                    <Grid ColumnDefinitions="*,Auto" Margin="0,5,0,10">
+                        <StackLayout Grid.Column="0">
+                            <Label Text="Text-to-Speech" FontAttributes="Bold"/>
+                            <Label Text="Enable voice narration of screen content" FontSize="12" TextColor="Gray"/>
+                        </StackLayout>
+                        <Switch Grid.Column="1" OnColor="#6f61ef" ThumbColor="White"/>
+                    </Grid>
 
-            <!-- Dark Mode -->
-            <Grid ColumnDefinitions="*,Auto">
-                <Label Text="Dark Mode" Grid.Column="0" VerticalOptions="Center" />
-                <Switch Grid.Column="1" />
-            </Grid>
+                    <!-- Dark Mode -->
+                    <Grid ColumnDefinitions="*,Auto" Margin="0,5,0,0">
+                        <StackLayout Grid.Column="0">
+                            <Label Text="Dark Mode" FontAttributes="Bold"/>
+                            <Label Text="Reduce eye strain in low light conditions" FontSize="12" TextColor="Gray"/>
+                        </StackLayout>
+                        <Switch Grid.Column="1" OnColor="#6f61ef" ThumbColor="White"/>
+                    </Grid>
+                </StackLayout>
+            </Frame>
 
-            <!-- Help & Support -->
-            <Label Text="Help and Support" FontSize="18" FontAttributes="Bold" Margin="0,24,0,8" />
-            <Button Text="Contact Support (+44 7471 185479)" BackgroundColor="Purple" TextColor="White" />
+            <!-- Notification Settings -->
+            <Frame CornerRadius="10" Padding="15" BackgroundColor="White">
+                <StackLayout>
+                    <Label Text="Simple Notification Settings" FontSize="22" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,0,0,15"/>
+
+                    <!-- Push Notifications -->
+                    <Grid ColumnDefinitions="*,Auto" Margin="0,5,0,10">
+                        <StackLayout Grid.Column="0">
+                            <Label Text="Push Notifications" FontAttributes="Bold"/>
+                            <Label Text="Receive alerts about your financial activity" FontSize="12" TextColor="Gray"/>
+                        </StackLayout>
+                        <Switch Grid.Column="1" OnColor="#6f61ef" ThumbColor="White" IsToggled="True"/>
+                    </Grid>
+
+                    <!-- Budget Alerts -->
+                    <Grid ColumnDefinitions="*,Auto" Margin="0,5,0,10">
+                        <StackLayout Grid.Column="0">
+                            <Label Text="Budget Alerts" FontAttributes="Bold"/>
+                            <Label Text="Get notified when approaching budget limits" FontSize="12" TextColor="Gray"/>
+                        </StackLayout>
+                        <Switch Grid.Column="1" OnColor="#6f61ef" ThumbColor="White" IsToggled="True"/>
+                    </Grid>
+
+                    <!-- Weekly Reports -->
+                    <Grid ColumnDefinitions="*,Auto" Margin="0,5,0,0">
+                        <StackLayout Grid.Column="0">
+                            <Label Text="Weekly Reports" FontAttributes="Bold"/>
+                            <Label Text="Receive weekly financial summaries" FontSize="12" TextColor="Gray"/>
+                        </StackLayout>
+                        <Switch Grid.Column="1" OnColor="#6f61ef" ThumbColor="White" IsToggled="True"/>
+                    </Grid>
+                </StackLayout>
+            </Frame>
 
             <!-- FAQ -->
-            <Label Text="Frequently Asked Questions" />
-            <Label Text="How do I reset my password?" x:Name="ResetExplain" 
-                           TextDecorations="Underline"
-                           TextColor="Blue">
-                <Label.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="ResetExplain_Tapped"></TapGestureRecognizer>
-                </Label.GestureRecognizers>
-            </Label>
-            <Label Text="How do I cancel conflicting subscriptions?" x:Name="CancelSubscriptionsExplain" 
-                           TextDecorations="Underline"
-                           TextColor="Blue">
-                <Label.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="CancelSubscriptionsExplain_Tapped"/>
-                </Label.GestureRecognizers>
-            </Label>
-        </VerticalStackLayout>
+            <Frame CornerRadius="10" Padding="15" BackgroundColor="White">
+                <StackLayout>
+                    <Label Text="Frequently Asked Questions" FontSize="22" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,0,0,15"/>
+
+                    <!-- FAQ Item 1 -->
+                    <Frame CornerRadius="8" Padding="15" BackgroundColor="#f8f8f8" Margin="0,5,0,10" HasShadow="False">
+                        <StackLayout>
+                            <Label Text="How do I reset my password?" FontAttributes="Bold" TextColor="#6f61ef" x:Name="ResetExplain">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="ResetExplain_Tapped"/>
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </StackLayout>
+                    </Frame>
+
+                    <!-- FAQ Item 2 -->
+                    <Frame CornerRadius="8" Padding="15" BackgroundColor="#f8f8f8" Margin="0,5,0,10" HasShadow="False">
+                        <StackLayout>
+                            <Label Text="How do I cancel conflicting subscriptions?" FontAttributes="Bold" TextColor="#6f61ef" x:Name="CancelSubscriptionsExplain">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="CancelSubscriptionsExplain_Tapped"/>
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </StackLayout>
+                    </Frame>
+
+                    <!-- FAQ Item 3 -->
+                    <Frame CornerRadius="8" Padding="15" BackgroundColor="#f8f8f8" Margin="0,5,0,0" HasShadow="False">
+                        <StackLayout>
+                            <Label Text="How do I set up automatic payments?" FontAttributes="Bold" TextColor="#6f61ef" x:Name="AutoPaymentsExplain">
+                                
+                            </Label>
+                        </StackLayout>
+                    </Frame>
+                </StackLayout>
+            </Frame>
+
+            <!-- Help & Support -->
+            <Frame CornerRadius="10" Padding="15" BackgroundColor="White">
+                <StackLayout>
+                    <Label Text="Help and Support" FontSize="22" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,0,0,15"/>
+
+                    <!-- Contact Support -->
+                    <Button Text="Contact Support" TextColor="White" BackgroundColor="#6f61ef" CornerRadius="25" Padding="0,12" FontAttributes="Bold" Margin="0,5,0,10"/>
+
+                    <!-- Phone Number -->
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,5,0,10">
+                        <Label Text="Call us: " FontAttributes="Bold"/>
+                        <Label Text="+44 7471 185479" TextColor="#6f61ef"/>
+                    </StackLayout>
+
+                    <!-- Email -->
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                        <Label Text="Email: " FontAttributes="Bold"/>
+                        <Label Text="support@spendly.com" TextColor="#6f61ef"/>
+                    </StackLayout>
+                </StackLayout>
+            </Frame>
+
+            <!-- App Information -->
+            <StackLayout HorizontalOptions="Center" Margin="0,10,0,20">
+                <Label Text="Spendly v1.2.4" TextColor="Gray" HorizontalOptions="Center"/>
+                <Label Text="© 2025 Spendly Financial Solutions" TextColor="Gray" HorizontalOptions="Center"/>
+            </StackLayout>
+
+        </StackLayout>
     </ScrollView>
 
 </ContentPage>

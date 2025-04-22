@@ -22,4 +22,9 @@ public partial class Settings : ContentPage
     {
         Navigation.PushAsync(new CancelSubscriptionPage());
     }
+
+    private void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
+    {
+        Navigation.PushAsync(new Secuirty());
+    }
 }
