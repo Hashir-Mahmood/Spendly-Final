@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiApp1234.Pages.Settings.notifications"
+             BackgroundColor="#f4f6f9">
+
+    <ScrollView>
+        <StackLayout Padding="20" Spacing="20">
+
+            <!-- Header with Back Button and Title -->
+            <Grid Margin="0,10,0,20" ColumnDefinitions="Auto,*,Auto">
+                
+
+                <!-- Title -->
+                <Label Grid.Column="1" Text="Notifications" FontSize="28" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"/>
+
+                <!-- Placeholder to balance layout -->
+                <Frame Grid.Column="2" CornerRadius="24" Padding="10" HasShadow="False" BackgroundColor="Transparent" IsVisible="False">
+                    <BoxView WidthRequest="20" HeightRequest="20"/>
+                </Frame>
+            </Grid>
+
+            <!-- Notification Types -->
+            <Frame CornerRadius="10" Padding="15" BackgroundColor="White">
+                <StackLayout>
+                    <Label Text="Notification Types" FontSize="22" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,0,0,15"/>
+
+                    <!-- Transaction Alerts -->
+                    <Grid ColumnDefinitions="*,Auto" Margin="0,5,0,10">
+                        <StackLayout Grid.Column="0">
+                            <Label Text="Transaction Alerts" FontAttributes="Bold"/>
+                            <Label Text="Receive notifications for all account transactions" FontSize="12" TextColor="Gray"/>
+                        </StackLayout>
+                        <Switch Grid.Column="1" OnColor="#6f61ef" ThumbColor="White" IsToggled="True"/>
+                    </Grid>
+
+                    <!-- Budget Alerts -->
+                    <Grid ColumnDefinitions="*,Auto" Margin="0,5,0,10">
+                        <StackLayout Grid.Column="0">
+                            <Label Text="Budget Alerts" FontAttributes="Bold"/>
+                            <Label Text="Get notified when approaching budget limits" FontSize="12" TextColor="Gray"/>
+                        </StackLayout>
+                        <Switch Grid.Column="1" OnColor="#6f61ef" ThumbColor="White" IsToggled="True"/>
+                    </Grid>
+
+                    <!-- Payment Due Alerts -->
+                    <Grid ColumnDefinitions="*,Auto" Margin="0,5,0,10">
+                        <StackLayout Grid.Column="0">
+                            <Label Text="Payment Due Alerts" FontAttributes="Bold"/>
+                            <Label Text="Notifications for upcoming bills and payments" FontSize="12" TextColor="Gray"/>
+                        </StackLayout>
+                        <Switch Grid.Column="1" OnColor="#6f61ef" ThumbColor="White" IsToggled="True"/>
+                    </Grid>
+
+                    <!-- Security Alerts -->
+                    <Grid ColumnDefinitions="*,Auto" Margin="0,5,0,0">
+                        <StackLayout Grid.Column="0">
+                            <Label Text="Security Alerts" FontAttributes="Bold"/>
+                            <Label Text="Notify about suspicious account activity" FontSize="12" TextColor="Gray"/>
+                        </StackLayout>
+                        <Switch Grid.Column="1" OnColor="#6f61ef" ThumbColor="White" IsToggled="True"/>
+                    </Grid>
+                </StackLayout>
+            </Frame>
+
+            <!-- Notification Frequency -->
+            <Frame CornerRadius="10" Padding="15" BackgroundColor="White">
+                <StackLayout>
+                    <Label Text="Notification Frequency" FontSize="22" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,0,0,15"/>
+
+                    <!-- Frequency Selector -->
+                    <Label Text="Transaction Summary" FontAttributes="Bold" Margin="0,5,0,5"/>
+                    <Frame CornerRadius="8" BackgroundColor="#f8f8f8" Padding="15" HasShadow="False">
+                        <Picker Title="Select frequency" TitleColor="Gray" x:Name="TransactionFrequencyPicker">
+                            <Picker.Items>
+                                <x:String>Real-time</x:String>
+                                <x:String>Daily</x:String>
+                                <x:String>Weekly</x:String>
+                                <x:String>Monthly</x:String>
+                            </Picker.Items>
+                            <Picker.SelectedIndex>1</Picker.SelectedIndex>
+                        </Picker>
+                    </Frame>
+
+                    <Label Text="Budget Reports" FontAttributes="Bold" Margin="0,15,0,5"/>
+                    <Frame CornerRadius="8" BackgroundColor="#f8f8f8" Padding="15" HasShadow="False">
+                        <Picker Title="Select frequency" TitleColor="Gray" x:Name="BudgetFrequencyPicker">
+                            <Picker.Items>
+                                <x:String>Daily</x:String>
+                                <x:String>Weekly</x:String>
+                                <x:String>Bi-weekly</x:String>
+                                <x:String>Monthly</x:String>
+                            </Picker.Items>
+                            <Picker.SelectedIndex>1</Picker.SelectedIndex>
+                        </Picker>
+                    </Frame>
+
+                    <Label Text="Quiet Hours" FontAttributes="Bold" Margin="0,15,0,5"/>
+                    <Grid ColumnDefinitions="*,*" Margin="0,0,0,10">
+                        <Frame Grid.Column="0" CornerRadius="8" BackgroundColor="#f8f8f8" Padding="15" HasShadow="False" Margin="0,0,5,0">
+                            <TimePicker Format="HH:mm" Time="22:00:00" TextColor="#6f61ef" x:Name="QuietHoursStart"/>
+                        </Frame>
+                        <Frame Grid.Column="1" CornerRadius="8" BackgroundColor="#f8f8f8" Padding="15" HasShadow="False" Margin="5,0,0,0">
+                            <TimePicker Format="HH:mm" Time="07:00:00" TextColor="#6f61ef" x:Name="QuietHoursEnd"/>
+                        </Frame>
+                    </Grid>
+                    <Label Text="No notifications will be sent during quiet hours" FontSize="12" TextColor="Gray" Margin="5,0,0,0"/>
+                </StackLayout>
+            </Frame>
+
+            <!-- Notification Channels -->
+            <Frame CornerRadius="10" Padding="15" BackgroundColor="White">
+                <StackLayout>
+                    <Label Text="Notification Channels" FontSize="22" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,0,0,15"/>
+
+                    <!-- Push Notifications -->
+                    <Grid ColumnDefinitions="*,Auto" Margin="0,5,0,10">
+                        <StackLayout Grid.Column="0">
+                            <Label Text="Push Notifications" FontAttributes="Bold"/>
+                            <Label Text="In-app and device notifications" FontSize="12" TextColor="Gray"/>
+                        </StackLayout>
+                        <Switch Grid.Column="1" OnColor="#6f61ef" ThumbColor="White" IsToggled="True"/>
+                    </Grid>
+
+                    <!-- Email Notifications -->
+                    <Grid ColumnDefinitions="*,Auto" Margin="0,5,0,10">
+                        <StackLayout Grid.Column="0">
+                            <Label Text="Email Notifications" FontAttributes="Bold"/>
+                            <Label Text="Send alerts to your email" FontSize="12" TextColor="Gray"/>
+                        </StackLayout>
+                        <Switch Grid.Column="1" OnColor="#6f61ef" ThumbColor="White" IsToggled="False"/>
+                    </Grid>
+
+                    <!-- SMS Notifications -->
+                    <Grid ColumnDefinitions="*,Auto" Margin="0,5,0,0">
+                        <StackLayout Grid.Column="0">
+                            <Label Text="SMS Notifications" FontAttributes="Bold"/>
+                            <Label Text="Receive text message alerts" FontSize="12" TextColor="Gray"/>
+                        </StackLayout>
+                        <Switch Grid.Column="1" OnColor="#6f61ef" ThumbColor="White" IsToggled="False"/>
+                    </Grid>
+                </StackLayout>
+            </Frame>
+
+            <!-- Notification Preview -->
+            <Frame CornerRadius="10" Padding="15" BackgroundColor="White">
+                <StackLayout>
+                    <Label Text="Preview Settings" FontSize="22" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,0,0,15"/>
+
+                    <!-- Show Preview Content -->
+                    <Grid ColumnDefinitions="*,Auto" Margin="0,5,0,10">
+                        <StackLayout Grid.Column="0">
+                            <Label Text="Show Content in Preview" FontAttributes="Bold"/>
+                            <Label Text="Display notification details in the lock screen" FontSize="12" TextColor="Gray"/>
+                        </StackLayout>
+                        <Switch Grid.Column="1" OnColor="#6f61ef" ThumbColor="White"/>
+                    </Grid>
+
+                    <!-- Show Amount -->
+                    <Grid ColumnDefinitions="*,Auto" Margin="0,5,0,0">
+                        <StackLayout Grid.Column="0">
+                            <Label Text="Show Transaction Amount" FontAttributes="Bold"/>
+                            <Label Text="Display monetary values in notifications" FontSize="12" TextColor="Gray"/>
+                        </StackLayout>
+                        <Switch Grid.Column="1" OnColor="#6f61ef" ThumbColor="White" IsToggled="True"/>
+                    </Grid>
+                </StackLayout>
+            </Frame>
+
+            <!-- Save Button -->
+            <Button Text="Save Preferences" TextColor="White" BackgroundColor="#6f61ef" CornerRadius="25" Padding="0,12" FontAttributes="Bold" Margin="0,10,0,20" x:Name="SavePreferences" />
+
+            <!-- App Information -->
+            <StackLayout HorizontalOptions="Center" Margin="0,10,0,20">
+                <Label Text="Spendly v1.2.4" TextColor="Gray" HorizontalOptions="Center"/>
+                <Label Text="© 2025 Spendly Financial Solutions" TextColor="Gray" HorizontalOptions="Center"/>
+            </StackLayout>
+
+        </StackLayout>
+    </ScrollView>
+
+</ContentPage>
