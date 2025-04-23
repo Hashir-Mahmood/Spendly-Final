@@ -19,31 +19,21 @@ namespace MauiApp1234
         {
             int id = 0;
 
-           
-
             if (Preferences.Default.ContainsKey("customer_id"))
             {
                 string n = Preferences.Default.Get("customer_id", "");
 
-                if (string.IsNullOrEmpty(n)) 
+                if (string.IsNullOrWhiteSpace(n))
                 {
                     DisplayAlert("Error", "Please Log In with a valid user before proceeding.", "OK");
                     return;
                 }
                 else
                 {
-                    id = Convert.ToInt16(n);
+                    id = Convert.ToInt32(n); // Use Convert.ToInt32 for a larger range
                 }
-                
-                
             }
             else
-            {
-               DisplayAlert("Error", "Please Log In with a valid user before proceeding.", "OK");
-                return;
-            }
-
-            if(id>=0)
             {
                 DisplayAlert("Error", "Please Log In with a valid user before proceeding.", "OK");
                 return;
@@ -67,15 +57,15 @@ namespace MauiApp1234
 
                     // SQL query to check if a row exists for the current customerId
                     string query = @"
-                INSERT INTO quiz (customerId, budgeterType) 
+                INSERT INTO quiz (customerId, budgeterType)
                 VALUES (@customerId, @BudgetType)
-                ON DUPLICATE KEY UPDATE 
+                ON DUPLICATE KEY UPDATE
                     budgeterType = @BudgetType";
 
                     using (var cmd = new MySqlCommand(query, conn))
                     {
                         // Add parameters to prevent SQL injection
-                        cmd.Parameters.AddWithValue("@customerId", id); 
+                        cmd.Parameters.AddWithValue("@customerId", id);
                         cmd.Parameters.AddWithValue("@BudgetType", selectedBudgetType);
 
                         // Execute the query
@@ -93,16 +83,13 @@ namespace MauiApp1234
                     DisplayAlert("Error", $"Database error: {ex.Message}", "OK");
                 }
             }
-        
-                if (string.IsNullOrWhiteSpace(selectedBudgetType))
+
+            if (string.IsNullOrWhiteSpace(selectedBudgetType))
             {
                 // Show an error message if no radio button was selected
                 DisplayAlert("Error", "Please select a budget type before proceeding.", "OK");
                 return;
             }
-
-          
-            
         }
 
         private void Button1_Clicked(object sender, EventArgs e)

@@ -12,6 +12,39 @@ public partial class QuizPage3 : ContentPage
 
     private void Button_Clicked(object sender, EventArgs e)
     {
+
+        int id = 0;
+
+
+
+        if (Preferences.Default.ContainsKey("customer_id"))
+        {
+            string n = Preferences.Default.Get("customer_id", "");
+
+            if (string.IsNullOrEmpty(n))
+            {
+                DisplayAlert("Error", "Please Log In with a valid user before proceeding.", "OK");
+                return;
+            }
+            else
+            {
+                id = Convert.ToInt16(n);
+            }
+
+
+        }
+        else
+        {
+            DisplayAlert("Error", "Please Log In with a valid user before proceeding.", "OK");
+            return;
+        }
+
+        if (id >= 0)
+        {
+            DisplayAlert("Error", "Please Log In with a valid user before proceeding.", "OK");
+            return;
+        }
+
         if (string.IsNullOrWhiteSpace(selectedFinancialGoal))
         {
             // Show an error message if no radio button was selected
@@ -29,10 +62,15 @@ public partial class QuizPage3 : ContentPage
                 conn.Open();
 
                 // SQL Insert Query
-                string query = "INSERT INTO quiz (interest) VALUES (@interest)";
+                string query = @"
+                INSERT INTO quiz (customerId, interest) 
+                VALUES (@customerId, @interest)
+                ON DUPLICATE KEY UPDATE 
+                    interest = @interest"; 
                 using (var cmd = new MySqlCommand(query, conn))
                 {
                     // Add parameter to avoid SQL injection
+                    cmd.Parameters.AddWithValue("@customerId", id);
                     cmd.Parameters.AddWithValue("@interest", selectedFinancialGoal);
 
                     // Execute the query

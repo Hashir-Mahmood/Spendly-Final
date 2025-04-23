@@ -77,14 +77,14 @@ namespace MauiApp1234
                         if (customer_id != null)
                         {
                             // Save customerId in app memory using Preferences
-                            Preferences.Set("customer_id", customer_id.ToString());
+                            Preferences.Set("customer_id", customer_id.ToString()); // Ensure .ToString() is called
 
                             Console.WriteLine($"Logged in user ID: {customer_id}"); // Debugging log
 
                             DisplayAlert("Your customer ID is:", $"Logged in user ID: {customer_id}", "OK");
 
                             // Navigate to Budgeting page
-                            Navigation.PushAsync(new Budgeting());
+                            Navigation.PushAsync(new InfoHub1());
                         }
                         else
                         {
