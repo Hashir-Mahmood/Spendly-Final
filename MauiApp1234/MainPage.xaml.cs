@@ -19,10 +19,22 @@ namespace MauiApp1234
         {
             int id = 0;
 
+           
+
             if (Preferences.Default.ContainsKey("customer_id"))
             {
                 string n = Preferences.Default.Get("customer_id", "");
-                id = Convert.ToInt16(n); 
+
+                if (string.IsNullOrEmpty(n)) 
+                {
+                    DisplayAlert("Error", "Please Log In with a valid user before proceeding.", "OK");
+                    return;
+                }
+                else
+                {
+                    id = Convert.ToInt16(n);
+                }
+                
                 
             }
             else
