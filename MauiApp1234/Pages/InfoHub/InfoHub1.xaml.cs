@@ -221,7 +221,7 @@ public partial class InfoHub1 : ContentPage
                     Title = "Set goals for your money",
                     Description = "Learn how to set realistic financial goals and achieve them step by step",
                     ImageUrl = "article_cover1.png",
-                    WebUrl = "https://example.com/articles/financial-goals",
+                    WebUrl = "https://www.incharge.org/financial-literacy/budgeting-saving/how-to-set-financial-goals/",
                     ReadTime = "5 min read"
                 },
                 new Article
@@ -229,8 +229,8 @@ public partial class InfoHub1 : ContentPage
                     Id = "2",
                     Title = "Understanding investments ",
                     Description = "A beginner's guide to investment concepts and strategies",
-                    ImageUrl = "article_cover2.png",
-                    WebUrl = "https://example.com/articles/investment-basics",
+                    ImageUrl = "financialstability.jpg",
+                    WebUrl = "https://www.investopedia.com/articles/basics/06/invest1000.asp",
                     ReadTime = "8 min read"
                 },
                 new Article
@@ -239,7 +239,7 @@ public partial class InfoHub1 : ContentPage
                     Title = "Budgeting made simple",
                     Description = "Practical tips to create and maintain a budget that works",
                     ImageUrl = "article_cover3.png",
-                    WebUrl = "https://example.com/articles/budgeting-tips",
+                    WebUrl = "https://www.ramseysolutions.com/budgeting/how-to-make-a-budget",
                     ReadTime = "6 min read"
                 }
             };
@@ -268,8 +268,8 @@ public partial class InfoHub1 : ContentPage
                     Id = "1",
                     Title = "Does saving money mean not purchasing what you want?",
                     Description = "Learn the fundamentals of long-term budgeting",
-                    ThumbnailUrl = "video_thumb1.png",
-                    WebUrl = "https://example.com/videos/saving-vs-spending",
+                    ThumbnailUrl = "article_cover3.png",
+                    WebUrl = "https://www.youtube.com/watch?v=DuOZceJ_trg",
                     ViewCount = "1.2K views"
                 },
                 new Video
@@ -277,8 +277,8 @@ public partial class InfoHub1 : ContentPage
                     Id = "2",
                     Title = "Investment strategies for beginners",
                     Description = "Simple strategies to start your investment journey",
-                    ThumbnailUrl = "video_thumb2.png",
-                    WebUrl = "https://example.com/videos/investment-strategies",
+                    ThumbnailUrl = "financialstability.jpg",
+                    WebUrl = "https://www.youtube.com/watch?v=Ay4fmZdZqJE",
                     ViewCount = "850 views"
                 },
                 new Video
@@ -286,8 +286,8 @@ public partial class InfoHub1 : ContentPage
                     Id = "3",
                     Title = "Understanding credit scores",
                     Description = "How credit scores work and how to improve yours",
-                    ThumbnailUrl = "video_thumb3.png",
-                    WebUrl = "https://example.com/videos/credit-scores",
+                    ThumbnailUrl = "spendly_logo.png",
+                    WebUrl = "https://www.youtube.com/watch?v=79vtf30O1fQ&pp=0gcJCdgAo7VqN5tD",
                     ViewCount = "2.5K views"
                 }
             };
