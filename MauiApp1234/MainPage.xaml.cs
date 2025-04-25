@@ -17,7 +17,7 @@ namespace MauiApp1234
 
         private void Button_Clicked(object sender, EventArgs e)
         {
-            int id = 0;
+            long id = 0;
 
             if (Preferences.Default.ContainsKey("customer_id"))
             {
@@ -30,7 +30,7 @@ namespace MauiApp1234
                 }
                 else
                 {
-                    id = Convert.ToInt32(n); // Use Convert.ToInt32 for a larger range
+                    id = Convert.ToInt64(n); // Use Convert.ToInt32 for a larger range
                 }
             }
             else
@@ -73,7 +73,7 @@ namespace MauiApp1234
                         Console.WriteLine($"Rows affected: {rowsAffected}");
 
                         DisplayAlert("Success", "Your selection has been saved successfully!", "OK");
-                        Navigation.PushAsync(new InfoHub1());
+                        Navigation.PushAsync(new QuizPage2());
                     }
                 }
                 catch (Exception ex)

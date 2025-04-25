@@ -13,7 +13,7 @@ public partial class QuizPage2 : ContentPage
     private void Button_Clicked(object sender, EventArgs e)
     {
 
-        int id = 0;
+        long id = 0;
 
 
 
@@ -28,7 +28,7 @@ public partial class QuizPage2 : ContentPage
             }
             else
             {
-                id = Convert.ToInt16(n);
+                id = Convert.ToInt64(n);
             }
 
 
