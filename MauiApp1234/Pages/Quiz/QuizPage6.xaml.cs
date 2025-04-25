@@ -38,7 +38,7 @@ public partial class QuizPage6 : ContentPage
             return;
         }
 
-        if (id >= 0)
+        if (id <= 0)
         {
             DisplayAlert("Error", "Please Log In with a valid user before proceeding.", "OK");
             return;
