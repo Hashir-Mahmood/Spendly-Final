@@ -1,3 +1,5 @@
+using MauiApp1234.Pages.AI;
+using MauiApp1234.Pages.Settings;
 using Microsoft.Maui.Controls;
 using System.Collections.ObjectModel;
 
@@ -33,17 +35,17 @@ namespace MauiApp1234
 
         private void ChatbotIcon_Tapped(object sender, EventArgs e)
         {
-            // Handle chatbot icon tap
+            Navigation.PushAsync(new Ai());
         }
 
         private void OnNotificationsIconTapped(object sender, EventArgs e)
         {
-            // Handle notifications icon tap
+            Navigation.PushAsync(new notifications());
         }
 
         private void SettingsIcon_Tapped(object sender, EventArgs e)
         {
-            // Handle settings icon tap
+            Navigation.PushAsync(new Settings());
         }
 
         private async void DebtPageButton_Clicked(object sender, EventArgs e)

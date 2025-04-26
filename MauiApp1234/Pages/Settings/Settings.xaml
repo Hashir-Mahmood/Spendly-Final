@@ -22,9 +22,15 @@
             <!-- Account Settings -->
             <Frame CornerRadius="10" Padding="15" BackgroundColor="White">
                 <StackLayout>
-                    <Label Text="Account Settings" FontSize="22" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,0,0,15"/>
+                    <Label Text="Account Settings"
+                         FontSize="22"
+                        FontAttributes="Bold"
+                         HorizontalOptions="Center"
+                            Margin="0,0,0,15">
+                        
+                    </Label>
 
-                    <Button Text="Change Password" TextColor="#6f61ef" BackgroundColor="Transparent" BorderColor="#6f61ef" BorderWidth="1" CornerRadius="25" Padding="0,12" FontAttributes="Bold" Margin="0,5,0,10"/>
+                    <Button Text="Change Password" TextColor="#6f61ef" BackgroundColor="Transparent" BorderColor="#6f61ef" BorderWidth="1" CornerRadius="25" Padding="0,12" FontAttributes="Bold" Margin="0,5,0,10" Clicked="Button_Clicked_1"/>
 
                     <Button Text="Update Personal Information" TextColor="#6f61ef" BackgroundColor="Transparent" BorderColor="#6f61ef" BorderWidth="1" CornerRadius="25" Padding="0,12" FontAttributes="Bold" Margin="0,5,0,10"/>
 
@@ -44,7 +50,7 @@
                         </Button.GestureRecognizers>
                     </Button>
 
-                    <Button Text="Logout" TextColor="White" BackgroundColor="#6f61ef" CornerRadius="25" Padding="0,12" FontAttributes="Bold" Margin="0,5,0,0"/>
+                    <Button Text="Logout" TextColor="White" BackgroundColor="#6f61ef" CornerRadius="25" Padding="0,12" FontAttributes="Bold" Margin="0,5,0,0" Clicked="Button_Clicked_2"/>
                 </StackLayout>
             </Frame>
 
@@ -167,7 +173,7 @@
                     <Label Text="Help and Support" FontSize="22" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,0,0,15"/>
 
                     <!-- Contact Support -->
-                    <Button Text="Contact Support" TextColor="White" BackgroundColor="#6f61ef" CornerRadius="25" Padding="0,12" FontAttributes="Bold" Margin="0,5,0,10"/>
+                    <Button Text="Contact Support" TextColor="White" BackgroundColor="#6f61ef" CornerRadius="25" Padding="0,12" FontAttributes="Bold" Margin="0,5,0,10" Clicked="Button_Clicked_3"/>
 
                     <!-- Phone Number -->
                     <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,5,0,10">
