@@ -80,4 +80,19 @@ public partial class Settings : ContentPage
         }
     }
 
+    private async void OnEmailTapped(object sender, EventArgs e)
+    {
+        try
+        {
+            // Open the default email client with the "mailto:" URI
+            var emailUri = new Uri("mailto:support@spendly.com?subject=Support Request&body=Please describe your issue here...");
+            await Launcher.OpenAsync(emailUri);
+        }
+        catch (Exception ex)
+        {
+            // Handle any errors
+            await DisplayAlert("Error", $"An error occurred: {ex.Message}", "OK");
+        }
+    }
+
 }

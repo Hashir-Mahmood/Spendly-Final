@@ -188,8 +188,13 @@
                     <!-- Email -->
                     <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
                         <Label Text="Email: " FontAttributes="Bold"/>
-                        <Label Text="support@spendly.com" TextColor="#6f61ef"/>
+                        <Label Text="support@spendly.com" TextColor="#6f61ef">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnEmailTapped"/>
+                            </Label.GestureRecognizers>
+                        </Label>
                     </StackLayout>
+
                 </StackLayout>
             </Frame>
 
