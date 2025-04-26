@@ -178,7 +178,11 @@
                     <!-- Phone Number -->
                     <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,5,0,10">
                         <Label Text="Call us: " FontAttributes="Bold"/>
-                        <Label Text="+44 7471 185479" TextColor="#6f61ef"/>
+                        <Label Text="+44 7471 185479" TextColor="#6f61ef">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnPhoneNumberTapped"/>
+                            </Label.GestureRecognizers>
+                        </Label>
                     </StackLayout>
 
                     <!-- Email -->

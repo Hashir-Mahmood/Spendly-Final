@@ -65,4 +65,19 @@ public partial class Settings : ContentPage
         }
     }
 
+    private async void OnPhoneNumberTapped(object sender, EventArgs e)
+    {
+        try
+        {
+            // Open the phone dialer with the specified phone number
+            var phoneUri = new Uri("tel:+44 7471 185479");
+            await Launcher.OpenAsync(phoneUri);
+        }
+        catch (Exception ex)
+        {
+            // Handle any errors
+            await DisplayAlert("Error", $"An error occurred: {ex.Message}", "OK");
+        }
+    }
+
 }
