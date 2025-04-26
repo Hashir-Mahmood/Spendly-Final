@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.Logging;
 using MySqlConnector;
 using Syncfusion.Maui.Core.Hosting;
-namespace MauiApp1234
 
+namespace MauiApp1234
 {
     public static class MauiProgram
     {
@@ -18,10 +18,12 @@ namespace MauiApp1234
                     fonts.AddFont("Outfit-Bold.ttf", "OpenSansBold");
                 });
 
-#if DEBUG
-    		builder.Logging.AddDebug();
-#endif
+            // Register the TTS service
+            builder.Services.AddSingleton<ITtsService, TtsService>();
 
+#if DEBUG
+            builder.Logging.AddDebug();
+#endif
             return builder.Build();
         }
     }
