@@ -290,14 +290,6 @@
                 </StackLayout>
             </Frame>
 
-            <Button Text="View Detailed Analytics" 
-                    BackgroundColor="#6f61ef" 
-                    TextColor="White" 
-                    CornerRadius="25" 
-                    HeightRequest="50"
-                    FontAttributes="Bold" 
-                    Margin="40,10"
-                    Clicked="ViewDetailedAnalytics_Clicked"/>
 
 
         </StackLayout>
