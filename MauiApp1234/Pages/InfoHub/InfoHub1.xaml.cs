@@ -2,6 +2,9 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 
 namespace MauiApp1234;
+
+using MauiApp1234.Pages.AI;
+using MauiApp1234.Pages.Settings;
 using MySqlConnector;
 public partial class InfoHub1 : ContentPage
 {
@@ -37,12 +40,12 @@ public partial class InfoHub1 : ContentPage
 
     private void ChatbotIcon_Tapped(object sender, TappedEventArgs e)
     {
-
+        Navigation.PushAsync(new Ai());
     }
 
     private void OnNotificationsIconTapped(object sender, TappedEventArgs e)
     {
-
+        Navigation.PushAsync(new notifications());
     }
 
     private void SettingsIcon_Tapped(object sender, TappedEventArgs e)

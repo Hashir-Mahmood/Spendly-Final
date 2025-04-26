@@ -1,6 +1,8 @@
 using Microsoft.Maui.Controls;
 using System.Collections.ObjectModel;
 using System;
+using MauiApp1234.Pages.AI;
+using MauiApp1234.Pages.Settings;
 namespace MauiApp1234
 {
     public partial class Debt : ContentPage
@@ -30,17 +32,17 @@ namespace MauiApp1234
 
         private async void ChatbotIcon_Tapped(object sender, EventArgs e)
         {
-            await DisplayAlert("Chatbot", "Chatbot feature coming soon!", "OK");
+            await Navigation.PushAsync(new Ai());
         }
 
         private async void OnNotificationsIconTapped(object sender, EventArgs e)
         {
-            await DisplayAlert("Notifications", "No new notifications", "OK");
+            await Navigation.PushAsync(new notifications());
         }
 
         private async void SettingsIcon_Tapped(object sender, EventArgs e)
         {
-            await DisplayAlert("Settings", "Settings page coming soon!", "OK");
+            await Navigation.PushAsync(new Settings());
         }
 
         private async void InvestmentPageButton_Clicked(object sender, EventArgs e)
