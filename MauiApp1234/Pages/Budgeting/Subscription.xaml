@@ -129,11 +129,11 @@
                 </ScrollView>
             </Frame>
 
-            <ListView ItemsSource="{Binding Subscriptions}">
+            <ListView ItemsSource="{Binding Subscriptions}" RowHeight="105">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <Frame CornerRadius="10" Padding="15" BackgroundColor="White" HeightRequest="150">
+                            <Frame CornerRadius="10" Padding="15" BackgroundColor="White" VerticalOptions="Center">
                                 <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="Auto,*,Auto,Auto">
                                     <Image Grid.RowSpan="2" Source="netflix.png" HeightRequest="45" WidthRequest="45"
                                            Margin="0,0,15,0" Aspect="AspectFit"/>
