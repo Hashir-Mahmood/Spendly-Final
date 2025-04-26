@@ -140,13 +140,7 @@
             </VerticalStackLayout>
         </ScrollView>
 
-        <!-- Bottom Navigation -->
-        <Grid Grid.Row="3" BackgroundColor="White" HeightRequest="60" ColumnDefinitions="*,*,*,*">
-            <Image Grid.Column="0" Source="home.png" HeightRequest="24" HorizontalOptions="Center" VerticalOptions="Center" />
-            <Image Grid.Column="1" Source="chart.png" HeightRequest="24" HorizontalOptions="Center" VerticalOptions="Center" />
-            <Image Grid.Column="2" Source="stats.png" HeightRequest="24" HorizontalOptions="Center" VerticalOptions="Center" />
-            <Image Grid.Column="3" Source="menu.png" HeightRequest="24" HorizontalOptions="Center" VerticalOptions="Center" />
-        </Grid>
+        
     </Grid>
 
 
