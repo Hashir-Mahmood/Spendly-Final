@@ -27,4 +27,42 @@ public partial class Settings : ContentPage
     {
         Navigation.PushAsync(new Secuirty());
     }
+
+    private void Button_Clicked(object sender, EventArgs e)
+    {
+
+    }
+
+    private void TapGestureRecognizer_Tapped_1(object sender, TappedEventArgs e)
+    {
+
+    }
+
+    private void Button_Clicked_1(object sender, EventArgs e)
+    {
+        Navigation.PushAsync(new LogInPage3());
+    }
+
+    private void Button_Clicked_2(object sender, EventArgs e)
+    {
+        Navigation.PushAsync(new LogInPage2());
+    }
+
+    private async void Button_Clicked_3(object sender, EventArgs e)
+    {
+        try
+        {
+            // Create the "mailto" URI
+            var emailUri = new Uri("mailto:support@spendly.com?subject=Support Request&body=Please describe your issue here...");
+
+            // Open the default email app using the URI
+            await Launcher.OpenAsync(emailUri);
+        }
+        catch (Exception ex)
+        {
+            // Handle any potential errors
+            await DisplayAlert("Error", $"An error occurred: {ex.Message}", "OK");
+        }
+    }
+
 }
