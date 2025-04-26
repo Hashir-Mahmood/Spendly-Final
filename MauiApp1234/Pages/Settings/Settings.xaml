@@ -81,7 +81,7 @@
                             <Label Text="Text-to-Speech" FontAttributes="Bold"/>
                             <Label Text="Enable voice narration of screen content" FontSize="12" TextColor="Gray"/>
                         </StackLayout>
-                        <Switch Grid.Column="1" OnColor="#6f61ef" ThumbColor="White"/>
+                        <Switch x:Name="TtsSwitch" Grid.Column="1" OnColor="#6f61ef" ThumbColor="White" Toggled="TtsSwitch_Toggled"/>
                     </Grid>
 
                     <!-- Dark Mode -->

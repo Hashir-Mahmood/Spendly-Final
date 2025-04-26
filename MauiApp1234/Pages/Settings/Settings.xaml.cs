@@ -1,25 +1,44 @@
 using MauiApp1234.Pages.Settings;
-
+using Microsoft.Maui.Media; // Add this for TextToSpeech
 namespace MauiApp1234;
 using MySqlConnector;
+
 public partial class Settings : ContentPage
 {
-	public Settings()
-	{
-		InitializeComponent();
+    // Use the interface for better flexibility
+    private readonly ITtsService _ttsService;
+
+    public Settings(ITtsService ttsService) // Parameter using interface
+    {
+        InitializeComponent();
+        _ttsService = ttsService;
+
         string connString = "server=dbhost.cs.man.ac.uk;user=b66855mm;password=iTIfvSknLwQZHtrLaHMy4uTsM/UuEQvZfTqa0ei81+k;database=b66855mm";
         MySqlConnection conn = new MySqlConnection(connString);
         conn.Open();
 
         if (App.Current.UserAppTheme == AppTheme.Dark)
         {
-            darkModeSwitch.IsToggled = true;  // If the app is in Dark Mode, set the switch to 'on'
+            darkModeSwitch.IsToggled = true;
         }
         else
         {
-            darkModeSwitch.IsToggled = false;  // Otherwise, set it to 'off'
+            darkModeSwitch.IsToggled = false;
         }
 
+        // Initialize the TTS switch based on saved preference
+        TtsSwitch.IsToggled = _ttsService.IsEnabled;
+    }
+
+    private void OnTtsToggled(object sender, ToggledEventArgs e)
+    {
+        _ttsService.IsEnabled = e.Value;
+
+        // Optional: Provide audio feedback when enabled
+        if (e.Value)
+        {
+            _ttsService.SpeakAsync("Text to speech is now enabled");
+        }
     }
 
     private void ResetExplain_Tapped(object sender, TappedEventArgs e)
