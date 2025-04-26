@@ -11,11 +11,31 @@ public partial class Settings : ContentPage
         MySqlConnection conn = new MySqlConnection(connString);
         conn.Open();
 
+        if (App.Current.UserAppTheme == AppTheme.Dark)
+        {
+            darkModeSwitch.IsToggled = true;  // If the app is in Dark Mode, set the switch to 'on'
+        }
+        else
+        {
+            darkModeSwitch.IsToggled = false;  // Otherwise, set it to 'off'
+        }
+
     }
 
     private void ResetExplain_Tapped(object sender, TappedEventArgs e)
     {
         Navigation.PushAsync(new PasswordResetInstructionsPage());
+    }
+    private void OnDarkModeToggled(object sender, ToggledEventArgs e)
+    {
+        if (e.Value)  // If the switch is ON, enable dark mode
+        {
+            App.Current.UserAppTheme = AppTheme.Dark;
+        }
+        else  // If the switch is OFF, enable light mode
+        {
+            App.Current.UserAppTheme = AppTheme.Light;
+        }
     }
 
     private void CancelSubscriptionsExplain_Tapped(object sender, TappedEventArgs e)

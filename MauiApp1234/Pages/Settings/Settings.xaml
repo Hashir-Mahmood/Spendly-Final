@@ -90,7 +90,8 @@
                             <Label Text="Dark Mode" FontAttributes="Bold"/>
                             <Label Text="Reduce eye strain in low light conditions" FontSize="12" TextColor="Gray"/>
                         </StackLayout>
-                        <Switch Grid.Column="1" OnColor="#6f61ef" ThumbColor="White"/>
+                        <!-- Assign x:Name to the switch so it can be accessed in the code-behind -->
+                        <Switch x:Name="darkModeSwitch" Grid.Column="1" OnColor="#6f61ef" ThumbColor="White" Toggled="OnDarkModeToggled"/>
                     </Grid>
                 </StackLayout>
             </Frame>
