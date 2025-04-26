@@ -6,11 +6,12 @@ using MySqlConnector;
 using System.ComponentModel;
 using System.Windows.Input;
 using Syncfusion.Maui.Core.Carousel;
+using MauiApp1234.Pages.Budgeting;
 
 
 
-    // Data Model for a Subscription Item
-    public class SubscriptionItem : INotifyPropertyChanged
+// Data Model for a Subscription Item
+public class SubscriptionItem : INotifyPropertyChanged
     {
         public int subscriptionid { get; set; }
         public long customerid { get; set; }
@@ -230,7 +231,7 @@ using Syncfusion.Maui.Core.Carousel;
 
         private void Add_Clicked(object sender, EventArgs e)
         {
-
+            Navigation.PushAsync(new AddSubscription());
         }
     }
 
