@@ -4,14 +4,13 @@
              x:Class="MauiApp1234.Subscription"
              BackgroundColor="#f4f6f9"
              xmlns:syncfusion="clr-namespace:Syncfusion.Maui.Charts;assembly=Syncfusion.Maui.Charts"
-             Title="Subscription">
+             Title="Subscription"
+             xmlns:local="clr-namespace:MauiApp1234">
 
     <ScrollView>
         <StackLayout Padding="20" Spacing="20">
 
-            <!-- Header with Icons -->
             <Grid Margin="0,10" ColumnDefinitions="Auto,*,Auto,Auto">
-                <!-- Menu icon on the left -->
                 <Frame Grid.Column="0" CornerRadius="24" Padding="10" HasShadow="False" BackgroundColor="White" HorizontalOptions="CenterAndExpand">
                     <Image Source="ai.png" HeightRequest="20" WidthRequest="20" x:Name="ChatbotIcon"/>
                     <Frame.GestureRecognizers>
@@ -19,10 +18,8 @@
                     </Frame.GestureRecognizers>
                 </Frame>
 
-                <!-- Space in the middle (will automatically expand) -->
                 <Grid Grid.Column="1" />
 
-                <!-- Notifications icon -->
                 <Frame Grid.Column="2" CornerRadius="24" Padding="10" HasShadow="False" BackgroundColor="White">
                     <Image Source="bell.png" HeightRequest="20" WidthRequest="20" x:Name="NotificationsIcon"/>
                     <Frame.GestureRecognizers>
@@ -30,7 +27,6 @@
                     </Frame.GestureRecognizers>
                 </Frame>
 
-                <!-- Settings icon -->
                 <Frame Grid.Column="3" CornerRadius="20" Padding="10" HasShadow="False" BackgroundColor="White" Margin="10,0,0,0">
                     <Image Source="settings.png" HeightRequest="20" WidthRequest="20" x:Name="SettingsIcon"/>
                     <Frame.GestureRecognizers>
@@ -39,26 +35,39 @@
                 </Frame>
             </Grid>
 
-            <!-- Header -->
             <Label Text="Subscriptions" FontSize="28" FontAttributes="Bold" HorizontalOptions="Center"/>
 
-            <!-- Total Amount Card -->
-            <Frame CornerRadius="10" Padding="15" BackgroundColor="White">
-                <StackLayout>
-                    <StackLayout Orientation="Horizontal">
-                        <Label Text="Monthly Total:" FontAttributes="Bold" FontSize="16"/>
-                        <Label Text="+12.4%" TextColor="#6f61ef" FontAttributes="Bold" HorizontalOptions="EndAndExpand"/>
+            <Grid ColumnDefinitions="*, Auto" Margin="15,0">
+                <Frame Grid.Column="0" CornerRadius="10" Padding="15" BackgroundColor="White">
+                    <StackLayout>
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="Monthly Total:" FontAttributes="Bold" FontSize="16"/>
+                            <Label Text="+12.4%" TextColor="#6f61ef" FontAttributes="Bold" HorizontalOptions="EndAndExpand"/>
+                        </StackLayout>
+                        <Label Text="£89.99" FontSize="30" FontAttributes="Bold" Margin="0,5,0,10"/>
+                        <Label Text="see subscription analytics >>" TextColor="#6f61ef" HorizontalTextAlignment="Start">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="AnalyticsLabel_Tapped"/>
+                            </Label.GestureRecognizers>
+                        </Label>
                     </StackLayout>
-                    <Label Text="£89.99" FontSize="30" FontAttributes="Bold" Margin="0,5,0,10"/>
-                    <Label Text="see subscription analytics >>" TextColor="#6f61ef" HorizontalTextAlignment="Start">
-                        <Label.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="AnalyticsLabel_Tapped"/>
-                        </Label.GestureRecognizers>
-                    </Label>
-                </StackLayout>
-            </Frame>
+                </Frame>
 
-            <!-- Enhanced Warning Banner with Similar Subscriptions -->
+                <Button Grid.Column="1"
+                        Text="+ Add"
+                        FontSize="16"
+                        FontAttributes="Bold"
+                        TextColor="White"
+                        BackgroundColor="#007AFF"
+                        CornerRadius="10"
+                        Padding="15,10"
+                        VerticalOptions="Center"
+                        Margin="10,0,0,0"
+                        WidthRequest="100"
+                        x:Name="Add"
+                        Clicked="Add_Clicked"/>
+            </Grid>
+
             <Frame CornerRadius="10" Padding="15" BackgroundColor="#FFF3E0" BorderColor="#FF9800" HasShadow="False" x:Name="WarningBanner">
                 <StackLayout Spacing="10">
                     <Grid ColumnDefinitions="Auto,*,Auto">
@@ -70,14 +79,12 @@
                                 Clicked="DismissWarning_Clicked"/>
                     </Grid>
 
-                    <!-- Similar Subscriptions Details -->
                     <Grid ColumnDefinitions="Auto,*,Auto" Margin="25,0,0,0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
 
-                        <!-- Netflix Premium and Netflix Standard -->
                         <Image Source="netflix.png" HeightRequest="25" WidthRequest="25" Grid.Row="0" Grid.Column="0" 
                                VerticalOptions="Center" HorizontalOptions="Start"/>
                         <Label Text="Netflix Premium + Netflix Standard" TextColor="#FF9800" Grid.Row="0" Grid.Column="1" 
@@ -85,7 +92,6 @@
                         <Label Text="£26.98/mo" TextColor="#FF9800" Grid.Row="0" Grid.Column="2" 
                                VerticalOptions="Center" HorizontalOptions="End" FontAttributes="Bold"/>
 
-                        <!-- Recommendation -->
                         <Label Text="💡 Recommendation: Consider keeping only Netflix Premium to save £10.99/mo" 
                                TextColor="#FF9800" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" 
                                Margin="0,5,0,0"/>
@@ -98,7 +104,6 @@
                 </StackLayout>
             </Frame>
 
-            <!-- Category Filter Buttons -->
             <Frame CornerRadius="10" Padding="10" BackgroundColor="White">
                 <ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Never">
                     <HorizontalStackLayout Spacing="10">
@@ -124,62 +129,134 @@
                 </ScrollView>
             </Frame>
 
-            <!-- Subscription Items -->
-            <!-- Netflix Premium -->
+            <ListView ItemsSource="{Binding Subscriptions}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Frame CornerRadius="10" Padding="15" BackgroundColor="White">
+                                <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="Auto,*,Auto,Auto">
+                                    <Image Grid.RowSpan="2" Source="netflix.png" HeightRequest="45" WidthRequest="45"
+                                           Margin="0,0,15,0" Aspect="AspectFit"/>
+                                    <Label Grid.Column="1" Text="{Binding name}" FontAttributes="Bold" TextColor="Black" FontSize="16"/>
+                                    <Label Grid.Column="1" Grid.Row="1" Text="{Binding renewal, StringFormat='Renews {0:d}'}" TextColor="#666" FontSize="12"/>
+                                    <VerticalStackLayout Grid.Column="2" Grid.RowSpan="2" HorizontalOptions="End" VerticalOptions="Center" Margin="0,0,10,0">
+                                        <Label Text="{Binding price, StringFormat='£{0:F2}/m'}" FontAttributes="Bold" TextColor="Black" HorizontalOptions="End" FontSize="16"/>
+                                        <Label Text="{Binding subscriptionChange, StringFormat='{0:+#.#%;-#.#%}'}" FontSize="12" HorizontalOptions="End"/>
+                                    </VerticalStackLayout>
+                                    <Button Grid.Column="3"
+                                            Text="Cancel"
+                                            FontSize="12"
+                                            TextColor="Gray"
+                                            BackgroundColor="Transparent"
+                                            BorderColor="Gray"
+                                            BorderWidth="1"
+                                            CornerRadius="5"
+                                            Padding="8,5"
+                                            VerticalOptions="Center"
+                                            HorizontalOptions="End"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type local:SubscriptionViewModel}}, Path=CancelSubscriptionCommand}"
+                                            CommandParameter="{Binding subscriptionid}"/>
+                                </Grid>
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
             <Frame CornerRadius="10" Padding="15" BackgroundColor="White">
-                <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="Auto,*,Auto">
-                    <Image Grid.RowSpan="2" Source="netflix.png" HeightRequest="45" WidthRequest="45" 
+                <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="Auto,*,Auto,Auto">
+                    <Image Grid.RowSpan="2" Source="netflix.png" HeightRequest="45" WidthRequest="45"
                            Margin="0,0,15,0" Aspect="AspectFit"/>
                     <Label Grid.Column="1" Text="Netflix Premium" FontAttributes="Bold" TextColor="Black" FontSize="16"/>
                     <Label Grid.Column="1" Grid.Row="1" Text="Renews 15 Apr, 2024" TextColor="#666" FontSize="12"/>
-                    <VerticalStackLayout Grid.Column="2" Grid.RowSpan="2" HorizontalOptions="End" VerticalOptions="Center">
+                    <VerticalStackLayout Grid.Column="2" Grid.RowSpan="2" HorizontalOptions="End" VerticalOptions="Center" Margin="0,0,10,0">
                         <Label Text="£15.99/m" FontAttributes="Bold" TextColor="Black" HorizontalOptions="End" FontSize="16"/>
                         <Label Text="↑ +1.1" TextColor="#ff5252" FontSize="12" HorizontalOptions="End"/>
                     </VerticalStackLayout>
+                    <Button Grid.Column="3"
+                            Text="Cancel"
+                            FontSize="12"
+                            TextColor="Gray"
+                            BackgroundColor="Transparent"
+                            BorderColor="Gray"
+                            BorderWidth="1"
+                            CornerRadius="5"
+                            Padding="8,5"
+                            VerticalOptions="Center"
+                            HorizontalOptions="End"/>
                 </Grid>
             </Frame>
 
-            <!-- Netflix Standard -->
             <Frame CornerRadius="10" Padding="15" BackgroundColor="White">
-                <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="Auto,*,Auto">
-                    <Image Grid.RowSpan="2" Source="netflix.png" HeightRequest="45" WidthRequest="45" 
+                <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="Auto,*,Auto,Auto">
+                    <Image Grid.RowSpan="2" Source="netflix.png" HeightRequest="45" WidthRequest="45"
                            Margin="0,0,15,0" Aspect="AspectFit"/>
                     <Label Grid.Column="1" Text="Netflix Standard" FontAttributes="Bold" TextColor="Black" FontSize="16"/>
                     <Label Grid.Column="1" Grid.Row="1" Text="Renews 3 May, 2024" TextColor="#666" FontSize="12"/>
-                    <VerticalStackLayout Grid.Column="2" Grid.RowSpan="2" HorizontalOptions="End" VerticalOptions="Center">
+                    <VerticalStackLayout Grid.Column="2" Grid.RowSpan="2" HorizontalOptions="End" VerticalOptions="Center" Margin="0,0,10,0">
                         <Label Text="£10.99/m" FontAttributes="Bold" TextColor="Black" HorizontalOptions="End" FontSize="16"/>
                         <Label Text="↑ +0.5" TextColor="#ff5252" FontSize="12" HorizontalOptions="End"/>
                     </VerticalStackLayout>
+                    <Button Grid.Column="3"
+                            Text="Cancel"
+                            FontSize="12"
+                            TextColor="Gray"
+                            BackgroundColor="Transparent"
+                            BorderColor="Gray"
+                            BorderWidth="1"
+                            CornerRadius="5"
+                            Padding="8,5"
+                            VerticalOptions="Center"
+                            HorizontalOptions="End"/>
                 </Grid>
             </Frame>
 
-            <!-- Spotify -->
             <Frame CornerRadius="10" Padding="15" BackgroundColor="White">
-                <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="Auto,*,Auto">
-                    <Image Grid.RowSpan="2" Source="spotify.png" HeightRequest="45" WidthRequest="45" 
+                <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="Auto,*,Auto,Auto">
+                    <Image Grid.RowSpan="2" Source="spotify.png" HeightRequest="45" WidthRequest="45"
                            Margin="0,0,15,0" Aspect="AspectFit"/>
                     <Label Grid.Column="1" Text="Spotify Family" FontAttributes="Bold" TextColor="Black" FontSize="16"/>
                     <Label Grid.Column="1" Grid.Row="1" Text="Renews 28 Mar, 2024" TextColor="#666" FontSize="12"/>
-                    <VerticalStackLayout Grid.Column="2" Grid.RowSpan="2" HorizontalOptions="End" VerticalOptions="Center">
-                        <Label Text="£17.99/mo" FontAttributes="Bold" TextColor="Black" HorizontalOptions="End" FontSize="16"/>
+                    <VerticalStackLayout Grid.Column="2" Grid.RowSpan="2" HorizontalOptions="End" VerticalOptions="Center" Margin="0,0,10,0">
+                        <Label Text="£17.99/m" FontAttributes="Bold" TextColor="Black" HorizontalOptions="End" FontSize="16"/>
                         <Label Text="↓ -5.01" TextColor="#4CAF50" FontSize="12" HorizontalOptions="End"/>
                     </VerticalStackLayout>
+                    <Button Grid.Column="3"
+                            Text="Cancel"
+                            FontSize="12"
+                            TextColor="Gray"
+                            BackgroundColor="Transparent"
+                            BorderColor="Gray"
+                            BorderWidth="1"
+                            CornerRadius="5"
+                            Padding="8,5"
+                            VerticalOptions="Center"
+                            HorizontalOptions="End"/>
                 </Grid>
             </Frame>
 
-            <!-- Adobe -->
             <Frame CornerRadius="10" Padding="15" BackgroundColor="White">
-                <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="Auto,*,Auto">
-                    <Image Grid.RowSpan="2" Source="adobe.png" HeightRequest="45" WidthRequest="45" 
+                <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="Auto,*,Auto,Auto">
+                    <Image Grid.RowSpan="2" Source="adobe.png" HeightRequest="45" WidthRequest="45"
                            Margin="0,0,15,0" Aspect="AspectFit"/>
                     <Label Grid.Column="1" Text="Adobe Creative Cloud" FontAttributes="Bold" TextColor="Black" FontSize="16"/>
                     <Label Grid.Column="1" Grid.Row="1" Text="Renews 1 May, 2024" TextColor="#666" FontSize="12"/>
                     <Label Grid.Column="2" Grid.RowSpan="2" Text="£45" FontAttributes="Bold" TextColor="Black" 
-                          VerticalOptions="Center" FontSize="16"/>
+                           VerticalOptions="Center" FontSize="16" Margin="0,0,10,0"/>
+                    <Button Grid.Column="3"
+                            Text="Cancel"
+                            FontSize="12"
+                            TextColor="Gray"
+                            BackgroundColor="Transparent"
+                            BorderColor="Gray"
+                            BorderWidth="1"
+                            CornerRadius="5"
+                            Padding="8,5"
+                            VerticalOptions="Center"
+                            HorizontalOptions="End"/>
                 </Grid>
             </Frame>
 
-            <!-- Monthly Spending Section with Syncfusion Chart -->
             <Frame CornerRadius="10" Padding="15" BackgroundColor="White">
                 <StackLayout>
                     <Label Text="Monthly Spending" FontSize="22" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,0,0,5"/>
@@ -204,26 +281,25 @@
 
                         <syncfusion:SfCartesianChart.Series>
                             <syncfusion:ColumnSeries ItemsSource="{Binding MonthlySpendingData}" 
-                                              XBindingPath="Month" 
-                                              YBindingPath="Amount" 
-                                              Fill="#6f61ef">
+                                                     XBindingPath="Month" 
+                                                     YBindingPath="Amount" 
+                                                     Fill="#6f61ef">
                             </syncfusion:ColumnSeries>
                         </syncfusion:SfCartesianChart.Series>
                     </syncfusion:SfCartesianChart>
                 </StackLayout>
             </Frame>
 
-            <!-- View Detailed Analytics Button -->
             <Button Text="View Detailed Analytics" 
-                   BackgroundColor="#6f61ef" 
-                   TextColor="White" 
-                   CornerRadius="25" 
-                   HeightRequest="50"
-                   FontAttributes="Bold" 
-                   Margin="40,10"
-                   Clicked="ViewDetailedAnalytics_Clicked"/>
+                    BackgroundColor="#6f61ef" 
+                    TextColor="White" 
+                    CornerRadius="25" 
+                    HeightRequest="50"
+                    FontAttributes="Bold" 
+                    Margin="40,10"
+                    Clicked="ViewDetailedAnalytics_Clicked"/>
 
-            
+
         </StackLayout>
     </ScrollView>
 </ContentPage>
