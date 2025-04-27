@@ -79,9 +79,6 @@ namespace MauiApp1234.Pages.Dashboard
                 return;
             }
 
-            TotalIncomeLabel.Text = "Loading...";
-            IsLoadingIndicator.IsRunning = true;
-            IsLoadingIndicator.IsVisible = true;
 
             try
             {
