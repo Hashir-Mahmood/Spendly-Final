@@ -267,13 +267,23 @@
                     <Label Text="Monthly overview" FontSize="14" TextColor="Gray" HorizontalOptions="Center" Margin="0,5,0,15"/>
 
                     <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" RowSpacing="20" ColumnSpacing="20">
-                        <!-- Total Income -->
-                        <Frame Grid.Row="0" Grid.Column="0" BackgroundColor="#f0f0f0" Padding="10" CornerRadius="10">
-                            <VerticalStackLayout>
-                                <Label Text="Total Income" FontAttributes="Bold" HorizontalOptions="Center"/>
-                                <Label x:Name="TotalIncomeLabel" Text="£1,100" TextColor="Green" FontSize="20" FontAttributes="Bold" HorizontalOptions="Center"/>
-                            </VerticalStackLayout>
-                        </Frame>
+						<!-- Total Income -->
+						<Frame Grid.Row="0" Grid.Column="0" BackgroundColor="#f0f0f0" Padding="10" CornerRadius="10">
+							<VerticalStackLayout>
+								<Label Text="Total Income" FontAttributes="Bold" HorizontalOptions="Center"/>
+								<Label x:Name="TotalIncomeLabel"
+									   Text="{Binding TotalIncome, StringFormat='£{0:N0}'}"
+									   TextColor="Green"
+									   FontSize="20"
+									   FontAttributes="Bold"
+									   HorizontalOptions="Center"/>
+								<ActivityIndicator IsRunning="{Binding IsLoading}"
+												   IsVisible="{Binding IsLoading}"
+												   Color="Green"
+												   HorizontalOptions="Center"
+												   Scale="0.8"/>
+							</VerticalStackLayout>
+						</Frame>
 
                         <!-- Total Expenses -->
                         <Frame Grid.Row="0" Grid.Column="1" BackgroundColor="#f0f0f0" Padding="10" CornerRadius="10">

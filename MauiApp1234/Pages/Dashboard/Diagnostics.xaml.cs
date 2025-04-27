@@ -22,7 +22,7 @@ namespace MauiApp1234.Pages.Dashboard
         public Diagnostics()
         {
             InitializeComponent();
-
+            LoadTotalIncome();
             // Set data source for pie chart
             var expenseData = new List<ExpenseItem>
     {
@@ -50,8 +50,72 @@ namespace MauiApp1234.Pages.Dashboard
         {
             // This will be called when a radio button is checked
         }
+        private async Task LoadCustomerIncome()
+        {
+            long customerId = 0;
 
-        private void OnAddNewAccountClicked(object sender, EventArgs e)
+            if (Preferences.Default.ContainsKey("customer_id"))
+            {
+                string n = Preferences.Default.Get("customer_id", "");
+
+                if (string.IsNullOrWhiteSpace(n))
+                {
+                    await DisplayAlert("Error", "Please Log In with a valid user before proceeding.", "OK");
+                    return;
+                }
+                else
+                {
+                    customerId = Convert.ToInt64(n);
+                }
+            }
+            else
+            {
+                await DisplayAlert("Error", "Please Log In with a valid user before proceeding.", "OK");
+                return;
+            }
+
+            TotalIncomeLabel.Text = "Loading...";
+            IsLoadingIndicator.IsRunning = true;
+            IsLoadingIndicator.IsVisible = true;
+
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(_connectionString))
+                {
+                    await conn.OpenAsync();
+                    // Modified SQL query to filter by customer_id
+                    string sql = $"SELECT monthly_income FROM customer WHERE customer_id = @customerId";
+                    using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@customerId", customerId);
+                        object result = await cmd.ExecuteScalarAsync();
+
+                        if (result != DBNull.Value && result != null)
+                        {
+                            TotalIncomeLabel.Text = $"£{Convert.ToDecimal(result):N0}";
+                        }
+                        else
+                        {
+                            TotalIncomeLabel.Text = "£0"; // Or a message indicating no income for this customer
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                TotalIncomeLabel.Text = "Error loading income";
+                Console.WriteLine($"Error loading income: {ex.Message}");
+                // Optionally display a more informative error to the user
+            }
+            finally
+            {
+                IsLoadingIndicator.IsRunning = false;
+                IsLoadingIndicator.IsVisible = false;
+            }
+        }
+    }
+
+    private void OnAddNewAccountClicked(object sender, EventArgs e)
         {
             // Handle add account button
             DisplayAlert("Add Account", "This would add a new account", "OK");
