@@ -113,9 +113,9 @@ namespace MauiApp1234.Pages.Dashboard
                 IsLoadingIndicator.IsVisible = false;
             }
         }
-    }
 
-    private void OnAddNewAccountClicked(object sender, EventArgs e)
+
+        private void OnAddNewAccountClicked(object sender, EventArgs e)
         {
             // Handle add account button
             DisplayAlert("Add Account", "This would add a new account", "OK");
