@@ -79,11 +79,15 @@ namespace MauiApp1234.Pages.Dashboard
                 return;
             }
 
+            // Database connection string
+            string connString = "server=dbhost.cs.man.ac.uk;user=b66855mm;password=iTIfvSknLwQZHtrLaHMy4uTsM/UuEQvZfTqa0ei81+k;database=b66855mm";
 
-            try
-            {
-                using (MySqlConnection conn = new MySqlConnection(_connectionString))
+            using (var conn = new MySqlConnection(connString))
+                try
                 {
+                    
+
+                    
                     await conn.OpenAsync();
                     // Modified SQL query to filter by customer_id
                     string sql = $"SELECT monthly_income FROM customer WHERE customer_id = @customerId";
@@ -101,19 +105,15 @@ namespace MauiApp1234.Pages.Dashboard
                             TotalIncomeLabel.Text = "£0"; // Or a message indicating no income for this customer
                         }
                     }
+                    
                 }
-            }
             catch (Exception ex)
             {
                 TotalIncomeLabel.Text = "Error loading income";
                 Console.WriteLine($"Error loading income: {ex.Message}");
                 // Optionally display a more informative error to the user
             }
-            finally
-            {
-                IsLoadingIndicator.IsRunning = false;
-                IsLoadingIndicator.IsVisible = false;
-            }
+            
         }
 
 
