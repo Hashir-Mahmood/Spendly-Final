@@ -18,8 +18,7 @@ namespace MauiApp1234
                     fonts.AddFont("Outfit-Bold.ttf", "OpenSansBold");
                 });
 
-            // Register the TTS service
-            builder.Services.AddSingleton<ITtsService, TtsService>();
+            
 
 #if DEBUG
             builder.Logging.AddDebug();
