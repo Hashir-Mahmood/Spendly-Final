@@ -175,13 +175,13 @@ namespace MauiApp1234.Pages.Dashboard
             }
         }
 
-        // --- MODIFIED: Load expense data with date filtering ---
-        private async Task LoadExpenseDataAsync()
+        // --- MODIFIED: Load expense data with fixed date for December 2024 ---
+        private async Task LoadExpenseDataAsync()
         {
             if (_customerId == 0)
             {
                 MainThread.BeginInvokeOnMainThread(() => { // Ensure UI updates are on Main Thread
-                    TotalExpensesLabel.Text = "Login Required";
+                    TotalExpensesLabel.Text = "Login Required";
                     _totalExpenses = 0;
                     ExpensePieSeries.ItemsSource = null;
                     ExpenseBreakdownLayout.Children.Clear();
@@ -190,35 +190,13 @@ namespace MauiApp1234.Pages.Dashboard
             }
 
             string connString = "server=dbhost.cs.man.ac.uk;user=b66855mm;password=iTIfvSknLwQZHtrLaHMy4uTsM/UuEQvZfTqa0ei81+k;database=b66855mm"; // Replace with your actual password
-            var expenseData = new List<ExpenseItem>();
+            var expenseData = new List<ExpenseItem>();
             _totalExpenses = 0; // Reset total expenses
 
-            // --- Calculate Date Range ---
-            DateTime now = DateTime.Now;
-            DateTime startDate;
-            DateTime endDate;
-
-            switch (_selectedTimePeriod)
-            {
-                case "Week":
-                    // Assuming week starts on Monday (adjust DayOfWeek.Monday if needed)
-                    int diff = (7 + (now.DayOfWeek - DayOfWeek.Monday)) % 7;
-                    startDate = now.AddDays(-1 * diff).Date; // Start of current week (00:00:00)
-                    endDate = startDate.AddDays(7);           // Start of next week (00:00:00)
-                    break;
-
-                case "Year":
-                    startDate = new DateTime(now.Year, 1, 1); // January 1st of current year
-                    endDate = startDate.AddYears(1);          // January 1st of next year
-                    break;
-
-                case "Month":
-                default: // Default to Month
-                    startDate = new DateTime(now.Year, now.Month, 1); // First day of current month
-                    endDate = startDate.AddMonths(1);                 // First day of next month
-                    break;
-            }
-            Debug.WriteLine($"Filtering expenses from {startDate:yyyy-MM-dd} to {endDate:yyyy-MM-dd} (exclusive)");
+            // --- FIXED DATE RANGE FOR DECEMBER 2024 ---
+            DateTime startDate = new DateTime(2024, 12, 1); // December 1st, 2024
+            DateTime endDate = new DateTime(2025, 1, 1);  // January 1st, 2025 (exclusive)
+            Debug.WriteLine($"Filtering expenses from {startDate:yyyy-MM-dd} to {endDate:yyyy-MM-dd} (exclusive) for December 2024");
 
 
             using (var conn = new MySqlConnection(connString))
@@ -227,33 +205,33 @@ namespace MauiApp1234.Pages.Dashboard
                 {
                     await conn.OpenAsync();
 
-                    // --- Build SQL Query with Date Filters ---
-                    var sqlBuilder = new StringBuilder(@"
-                        SELECT
-                            t.`transaction-category` AS Category,
-                            SUM(ABS(t.`transaction-amount`)) AS TotalAmount
-                        FROM `transaction` t
-                        JOIN `account` a ON t.`account-id` = a.`account-id`
-                        WHERE a.`customer-id` = @customerId
-                    ");
+                    // --- Build SQL Query with Date Filters ---
+                    var sqlBuilder = new StringBuilder(@"
+                        SELECT
+                            t.`transaction-category` AS Category,
+                            SUM(ABS(t.`transaction-amount`)) AS TotalAmount
+                        FROM `transaction` t
+                        JOIN `account` a ON t.`account-id` = a.`account-id`
+                        WHERE a.`customer-id` = @customerId
+                    ");
 
-                    // Append date filtering clause
-                    sqlBuilder.Append(" AND t.`transaction-date` >= @startDate AND t.`transaction-date` < @endDate ");
+                    // Append date filtering clause for December 2024
+                    sqlBuilder.Append(" AND t.`transaction-date` >= @startDate AND t.`transaction-date` < @endDate ");
 
-                    // Append category filtering clause
-                    sqlBuilder.Append(@"
-                        AND t.`transaction-category` IN ('Mortgage', 'Utility', 'Food', 'Shopping', 'Leisure', 'Health', 'Transfer', 'Gambling', 'Life Event', 'Monthly fees', 'Withdrawal')
-                        GROUP BY t.`transaction-category`
-                        HAVING TotalAmount > 0;
-                    ");
+                    // Append category filtering clause
+                    sqlBuilder.Append(@"
+                        AND t.`transaction-category` IN ('Mortgage', 'Utility', 'Food', 'Shopping', 'Leisure', 'Health', 'Transfer', 'Gambling', 'Life Event', 'Monthly fees', 'Withdrawal')
+                        GROUP BY t.`transaction-category`
+                        HAVING TotalAmount > 0;
+                    ");
 
                     string sql = sqlBuilder.ToString();
                     Debug.WriteLine($"Executing SQL: {sql}"); // For debugging
 
-                    using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+                    using (MySqlCommand cmd = new MySqlCommand(sql, conn))
                     {
-                        // Add parameters securely
-                        cmd.Parameters.AddWithValue("@customerId", _customerId);
+                        // Add parameters securely
+                        cmd.Parameters.AddWithValue("@customerId", _customerId);
                         cmd.Parameters.AddWithValue("@startDate", startDate);
                         cmd.Parameters.AddWithValue("@endDate", endDate);
 
@@ -271,8 +249,8 @@ namespace MauiApp1234.Pages.Dashboard
                         }
                     }
 
-                    // Update UI on the main thread
-                    MainThread.BeginInvokeOnMainThread(() =>
+                    // Update UI on the main thread
+                    MainThread.BeginInvokeOnMainThread(() =>
                     {
                         if (ExpensePieSeries != null)
                         {
@@ -280,14 +258,14 @@ namespace MauiApp1234.Pages.Dashboard
                             ExpensePieSeries.XBindingPath = "Category";
                             ExpensePieSeries.YBindingPath = "Amount";
                             ExpensePieSeries.ExplodeIndex = expenseData.Count > 1 ? 0 : -1;
-                            // Optional: Force chart refresh if needed, though ItemsSource change should handle it
-                            // ExpensePieChart.InvalidateChart();
-                        }
+                            // Optional: Force chart refresh if needed, though ItemsSource change should handle it
+                            // ExpensePieChart.InvalidateChart();
+                        }
 
                         PopulateExpenseBreakdown(expenseData);
                         TotalExpensesLabel.Text = _totalExpenses.ToString("C0", CultureInfo.GetCultureInfo("en-GB"));
                         UpdateNetCashFlow(); // Recalculate net flow after expenses are updated
-                    });
+                    });
                 }
                 catch (Exception ex)
                 {
@@ -297,10 +275,10 @@ namespace MauiApp1234.Pages.Dashboard
                         ExpensePieSeries.ItemsSource = null;
                         ExpenseBreakdownLayout.Children.Clear();
                         ExpenseBreakdownLayout.Children.Add(new Label { Text = "Error loading expense data.", TextColor = Colors.Red });
-                        DisplayAlert("Database Error", $"Failed to load expense data for {_selectedTimePeriod}: {ex.Message}", "OK");
+                        DisplayAlert("Database Error", $"Failed to load expense data for December 2024: {ex.Message}", "OK");
                         _totalExpenses = 0; // Reset on error
-                        UpdateNetCashFlow(); // Update net flow even on error
-                    });
+                        UpdateNetCashFlow(); // Update net flow even on error
+                    });
                     Console.WriteLine($"Error loading expenses: {ex.Message}");
                 }
             }
