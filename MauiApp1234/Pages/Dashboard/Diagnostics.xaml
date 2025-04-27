@@ -5,301 +5,192 @@
              BackgroundColor="#f4f6f9"
              xmlns:chart="clr-namespace:Syncfusion.Maui.Charts;assembly=Syncfusion.Maui.Charts"
              xmlns:local="clr-namespace:MauiApp1234.Pages.Dashboard">
-    <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="20">
+	<ScrollView>
+		<VerticalStackLayout Padding="20" Spacing="20">
 
-            <!-- Header -->
-            <Label Text="Financial Diagnostics" FontSize="28" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,10,0,10"/>
+			<Label Text="Financial Diagnostics" FontSize="28" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,10,0,10"/>
 
-            <!-- Time Period Selection -->
-            <Frame CornerRadius="10" Padding="15" BackgroundColor="White">
-                <VerticalStackLayout>
-                    <Label Text="Track your financial data over time" FontSize="14" TextColor="Gray" HorizontalOptions="Center" Margin="0,0,0,10"/>
-                    <HorizontalStackLayout HorizontalOptions="Center" Spacing="20">
-                        <RadioButton Content="Week" GroupName="TimePeriod" CheckedChanged="OnTimePeriodChanged" />
-                        <RadioButton Content="Month" GroupName="TimePeriod" IsChecked="True" CheckedChanged="OnTimePeriodChanged" />
-                        <RadioButton Content="Year" GroupName="TimePeriod" CheckedChanged="OnTimePeriodChanged" />
-                    </HorizontalStackLayout>
-                </VerticalStackLayout>
-            </Frame>
+			<Frame CornerRadius="10" Padding="15" BackgroundColor="White" BorderColor="LightGray" HasShadow="True">
+				<VerticalStackLayout>
+					<Label Text="Track your financial data over time" FontSize="14" TextColor="Gray" HorizontalOptions="Center" Margin="0,0,0,10"/>
+					<HorizontalStackLayout HorizontalOptions="Center" Spacing="20">
+						<RadioButton Content="Week" GroupName="TimePeriod" CheckedChanged="OnTimePeriodChanged" AutomationId="WeekRadio"/>
+						<RadioButton Content="Month" GroupName="TimePeriod" IsChecked="True" CheckedChanged="OnTimePeriodChanged" AutomationId="MonthRadio"/>
+						<RadioButton Content="Year" GroupName="TimePeriod" CheckedChanged="OnTimePeriodChanged" AutomationId="YearRadio"/>
+					</HorizontalStackLayout>
+				</VerticalStackLayout>
+			</Frame>
 
-            <!-- Income Chart -->
-            <Frame CornerRadius="10" Padding="15" BackgroundColor="White">
-                <VerticalStackLayout>
-                    <Label Text="Income Breakdown" FontSize="22" FontAttributes="Bold" HorizontalOptions="Center"/>
-                    <Label Text="Track your income split across accounts" FontSize="14" TextColor="Gray" HorizontalOptions="Center" Margin="0,5,0,15"/>
+			<Frame CornerRadius="10" Padding="15" BackgroundColor="White" BorderColor="LightGray" HasShadow="True">
+				<VerticalStackLayout>
+					<Label Text="Income Breakdown" FontSize="22" FontAttributes="Bold" HorizontalOptions="Center"/>
+					<Label Text="Track your income split across accounts" FontSize="14" TextColor="Gray" HorizontalOptions="Center" Margin="0,5,0,15"/>
 
-                    <!-- Income Progress Bars -->
-                    <VerticalStackLayout Spacing="10" x:Name="IncomeBreakdownLayout">
-                        <HorizontalStackLayout Spacing="10">
-                            <Label Text="Classic" FontSize="14" FontAttributes="Bold" WidthRequest="120"/>
-                            <ProgressBar Progress="0.4" HeightRequest="10" WidthRequest="200" ProgressColor="#6f61ef"/>
-                            <Label Text="£400" FontSize="14" TextColor="Green" HorizontalOptions="EndAndExpand"/>
-                            <Label Text="⬆" FontSize="16" TextColor="Green"/>
-                        </HorizontalStackLayout>
+					<VerticalStackLayout Spacing="10" x:Name="IncomeBreakdownLayout" MinimumHeightRequest="50">
+						<ActivityIndicator IsRunning="True" Color="#6f61ef" Margin="0,20"/>
+						<Label Text="Loading income data..." HorizontalOptions="Center" TextColor="Gray"/>
+					</VerticalStackLayout>
 
-                        <HorizontalStackLayout Spacing="10">
-                            <Label Text="Club Lloyds" FontSize="14" FontAttributes="Bold" WidthRequest="120"/>
-                            <ProgressBar Progress="0.3" HeightRequest="10" WidthRequest="200" ProgressColor="#6f61ef"/>
-                            <Label Text="£300" FontSize="14" TextColor="Green" HorizontalOptions="EndAndExpand"/>
-                            <Label Text="⬆" FontSize="16" TextColor="Green"/>
-                        </HorizontalStackLayout>
+					<Button Text="+ Add New Account" TextColor="White" BackgroundColor="#6f61ef" BorderColor="Transparent" BorderWidth="0" CornerRadius="20" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,15,0,0" Clicked="OnAddNewAccountClicked"/>
+				</VerticalStackLayout>
+			</Frame>
 
-                        <HorizontalStackLayout Spacing="10">
-                            <Label Text="Easy Saver" FontSize="14" FontAttributes="Bold" WidthRequest="120"/>
-                            <ProgressBar Progress="0.2" HeightRequest="10" WidthRequest="200" ProgressColor="#6f61ef"/>
-                            <Label Text="£200" FontSize="14" TextColor="Green" HorizontalOptions="EndAndExpand"/>
-                            <Label Text="⬆" FontSize="16" TextColor="Green"/>
-                        </HorizontalStackLayout>
+			<Frame CornerRadius="10" Padding="15" BackgroundColor="White" BorderColor="LightGray" HasShadow="True">
+				<VerticalStackLayout>
+					<Label Text="Expense Breakdown" FontSize="22" FontAttributes="Bold" HorizontalOptions="Center"/>
+					<Label Text="Track your expenses across categories" FontSize="14" TextColor="Gray" HorizontalOptions="Center" Margin="0,5,0,15"/>
 
-                        <HorizontalStackLayout Spacing="10">
-                            <Label Text="Club Advantage" FontSize="14" FontAttributes="Bold" WidthRequest="120"/>
-                            <ProgressBar Progress="0.1" HeightRequest="10" WidthRequest="200" ProgressColor="#6f61ef"/>
-                            <Label Text="£100" FontSize="14" TextColor="Green" HorizontalOptions="EndAndExpand"/>
-                            <Label Text="⬆" FontSize="16" TextColor="Green"/>
-                        </HorizontalStackLayout>
+					<Label Text="Select categories to display:" FontAttributes="Bold" Margin="0,0,0,5"/>
+					<ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Never" Margin="0,0,0,15">
+						<HorizontalStackLayout Spacing="8" x:Name="CategoryChipsLayout">
+							<Frame Padding="8,5" CornerRadius="15" BackgroundColor="LightGray">
+								<HorizontalStackLayout Spacing="5">
+									<Label Text="+ Add Category" TextColor="#6f61ef" FontSize="12" FontAttributes="Bold">
+										<Label.GestureRecognizers>
+											<TapGestureRecognizer Tapped="OnAddCategoryTapped"/>
+										</Label.GestureRecognizers>
+									</Label>
+								</HorizontalStackLayout>
+							</Frame>
+						</HorizontalStackLayout>
+					</ScrollView>
 
-                        <HorizontalStackLayout Spacing="10">
-                            <Label Text="Interest" FontSize="14" FontAttributes="Bold" WidthRequest="120"/>
-                            <ProgressBar Progress="0.1" HeightRequest="10" WidthRequest="200" ProgressColor="#6f61ef"/>
-                            <Label Text="£100" FontSize="14" TextColor="Green" HorizontalOptions="EndAndExpand"/>
-                            <Label Text="⬆" FontSize="16" TextColor="Green"/>
-                        </HorizontalStackLayout>
-                    </VerticalStackLayout>
+					<chart:SfCircularChart HeightRequest="250" Margin="0,0,0,15" x:Name="ExpensePieChart">
+						<chart:SfCircularChart.Legend>
+							<chart:ChartLegend/>
+						</chart:SfCircularChart.Legend>
+						<chart:SfCircularChart.Series>
+							<chart:PieSeries ShowDataLabels="True"
+                                             EnableTooltip="True"
+                                             ExplodeIndex="0" ExplodeRadius="10"
+                                             x:Name="ExpensePieSeries"
+                                             XBindingPath="Category"  YBindingPath="Amount">
+								<chart:PieSeries.PaletteBrushes>
+									<SolidColorBrush Color="#8A2BE2"/>
+									<SolidColorBrush Color="#BA55D3"/>
+									<SolidColorBrush Color="#9370DB"/>
+									<SolidColorBrush Color="#DA70D6"/>
+									<SolidColorBrush Color="#EE82EE"/>
+									<SolidColorBrush Color="#DDA0DD"/>
+									<SolidColorBrush Color="#9966CC"/>
+									<SolidColorBrush Color="#C8A2C8"/>
+									<SolidColorBrush Color="#E6E6FA"/>
+									<SolidColorBrush Color="#7B68EE"/>
+									<SolidColorBrush Color="#6A5ACD"/>
+									<SolidColorBrush Color="#483D8B"/>
+								</chart:PieSeries.PaletteBrushes>
+								<chart:PieSeries.DataLabelSettings>
+									<chart:CircularDataLabelSettings LabelPlacement="Outer" UseSeriesPalette="False">
+										<chart:CircularDataLabelSettings.LabelStyle>
+											<chart:ChartDataLabelStyle LabelFormat="0'%" FontSize="10" TextColor="Black"/>
+										</chart:CircularDataLabelSettings.LabelStyle>
+									</chart:CircularDataLabelSettings>
+								</chart:PieSeries.DataLabelSettings>
+							</chart:PieSeries>
+						</chart:SfCircularChart.Series>
+					</chart:SfCircularChart>
 
-                    <Button Text="+ Add New Account" TextColor="White" BackgroundColor="#6f61ef" BorderColor="Grey" BorderWidth="1" CornerRadius="20" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,15,0,0" Clicked="OnAddNewAccountClicked"/>
-                </VerticalStackLayout>
-            </Frame>
+					<VerticalStackLayout Spacing="10" x:Name="ExpenseBreakdownLayout" MinimumHeightRequest="100">
+						<ActivityIndicator IsRunning="True" Color="#6f61ef" Margin="0,20"/>
+						<Label Text="Loading expense data..." HorizontalOptions="Center" TextColor="Gray"/>
+					</VerticalStackLayout>
+				</VerticalStackLayout>
+			</Frame>
 
-            <!-- Expense Breakdown with Pie Chart -->
-            <Frame CornerRadius="10" Padding="15" BackgroundColor="White">
-                <VerticalStackLayout>
-                    <Label Text="Expense Breakdown" FontSize="22" FontAttributes="Bold" HorizontalOptions="Center"/>
-                    <Label Text="Track your expenses across categories" FontSize="14" TextColor="Gray" HorizontalOptions="Center" Margin="0,5,0,15"/>
+			<Frame x:Name="CategoryPickerPopup" IsVisible="false" BackgroundColor="White" CornerRadius="10" Padding="15" Margin="20,0" BorderColor="LightGray" HasShadow="True">
+				<Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="15">
+					<Label Grid.Row="0" Text="Add Categories" FontAttributes="Bold" HorizontalOptions="Center"/>
+					<Grid Grid.Row="1" RowDefinitions="Auto,Auto,Auto,Auto" ColumnDefinitions="*,*,*" RowSpacing="15" ColumnSpacing="10">
+						<HorizontalStackLayout Grid.Row="0" Grid.Column="0" Spacing="5">
+							<CheckBox x:Name="SavingCheckbox" />
+							<Label Text="Saving" VerticalOptions="Center"/>
+						</HorizontalStackLayout>
+						<HorizontalStackLayout Grid.Row="0" Grid.Column="1" Spacing="5">
+							<CheckBox x:Name="HealthCheckbox" />
+							<Label Text="Health" VerticalOptions="Center"/>
+						</HorizontalStackLayout>
+						<HorizontalStackLayout Grid.Row="0" Grid.Column="2" Spacing="5">
+							<CheckBox x:Name="TransferCheckbox" />
+							<Label Text="Transfer" VerticalOptions="Center"/>
+						</HorizontalStackLayout>
+						<HorizontalStackLayout Grid.Row="1" Grid.Column="0" Spacing="5">
+							<CheckBox x:Name="GamblingCheckbox" />
+							<Label Text="Gambling" VerticalOptions="Center"/>
+						</HorizontalStackLayout>
+						<HorizontalStackLayout Grid.Row="1" Grid.Column="1" Spacing="5">
+							<CheckBox x:Name="LifeEventCheckbox" />
+							<Label Text="Life Event" VerticalOptions="Center"/>
+						</HorizontalStackLayout>
+						<HorizontalStackLayout Grid.Row="1" Grid.Column="2" Spacing="5">
+							<CheckBox x:Name="MonthlyFeesCheckbox" />
+							<Label Text="Monthly fees" VerticalOptions="Center"/>
+						</HorizontalStackLayout>
+						<HorizontalStackLayout Grid.Row="2" Grid.Column="0" Spacing="5">
+							<CheckBox x:Name="InterestCheckbox" />
+							<Label Text="Interest" VerticalOptions="Center"/>
+						</HorizontalStackLayout>
+						<HorizontalStackLayout Grid.Row="2" Grid.Column="1" Spacing="5">
+							<CheckBox x:Name="WithdrawalCheckbox" />
+							<Label Text="Withdrawal" VerticalOptions="Center"/>
+						</HorizontalStackLayout>
+						<HorizontalStackLayout Grid.Row="2" Grid.Column="2" Spacing="5">
+							<CheckBox x:Name="MonthlyIncomeCheckbox" />
+							<Label Text="Monthly income" VerticalOptions="Center"/>
+						</HorizontalStackLayout>
+					</Grid>
+					<HorizontalStackLayout Grid.Row="2" HorizontalOptions="Center" Spacing="20" Margin="0,10,0,0">
+						<Button Text="Cancel" CornerRadius="20" BackgroundColor="LightGray" TextColor="Black" Clicked="OnCancelCategorySelection"/>
+						<Button Text="Add Selected" CornerRadius="20" BackgroundColor="#6f61ef" TextColor="White" Clicked="OnAddSelectedCategories"/>
+					</HorizontalStackLayout>
+				</Grid>
+			</Frame>
 
-                    <!-- Category Selection -->
-                    <Label Text="Select categories to display:" FontAttributes="Bold" Margin="0,0,0,5"/>
-                    <ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Never" Margin="0,0,0,15">
-                        <HorizontalStackLayout Spacing="8" x:Name="CategoryChipsLayout">
-                            <!-- Active Categories (Selected) -->
-                            <Frame Padding="8,5" CornerRadius="15" BackgroundColor="#6f61ef">
-                                <HorizontalStackLayout Spacing="5">
-                                    <Label Text="Mortgage" TextColor="White" FontSize="12"/>
-                                    <Label Text="×" TextColor="White" FontSize="14" FontAttributes="Bold">
-                                        <Label.GestureRecognizers>
-                                            <TapGestureRecognizer CommandParameter="Mortgage" Tapped="OnCategoryRemoved"/>
-                                        </Label.GestureRecognizers>
-                                    </Label>
-                                </HorizontalStackLayout>
-                            </Frame>
+			<Frame CornerRadius="10" Padding="15" BackgroundColor="White" BorderColor="LightGray" HasShadow="True">
+				<VerticalStackLayout>
+					<Label Text="Financial Summary" FontSize="22" FontAttributes="Bold" HorizontalOptions="Center"/>
+					<Label Text="Monthly overview" FontSize="14" TextColor="Gray" HorizontalOptions="Center" Margin="0,5,0,15"/>
 
-                            <Frame Padding="8,5" CornerRadius="15" BackgroundColor="#6f61ef">
-                                <HorizontalStackLayout Spacing="5">
-                                    <Label Text="Utility" TextColor="White" FontSize="12"/>
-                                    <Label Text="×" TextColor="White" FontSize="14" FontAttributes="Bold">
-                                        <Label.GestureRecognizers>
-                                            <TapGestureRecognizer CommandParameter="Utility" Tapped="OnCategoryRemoved"/>
-                                        </Label.GestureRecognizers>
-                                    </Label>
-                                </HorizontalStackLayout>
-                            </Frame>
-
-                            <Frame Padding="8,5" CornerRadius="15" BackgroundColor="#6f61ef">
-                                <HorizontalStackLayout Spacing="5">
-                                    <Label Text="Food" TextColor="White" FontSize="12"/>
-                                    <Label Text="×" TextColor="White" FontSize="14" FontAttributes="Bold">
-                                        <Label.GestureRecognizers>
-                                            <TapGestureRecognizer CommandParameter="Food" Tapped="OnCategoryRemoved"/>
-                                        </Label.GestureRecognizers>
-                                    </Label>
-                                </HorizontalStackLayout>
-                            </Frame>
-
-                            <Frame Padding="8,5" CornerRadius="15" BackgroundColor="#6f61ef">
-                                <HorizontalStackLayout Spacing="5">
-                                    <Label Text="Shopping" TextColor="White" FontSize="12"/>
-                                    <Label Text="×" TextColor="White" FontSize="14" FontAttributes="Bold">
-                                        <Label.GestureRecognizers>
-                                            <TapGestureRecognizer CommandParameter="Shopping" Tapped="OnCategoryRemoved"/>
-                                        </Label.GestureRecognizers>
-                                    </Label>
-                                </HorizontalStackLayout>
-                            </Frame>
-
-                            <Frame Padding="8,5" CornerRadius="15" BackgroundColor="#6f61ef">
-                                <HorizontalStackLayout Spacing="5">
-                                    <Label Text="Leisure" TextColor="White" FontSize="12"/>
-                                    <Label Text="×" TextColor="White" FontSize="14" FontAttributes="Bold">
-                                        <Label.GestureRecognizers>
-                                            <TapGestureRecognizer CommandParameter="Leisure" Tapped="OnCategoryRemoved"/>
-                                        </Label.GestureRecognizers>
-                                    </Label>
-                                </HorizontalStackLayout>
-                            </Frame>
-
-                            <!-- Add more button -->
-                            <Frame Padding="8,5" CornerRadius="15" BackgroundColor="LightGray">
-                                <HorizontalStackLayout Spacing="5">
-                                    <Label Text="+ Add Category" TextColor="#6f61ef" FontSize="12" FontAttributes="Bold">
-                                        <Label.GestureRecognizers>
-                                            <TapGestureRecognizer Tapped="OnAddCategoryTapped"/>
-                                        </Label.GestureRecognizers>
-                                    </Label>
-                                </HorizontalStackLayout>
-                            </Frame>
-                        </HorizontalStackLayout>
-                    </ScrollView>
-
-                    <!-- Syncfusion Pie Chart -->
-                    <chart:SfCircularChart HeightRequest="250" Margin="0,0,0,15" x:Name="ExpensePieChart">
-                        <chart:SfCircularChart.Legend>
-                            <chart:ChartLegend/>
-                        </chart:SfCircularChart.Legend>
-                        <chart:SfCircularChart.Series>
-                            <chart:PieSeries ShowDataLabels="True" 
-                        EnableTooltip="True"
-                        ExplodeIndex="0" 
-                        ExplodeRadius="10"
-                        x:Name="ExpensePieSeries">
-                                <chart:PieSeries.PaletteBrushes>
-                                    <SolidColorBrush Color="#8A2BE2"/>
-                                    <SolidColorBrush Color="#9370DB"/>
-                                    <SolidColorBrush Color="#BA55D3"/>
-                                    <SolidColorBrush Color="#DA70D6"/>
-                                    <SolidColorBrush Color="#EE82EE"/>
-                                    <SolidColorBrush Color="#6A0DAD"/>
-                                    <SolidColorBrush Color="#9400D3"/>
-                                    <SolidColorBrush Color="#800080"/>
-                                    <SolidColorBrush Color="#4B0082"/>
-                                    <SolidColorBrush Color="#7B68EE"/>
-                                    <SolidColorBrush Color="#6A5ACD"/>
-                                    <SolidColorBrush Color="#483D8B"/>
-                                </chart:PieSeries.PaletteBrushes>
-                            </chart:PieSeries>
-                        </chart:SfCircularChart.Series>
-                    </chart:SfCircularChart>
-
-                    <!-- Category List -->
-                    <VerticalStackLayout Spacing="10" x:Name="ExpenseBreakdownLayout">
-                        <HorizontalStackLayout Spacing="10">
-                            <Label Text="Mortgage" FontSize="14" FontAttributes="Bold" WidthRequest="120"/>
-                            <ProgressBar Progress="0.47" HeightRequest="10" WidthRequest="200" ProgressColor="#6f61ef"/>
-                            <Label Text="£750" FontSize="14" TextColor="Red" HorizontalOptions="EndAndExpand"/>
-                            <Label Text="⬇" FontSize="16" TextColor="Red"/>
-                        </HorizontalStackLayout>
-
-                        <HorizontalStackLayout Spacing="10">
-                            <Label Text="Utility" FontSize="14" FontAttributes="Bold" WidthRequest="120"/>
-                            <ProgressBar Progress="0.13" HeightRequest="10" WidthRequest="200" ProgressColor="#6f61ef"/>
-                            <Label Text="£210" FontSize="14" TextColor="Red" HorizontalOptions="EndAndExpand"/>
-                            <Label Text="⬇" FontSize="16" TextColor="Red"/>
-                        </HorizontalStackLayout>
-
-                        <HorizontalStackLayout Spacing="10">
-                            <Label Text="Food" FontSize="14" FontAttributes="Bold" WidthRequest="120"/>
-                            <ProgressBar Progress="0.2" HeightRequest="10" WidthRequest="200" ProgressColor="#6f61ef"/>
-                            <Label Text="£320" FontSize="14" TextColor="Red" HorizontalOptions="EndAndExpand"/>
-                            <Label Text="⬇" FontSize="16" TextColor="Red"/>
-                        </HorizontalStackLayout>
-
-                        <HorizontalStackLayout Spacing="10">
-                            <Label Text="Shopping" FontSize="14" FontAttributes="Bold" WidthRequest="120"/>
-                            <ProgressBar Progress="0.11" HeightRequest="10" WidthRequest="200" ProgressColor="#6f61ef"/>
-                            <Label Text="£180" FontSize="14" TextColor="Red" HorizontalOptions="EndAndExpand"/>
-                            <Label Text="⬇" FontSize="16" TextColor="Red"/>
-                        </HorizontalStackLayout>
-
-                        <HorizontalStackLayout Spacing="10">
-                            <Label Text="Leisure" FontSize="14" FontAttributes="Bold" WidthRequest="120"/>
-                            <ProgressBar Progress="0.09" HeightRequest="10" WidthRequest="200" ProgressColor="#6f61ef"/>
-                            <Label Text="£150" FontSize="14" TextColor="Red" HorizontalOptions="EndAndExpand"/>
-                            <Label Text="⬇" FontSize="16" TextColor="Red"/>
-                        </HorizontalStackLayout>
-                    </VerticalStackLayout>
-                </VerticalStackLayout>
-            </Frame>
-
-            <!-- Category Picker Popup (would be shown when "Add Category" is tapped) -->
-            <Frame x:Name="CategoryPickerPopup" IsVisible="false" BackgroundColor="White" CornerRadius="10" Padding="15" Margin="20,0">
-                <Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="15">
-                    <Label Grid.Row="0" Text="Add Categories" FontAttributes="Bold" HorizontalOptions="Center"/>
-                    <Grid Grid.Row="1" RowDefinitions="Auto,Auto,Auto,Auto" ColumnDefinitions="*,*,*" RowSpacing="15" ColumnSpacing="10">
-                        <!-- Unused categories that can be added -->
-                        <CheckBox Grid.Row="0" Grid.Column="0" x:Name="SavingCheckbox" />
-                        <Label Grid.Row="0" Grid.Column="0" Text="Saving" Margin="35,5,0,0"/>
-
-                        <CheckBox Grid.Row="0" Grid.Column="1" x:Name="HealthCheckbox" />
-                        <Label Grid.Row="0" Grid.Column="1" Text="Health" Margin="35,5,0,0"/>
-
-                        <CheckBox Grid.Row="0" Grid.Column="2" x:Name="TransferCheckbox" />
-                        <Label Grid.Row="0" Grid.Column="2" Text="Transfer" Margin="35,5,0,0"/>
-
-                        <CheckBox Grid.Row="1" Grid.Column="0" x:Name="GamblingCheckbox" />
-                        <Label Grid.Row="1" Grid.Column="0" Text="Gambling" Margin="35,5,0,0"/>
-
-                        <CheckBox Grid.Row="1" Grid.Column="1" x:Name="LifeEventCheckbox" />
-                        <Label Grid.Row="1" Grid.Column="1" Text="Life Event" Margin="35,5,0,0"/>
-
-                        <CheckBox Grid.Row="1" Grid.Column="2" x:Name="MonthlyFeesCheckbox" />
-                        <Label Grid.Row="1" Grid.Column="2" Text="Monthly fees" Margin="35,5,0,0"/>
-
-                        <CheckBox Grid.Row="2" Grid.Column="0" x:Name="InterestCheckbox" />
-                        <Label Grid.Row="2" Grid.Column="0" Text="Interest" Margin="35,5,0,0"/>
-
-                        <CheckBox Grid.Row="2" Grid.Column="1" x:Name="WithdrawalCheckbox" />
-                        <Label Grid.Row="2" Grid.Column="1" Text="Withdrawal" Margin="35,5,0,0"/>
-
-                        <CheckBox Grid.Row="2" Grid.Column="2" x:Name="MonthlyIncomeCheckbox" />
-                        <Label Grid.Row="2" Grid.Column="2" Text="Monthly income" Margin="35,5,0,0"/>
-                    </Grid>
-
-                    <HorizontalStackLayout Grid.Row="2" HorizontalOptions="Center" Spacing="20" Margin="0,10,0,0">
-                        <Button Text="Cancel" CornerRadius="20" BackgroundColor="LightGray" TextColor="Black" Clicked="OnCancelCategorySelection"/>
-                        <Button Text="Add Selected" CornerRadius="20" BackgroundColor="#6f61ef" TextColor="White" Clicked="OnAddSelectedCategories"/>
-                    </HorizontalStackLayout>
-                </Grid>
-            </Frame>
-
-            <!-- Summary Section -->
-            <Frame CornerRadius="10" Padding="15" BackgroundColor="White">
-                <VerticalStackLayout>
-                    <Label Text="Financial Summary" FontSize="22" FontAttributes="Bold" HorizontalOptions="Center"/>
-                    <Label Text="Monthly overview" FontSize="14" TextColor="Gray" HorizontalOptions="Center" Margin="0,5,0,15"/>
-
-                    <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" RowSpacing="20" ColumnSpacing="20">
-						<Frame Grid.Row="0" Grid.Column="0" BackgroundColor="#f0f0f0" Padding="10" CornerRadius="10">
-							<VerticalStackLayout>
-								<Label Text="Monthly Income" FontAttributes="Bold" HorizontalOptions="Center"/>
+					<Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" RowSpacing="15" ColumnSpacing="15">
+						<Frame Grid.Row="0" Grid.Column="0" BackgroundColor="#e8f5e9" Padding="15" CornerRadius="10" BorderColor="#c8e6c9">
+							<VerticalStackLayout Spacing="5">
+								<Label Text="Monthly Income" FontAttributes="Bold" HorizontalOptions="Center" FontSize="14"/>
 								<Label x:Name="TotalIncomeLabel"
-									   Text="£0" TextColor="Green"
-									   FontSize="20"
-									   FontAttributes="Bold"
-									   HorizontalOptions="Center"/>
-								
+                                       Text="Loading..." TextColor="#2e7d32" FontSize="20"
+                                       FontAttributes="Bold"
+                                       HorizontalOptions="Center"/>
 							</VerticalStackLayout>
 						</Frame>
 
-                        <!-- Total Expenses -->
-                        <Frame Grid.Row="0" Grid.Column="1" BackgroundColor="#f0f0f0" Padding="10" CornerRadius="10">
-                            <VerticalStackLayout>
-                                <Label Text="Total Expenses" FontAttributes="Bold" HorizontalOptions="Center"/>
-                                <Label x:Name="TotalExpensesLabel" Text="£1,610" TextColor="Red" FontSize="20" FontAttributes="Bold" HorizontalOptions="Center"/>
-                            </VerticalStackLayout>
-                        </Frame>
+						<Frame Grid.Row="0" Grid.Column="1" BackgroundColor="#ffebee" Padding="15" CornerRadius="10" BorderColor="#ffcdd2">
+							<VerticalStackLayout Spacing="5">
+								<Label Text="Total Expenses" FontAttributes="Bold" HorizontalOptions="Center" FontSize="14"/>
+								<Label x:Name="TotalExpensesLabel"
+                                       Text="Loading..." TextColor="#c62828" FontSize="20"
+                                       FontAttributes="Bold"
+                                       HorizontalOptions="Center"/>
+							</VerticalStackLayout>
+						</Frame>
 
-                        <!-- Net Flow -->
-                        <Frame Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="#f0f0f0" Padding="10" CornerRadius="10">
-                            <VerticalStackLayout>
-                                <Label Text="Net Cash Flow" FontAttributes="Bold" HorizontalOptions="Center"/>
-                                <Label x:Name="NetCashFlowLabel" Text="-£510" TextColor="Red" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center"/>
-                            </VerticalStackLayout>
-                        </Frame>
-                    </Grid>
+						<Frame Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="#e3f2fd" Padding="15" CornerRadius="10" BorderColor="#bbdefb">
+							<VerticalStackLayout Spacing="5">
+								<Label Text="Net Cash Flow" FontAttributes="Bold" HorizontalOptions="Center" FontSize="16"/>
+								<Label x:Name="NetCashFlowLabel"
+                                       Text="Loading..." TextColor="#1565c0" FontSize="24"
+                                       FontAttributes="Bold"
+                                       HorizontalOptions="Center"/>
+							</VerticalStackLayout>
+						</Frame>
+					</Grid>
 
-                    
-                </VerticalStackLayout>
-            </Frame>
+					<Label Text="View Detailed Report" TextColor="#6f61ef" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,20,0,0">
+						<Label.GestureRecognizers>
+							<TapGestureRecognizer Tapped="OnViewDetailedReportTapped"/>
+						</Label.GestureRecognizers>
+					</Label>
 
-        </VerticalStackLayout>
-    </ScrollView>
+				</VerticalStackLayout>
+			</Frame>
+
+		</VerticalStackLayout>
+	</ScrollView>
 </ContentPage>
