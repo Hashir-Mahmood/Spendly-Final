@@ -112,12 +112,12 @@
                             </Grid>
                         </Frame>
 
-                        <!-- Transportation -->
+                        <!-- Utilities -->
                         <Frame Padding="15" HasShadow="False" BackgroundColor="White" CornerRadius="12">
                             <Grid ColumnDefinitions="Auto,*,Auto">
-                                <Label Grid.Column="0" Text="🚗" FontSize="24" TextColor="#10B981" VerticalOptions="Center" Margin="0,0,15,0" />
+                                <Label Grid.Column="0" Text="🛠️" FontSize="24" TextColor="#10B981" VerticalOptions="Center" Margin="0,0,15,0" />
                                 <VerticalStackLayout Grid.Column="1" Spacing="5">
-                                    <Label Text="Transportation" FontAttributes="Bold" />
+                                    <Label Text="Utilities" FontAttributes="Bold" />
                                     <Label Text="£280 spent" TextColor="#6b7280" FontSize="14" />
                                 </VerticalStackLayout>
                                 <Label Grid.Column="2" Text="▼" FontSize="25" TextColor="#6b7280" VerticalOptions="Center" />
@@ -131,6 +131,18 @@
                                 <VerticalStackLayout Grid.Column="1" Spacing="5">
                                     <Label Text="Shopping" FontAttributes="Bold" />
                                     <Label Text="£520 spent" TextColor="#6b7280" FontSize="14" />
+                                </VerticalStackLayout>
+                                <Label Grid.Column="2" Text="▼" FontSize="25" TextColor="#6b7280" VerticalOptions="Center" />
+                            </Grid>
+                        </Frame>
+
+                        <!-- Leisure -->
+                        <Frame Padding="15" HasShadow="False" BackgroundColor="White" CornerRadius="12">
+                            <Grid ColumnDefinitions="Auto,*,Auto">
+                                <Label Grid.Column="0" Text="🏖️" FontSize="24" TextColor="#10B981" VerticalOptions="Center" Margin="0,0,15,0" />
+                                <VerticalStackLayout Grid.Column="1" Spacing="5">
+                                    <Label Text="Leisure" FontAttributes="Bold" />
+                                    <Label Text="£280 spent" TextColor="#6b7280" FontSize="14" />
                                 </VerticalStackLayout>
                                 <Label Grid.Column="2" Text="▼" FontSize="25" TextColor="#6b7280" VerticalOptions="Center" />
                             </Grid>
