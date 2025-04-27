@@ -1,6 +1,10 @@
 using Microsoft.Maui.Controls;
 using System.Collections.Generic;
 using Microsoft.Maui.Graphics;
+using MySqlConnector;
+using Microsoft.Maui.Storage; // For Preferences
+using System.Threading.Tasks;
+using System;
 
 namespace MauiApp1234.Pages.Dashboard
 {
