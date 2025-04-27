@@ -26,7 +26,8 @@ namespace MauiApp1234.Pages.Dashboard
         public Diagnostics()
         {
             InitializeComponent();
-            LoadTotalIncome();
+            LoadCustomerIncome();
+            
             // Set data source for pie chart
             var expenseData = new List<ExpenseItem>
     {
