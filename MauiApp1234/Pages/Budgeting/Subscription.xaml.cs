@@ -154,7 +154,7 @@ public class SubscriptionViewModel : INotifyPropertyChanged
     // Method to handle adding a new subscription (navigate to add subscription page)
     private async Task AddSubscription()
     {
-        //await Application.Current.MainPage.Navigation.PushAsync(new AddSubscription());
+        await Application.Current.MainPage.Navigation.PushAsync(new AddSubscription());
     }
 
     public event PropertyChangedEventHandler PropertyChanged;

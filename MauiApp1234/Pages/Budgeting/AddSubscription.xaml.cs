@@ -112,6 +112,8 @@ public partial class AddSubscription : ContentPage
 
         }
 
+        await Application.Current.MainPage.Navigation.PushAsync(new Subscription());
+
     }
 }
 
