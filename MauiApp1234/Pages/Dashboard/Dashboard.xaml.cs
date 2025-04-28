@@ -188,23 +188,23 @@ namespace MauiApp1234
 
                     // Get all categories from transactions and their spending totals
                     var sqlBuilder = new StringBuilder(@"
-                        SELECT
-                            t.`transaction-category` AS Category,
-                            SUM(ABS(t.`transaction-amount`)) AS TotalAmount
-                        FROM `transaction` t
-                        JOIN `account` a ON t.`account-id` = a.`account-id`
-                        WHERE a.`customer-id` = @customerId
-                    ");
+                SELECT
+                    t.`transaction-category` AS Category,
+                    SUM(ABS(t.`transaction-amount`)) AS TotalAmount
+                FROM `transaction` t
+                JOIN `account` a ON t.`account-id` = a.`account-id`
+                WHERE a.`customer-id` = @customerId
+            ");
 
                     // Append date filtering clause
                     sqlBuilder.Append(" AND t.`transaction-date` >= @startDate AND t.`transaction-date` < @endDate ");
 
                     // Append category filtering clause
                     sqlBuilder.Append(@"
-                        AND t.`transaction-category` IN ('Mortgage', 'Utility', 'Food', 'Shopping', 'Leisure', 'Health', 'Transfer', 'Gambling', 'Life Event', 'Monthly fees', 'Withdrawal')
-                        GROUP BY t.`transaction-category`
-                        HAVING TotalAmount > 0;
-                    ");
+                AND t.`transaction-category` IN ('Mortgage', 'Utility', 'Food', 'Shopping', 'Leisure', 'Health', 'Transfer', 'Gambling', 'Life Event', 'Monthly fees', 'Withdrawal')
+                GROUP BY t.`transaction-category`
+                HAVING TotalAmount > 0;
+            ");
 
                     string sql = sqlBuilder.ToString();
                     Debug.WriteLine($"Executing SQL: {sql}");
@@ -229,25 +229,27 @@ namespace MauiApp1234
                         }
                     }
 
-                    // Get budget amounts for the categories
-                    string budgetSql = @"
-                        SELECT 
-                            `category-name` AS CategoryName,
-                            `budget-amount` AS BudgetAmount
-                        FROM `spending-budget`
-                        WHERE `customer-id` = @customerId";
+                    // Now get custom budgets from the spending-budget table (if available)
+                    var categoryBudgets = new Dictionary<string, decimal>();
 
-                    Dictionary<string, decimal> categoryBudgets = new Dictionary<string, decimal>();
+                    sql = @"
+                SELECT
+                    `category-name` AS Category,
+                    `budget-amount` AS BudgetAmount
+                FROM `spending-budget`
+                WHERE `customer-id` = @customerId
+            ";
 
-                    using (MySqlCommand budgetCmd = new MySqlCommand(budgetSql, conn))
+                    using (MySqlCommand cmd = new MySqlCommand(sql, conn))
                     {
-                        budgetCmd.Parameters.AddWithValue("@customerId", _customerId);
+                        // Add parameter securely
+                        cmd.Parameters.AddWithValue("@customerId", _customerId);
 
-                        using (var reader = await budgetCmd.ExecuteReaderAsync())
+                        using (var reader = await cmd.ExecuteReaderAsync())
                         {
                             while (await reader.ReadAsync())
                             {
-                                string category = reader.GetString("CategoryName");
+                                string category = reader.GetString("Category");
                                 decimal budget = reader.GetDecimal("BudgetAmount");
                                 categoryBudgets[category] = budget;
                             }
@@ -260,12 +262,16 @@ namespace MauiApp1234
                     // Add categories that have spending
                     foreach (var kvp in categorySpending)
                     {
+                        // First check if a custom budget exists for this category
                         decimal budget = 0;
-                        categoryBudgets.TryGetValue(kvp.Key, out budget);
-
-                        // If no budget is set, default to 120% of current spending
-                        if (budget == 0)
+                        if (categoryBudgets.ContainsKey(kvp.Key))
                         {
+                            // Use custom budget if available
+                            budget = categoryBudgets[kvp.Key];
+                        }
+                        else
+                        {
+                            // Default to 120% of the current spending if no custom budget exists
                             budget = kvp.Value * 1.2m;
                         }
 
@@ -291,6 +297,7 @@ namespace MauiApp1234
                     _spendingCategories.Add(new SpendingCategory { Name = "Leisure", CurrentAmount = 120, BudgetAmount = 100 });
                 }
 
+                // Add categories to the UI
                 foreach (var category in _spendingCategories)
                 {
                     // Create horizontal layout for category name and amount
@@ -342,6 +349,7 @@ namespace MauiApp1234
                 });
             }
         }
+
 
         private async Task LoadTotalBalanceAsync(MySqlConnection conn)
         {
