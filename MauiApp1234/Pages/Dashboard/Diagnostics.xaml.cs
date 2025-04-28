@@ -40,7 +40,7 @@ namespace MauiApp1234.Pages.Dashboard
         private decimal _totalExpenses = 0;
         private long _customerId = 0; // Store customer ID for reuse
 
-        // --- NEW: Store the currently selected time period ---
+        // Store the currently selected time period
         private string _selectedTimePeriod = "Month"; // Default to Month
 
         public Diagnostics()
@@ -69,12 +69,10 @@ namespace MauiApp1234.Pages.Dashboard
 
             // Create tasks to load income and expenses concurrently
             // NOTE: LoadCustomerIncomeAsync currently fetches a static monthly income.
-            // It will NOT be filtered by the selected TimePeriod unless you modify it
-            // to sum actual income transactions within the date range.
             Task incomeTask = LoadCustomerIncomeAsync();
 
             // Load expenses based on the _selectedTimePeriod
-            Task expenseTask = LoadExpenseDataAsync(); // Pass the period or let it read the field
+            Task expenseTask = LoadExpenseDataAsync();
 
             // Wait for both tasks to complete
             await Task.WhenAll(incomeTask, expenseTask);
@@ -110,7 +108,6 @@ namespace MauiApp1234.Pages.Dashboard
         }
 
         // Updated method to load income (Still loads static monthly income)
-        // Consider modifying this later to sum income transactions for the selected period if needed.
         private async Task LoadCustomerIncomeAsync()
         {
             if (_customerId == 0)
@@ -120,11 +117,7 @@ namespace MauiApp1234.Pages.Dashboard
                 return;
             }
 
-            // *** Limitation Note ***: This method currently fetches the stored 'monthly_income'
-            // It does not filter actual income transactions by the selected Week/Month/Year.
-            // To filter income like expenses, you would need to query the 'transaction' table
-            // for income categories within the selected date range.
-
+            // *** Limitation Note ***: Fetches stored 'monthly_income', not filtered by date.
             string connString = "server=dbhost.cs.man.ac.uk;user=b66855mm;password=iTIfvSknLwQZHtrLaHMy4uTsM/UuEQvZfTqa0ei81+k;database=b66855mm"; // Replace with your actual password
 
             using (var conn = new MySqlConnection(connString))
@@ -140,7 +133,6 @@ namespace MauiApp1234.Pages.Dashboard
 
                         if (result != DBNull.Value && result != null && decimal.TryParse(result.ToString(), out _totalIncome))
                         {
-                            // Using MainThread for UI updates from background task
                             MainThread.BeginInvokeOnMainThread(() =>
                             {
                                 TotalIncomeLabel.Text = _totalIncome.ToString("C0", CultureInfo.GetCultureInfo("en-GB"));
@@ -155,7 +147,6 @@ namespace MauiApp1234.Pages.Dashboard
                             });
                         }
                     }
-                    // Clear or update income breakdown (implementation depends on whether you fetch transactions)
                     MainThread.BeginInvokeOnMainThread(() =>
                     {
                         IncomeBreakdownLayout.Children.Clear();
@@ -169,34 +160,62 @@ namespace MauiApp1234.Pages.Dashboard
                         TotalIncomeLabel.Text = "Error";
                         _totalIncome = 0;
                         Console.WriteLine($"Error loading income: {ex.Message}");
-                        DisplayAlert("Database Error", $"Failed to load income data: {ex.Message}", "OK");
+                        // Check if the page is still visible before displaying the alert
+                        if (this.Window != null)
+                        {
+                            DisplayAlert("Database Error", $"Failed to load income data: {ex.Message}", "OK");
+                        }
                     });
                 }
             }
         }
 
-        // --- MODIFIED: Load expense data with fixed date for December 2024 ---
-        private async Task LoadExpenseDataAsync()
+        // --- MODIFIED: Load expense data with FIXED date filtering for Dec 2024 / Year 2024 ---
+        private async Task LoadExpenseDataAsync()
         {
             if (_customerId == 0)
             {
                 MainThread.BeginInvokeOnMainThread(() => { // Ensure UI updates are on Main Thread
-                    TotalExpensesLabel.Text = "Login Required";
+                    TotalExpensesLabel.Text = "Login Required";
                     _totalExpenses = 0;
-                    ExpensePieSeries.ItemsSource = null;
-                    ExpenseBreakdownLayout.Children.Clear();
+                    if (ExpensePieSeries != null) ExpensePieSeries.ItemsSource = null; // Null check
+                    if (ExpenseBreakdownLayout != null) ExpenseBreakdownLayout.Children.Clear(); // Null check
                 });
                 return;
             }
 
             string connString = "server=dbhost.cs.man.ac.uk;user=b66855mm;password=iTIfvSknLwQZHtrLaHMy4uTsM/UuEQvZfTqa0ei81+k;database=b66855mm"; // Replace with your actual password
-            var expenseData = new List<ExpenseItem>();
+            var expenseData = new List<ExpenseItem>();
             _totalExpenses = 0; // Reset total expenses
 
-            // --- FIXED DATE RANGE FOR DECEMBER 2024 ---
-            DateTime startDate = new DateTime(2024, 12, 1); // December 1st, 2024
-            DateTime endDate = new DateTime(2025, 1, 1);  // January 1st, 2025 (exclusive)
-            Debug.WriteLine($"Filtering expenses from {startDate:yyyy-MM-dd} to {endDate:yyyy-MM-dd} (exclusive) for December 2024");
+            // --- Calculate FIXED Date Range based on Dec 2024 / Year 2024 ---
+            DateTime startDate;
+            DateTime endDate;
+            int targetYear = 2024;
+            int targetMonth = 12; // December
+
+            switch (_selectedTimePeriod)
+            {
+                case "Week":
+                    // First week of December 2024 (Dec 1st to Dec 7th inclusive)
+                    startDate = new DateTime(targetYear, targetMonth, 1); // Dec 1st, 2024 00:00:00
+                    endDate = startDate.AddDays(7);                      // Dec 8th, 2024 00:00:00 (exclusive)
+                    break;
+
+                case "Year":
+                    // Entire year 2024 (Jan 1st 2024 to Dec 31st 2024 inclusive)
+                    startDate = new DateTime(targetYear, 1, 1);     // Jan 1st, 2024 00:00:00
+                    endDate = startDate.AddYears(1);                // Jan 1st, 2025 00:00:00 (exclusive)
+                    break;
+
+                case "Month":
+                default: // Default to Month (December 2024)
+                    // Entire month of December 2024 (Dec 1st to Dec 31st inclusive)
+                    startDate = new DateTime(targetYear, targetMonth, 1); // Dec 1st, 2024 00:00:00
+                    endDate = startDate.AddMonths(1);                 // Jan 1st, 2025 00:00:00 (exclusive)
+                    break;
+            }
+            Debug.WriteLine($"Filtering expenses for period '{_selectedTimePeriod}' from {startDate:yyyy-MM-dd} to {endDate:yyyy-MM-dd} (exclusive)");
 
 
             using (var conn = new MySqlConnection(connString))
@@ -205,33 +224,33 @@ namespace MauiApp1234.Pages.Dashboard
                 {
                     await conn.OpenAsync();
 
-                    // --- Build SQL Query with Date Filters ---
-                    var sqlBuilder = new StringBuilder(@"
-                        SELECT
-                            t.`transaction-category` AS Category,
-                            SUM(ABS(t.`transaction-amount`)) AS TotalAmount
-                        FROM `transaction` t
-                        JOIN `account` a ON t.`account-id` = a.`account-id`
-                        WHERE a.`customer-id` = @customerId
-                    ");
+                    // Build SQL Query with Date Filters
+                    var sqlBuilder = new StringBuilder(@"
+                        SELECT
+                            t.`transaction-category` AS Category,
+                            SUM(ABS(t.`transaction-amount`)) AS TotalAmount
+                        FROM `transaction` t
+                        JOIN `account` a ON t.`account-id` = a.`account-id`
+                        WHERE a.`customer-id` = @customerId
+                    ");
 
-                    // Append date filtering clause for December 2024
-                    sqlBuilder.Append(" AND t.`transaction-date` >= @startDate AND t.`transaction-date` < @endDate ");
+                    // Append date filtering clause
+                    sqlBuilder.Append(" AND t.`transaction-date` >= @startDate AND t.`transaction-date` < @endDate ");
 
-                    // Append category filtering clause
-                    sqlBuilder.Append(@"
-                        AND t.`transaction-category` IN ('Mortgage', 'Utility', 'Food', 'Shopping', 'Leisure', 'Health', 'Transfer', 'Gambling', 'Life Event', 'Monthly fees', 'Withdrawal')
-                        GROUP BY t.`transaction-category`
-                        HAVING TotalAmount > 0;
-                    ");
+                    // Append category filtering clause
+                    sqlBuilder.Append(@"
+                        AND t.`transaction-category` IN ('Mortgage', 'Utility', 'Food', 'Shopping', 'Leisure', 'Health', 'Transfer', 'Gambling', 'Life Event', 'Monthly fees', 'Withdrawal')
+                        GROUP BY t.`transaction-category`
+                        HAVING TotalAmount > 0;
+                    ");
 
                     string sql = sqlBuilder.ToString();
                     Debug.WriteLine($"Executing SQL: {sql}"); // For debugging
 
-                    using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+                    using (MySqlCommand cmd = new MySqlCommand(sql, conn))
                     {
-                        // Add parameters securely
-                        cmd.Parameters.AddWithValue("@customerId", _customerId);
+                        // Add parameters securely
+                        cmd.Parameters.AddWithValue("@customerId", _customerId);
                         cmd.Parameters.AddWithValue("@startDate", startDate);
                         cmd.Parameters.AddWithValue("@endDate", endDate);
 
@@ -249,36 +268,51 @@ namespace MauiApp1234.Pages.Dashboard
                         }
                     }
 
-                    // Update UI on the main thread
-                    MainThread.BeginInvokeOnMainThread(() =>
+                    // Update UI on the main thread
+                    MainThread.BeginInvokeOnMainThread(() =>
                     {
+                        // Add null checks for UI elements before accessing them
                         if (ExpensePieSeries != null)
                         {
                             ExpensePieSeries.ItemsSource = expenseData;
                             ExpensePieSeries.XBindingPath = "Category";
                             ExpensePieSeries.YBindingPath = "Amount";
                             ExpensePieSeries.ExplodeIndex = expenseData.Count > 1 ? 0 : -1;
-                            // Optional: Force chart refresh if needed, though ItemsSource change should handle it
-                            // ExpensePieChart.InvalidateChart();
-                        }
+                        }
 
-                        PopulateExpenseBreakdown(expenseData);
-                        TotalExpensesLabel.Text = _totalExpenses.ToString("C0", CultureInfo.GetCultureInfo("en-GB"));
+                        if (ExpenseBreakdownLayout != null)
+                        {
+                            PopulateExpenseBreakdown(expenseData);
+                        }
+
+                        if (TotalExpensesLabel != null)
+                        {
+                            TotalExpensesLabel.Text = _totalExpenses.ToString("C0", CultureInfo.GetCultureInfo("en-GB"));
+                        }
                         UpdateNetCashFlow(); // Recalculate net flow after expenses are updated
-                    });
+                    });
                 }
                 catch (Exception ex)
                 {
                     MainThread.BeginInvokeOnMainThread(() =>
                     {
-                        TotalExpensesLabel.Text = "Error";
-                        ExpensePieSeries.ItemsSource = null;
-                        ExpenseBreakdownLayout.Children.Clear();
-                        ExpenseBreakdownLayout.Children.Add(new Label { Text = "Error loading expense data.", TextColor = Colors.Red });
-                        DisplayAlert("Database Error", $"Failed to load expense data for December 2024: {ex.Message}", "OK");
+                        // Add null checks for UI elements
+                        if (TotalExpensesLabel != null) TotalExpensesLabel.Text = "Error";
+                        if (ExpensePieSeries != null) ExpensePieSeries.ItemsSource = null;
+                        if (ExpenseBreakdownLayout != null)
+                        {
+                            ExpenseBreakdownLayout.Children.Clear();
+                            ExpenseBreakdownLayout.Children.Add(new Label { Text = "Error loading expense data.", TextColor = Colors.Red });
+                        }
                         _totalExpenses = 0; // Reset on error
-                        UpdateNetCashFlow(); // Update net flow even on error
-                    });
+                        UpdateNetCashFlow(); // Update net flow even on error
+
+                        // Check if the page is still visible before displaying the alert
+                        if (this.Window != null)
+                        {
+                            DisplayAlert("Database Error", $"Failed to load expense data for {_selectedTimePeriod}: {ex.Message}", "OK");
+                        }
+                    });
                     Console.WriteLine($"Error loading expenses: {ex.Message}");
                 }
             }
@@ -287,6 +321,9 @@ namespace MauiApp1234.Pages.Dashboard
         // Helper method to populate expense breakdown UI (No changes needed here)
         private void PopulateExpenseBreakdown(List<ExpenseItem> expenses)
         {
+            // Add null check for the layout
+            if (ExpenseBreakdownLayout == null) return;
+
             ExpenseBreakdownLayout.Children.Clear(); // Clear previous items
 
             if (expenses == null || !expenses.Any())
@@ -308,21 +345,20 @@ namespace MauiApp1234.Pages.Dashboard
                 horizontalLayout.Children.Add(new ProgressBar { Progress = progress, HeightRequest = 10, WidthRequest = 180, ProgressColor = Color.FromArgb("#6f61ef"), VerticalOptions = LayoutOptions.Center });
                 // Amount Label
                 horizontalLayout.Children.Add(new Label { Text = ((decimal)item.Amount).ToString("C0", CultureInfo.GetCultureInfo("en-GB")), FontSize = 14, TextColor = Colors.Red, HorizontalOptions = LayoutOptions.EndAndExpand, VerticalOptions = LayoutOptions.Center });
-                // Trend Indicator (Static placeholder)
-                // horizontalLayout.Children.Add(new Label { Text = "⬇", FontSize = 16, TextColor = Colors.Red, VerticalOptions = LayoutOptions.Center });
 
                 ExpenseBreakdownLayout.Children.Add(horizontalLayout);
             }
         }
 
 
-        // Method to update Net Cash Flow (No changes needed here)
+        // Method to update Net Cash Flow (Added null check)
         private void UpdateNetCashFlow()
         {
-            // This method is now called after both income and expenses are potentially updated
-            // and also within the BeginInvokeOnMainThread blocks of the loading methods.
             MainThread.BeginInvokeOnMainThread(() => // Ensure UI update is on main thread
             {
+                // Add null check for the label
+                if (NetCashFlowLabel == null) return;
+
                 decimal netFlow = _totalIncome - _totalExpenses;
                 NetCashFlowLabel.Text = netFlow.ToString("C0", CultureInfo.GetCultureInfo("en-GB"));
                 NetCashFlowLabel.TextColor = netFlow >= 0 ? Colors.Green : Colors.Red;
@@ -332,41 +368,39 @@ namespace MauiApp1234.Pages.Dashboard
 
         // --- Event Handlers ---
 
-        // --- MODIFIED: Update selected period and reload data ---
+        // MODIFIED: Update selected period and reload data
         private async void OnTimePeriodChanged(object sender, CheckedChangedEventArgs e)
         {
             if (e.Value && sender is RadioButton selectedRadioButton) // Act only when checked
             {
-                // Use Content or assign AutomationId/StyleId in XAML for reliability
-                string newlySelectedPeriod = selectedRadioButton.ContentAsString(); // Example: "Week", "Month", "Year"
+                string newlySelectedPeriod = selectedRadioButton.ContentAsString();
 
-                // Only reload if the period actually changed
                 if (!string.IsNullOrEmpty(newlySelectedPeriod) && newlySelectedPeriod != _selectedTimePeriod)
                 {
                     _selectedTimePeriod = newlySelectedPeriod;
                     Debug.WriteLine($"Time Period Changed. New Period: {_selectedTimePeriod}");
 
                     // Reload all financial data based on the new period
-                    // LoadFinancialData handles fetching both income (static) and expenses (filtered)
                     await LoadFinancialData();
                 }
             }
         }
 
-        // Other event handlers (no changes needed for date filtering logic)
+        // Other event handlers (Added null checks for safety)
         private void OnAddNewAccountClicked(object sender, EventArgs e)
         {
-            DisplayAlert("Add Account", "Functionality to add a new account is not implemented.", "OK");
+            if (this.Window != null) DisplayAlert("Add Account", "Functionality to add a new account is not implemented.", "OK");
         }
 
         private async void OnCategoryRemoved(object sender, TappedEventArgs e)
         {
             string category = e.Parameter as string;
-            await DisplayAlert("Remove Category", $"Functionality to remove category '{category}' is not fully implemented.", "OK");
+            if (this.Window != null) await DisplayAlert("Remove Category", $"Functionality to remove category '{category}' is not fully implemented.", "OK");
         }
 
         private void OnAddCategoryTapped(object sender, TappedEventArgs e)
         {
+            // Assuming CategoryPickerPopup is defined in XAML
             if (CategoryPickerPopup != null)
             {
                 CategoryPickerPopup.IsVisible = true;
@@ -375,6 +409,7 @@ namespace MauiApp1234.Pages.Dashboard
 
         private void OnCancelCategorySelection(object sender, EventArgs e)
         {
+            // Assuming CategoryPickerPopup is defined in XAML
             if (CategoryPickerPopup != null)
             {
                 CategoryPickerPopup.IsVisible = false;
@@ -383,16 +418,25 @@ namespace MauiApp1234.Pages.Dashboard
 
         private async void OnAddSelectedCategories(object sender, EventArgs e)
         {
+            // Assuming CategoryPickerPopup is defined in XAML
             if (CategoryPickerPopup != null)
             {
                 CategoryPickerPopup.IsVisible = false;
             }
-            await DisplayAlert("Add Categories", "Functionality to add selected categories is not fully implemented.", "OK");
+            if (this.Window != null) await DisplayAlert("Add Categories", "Functionality to add selected categories is not fully implemented.", "OK");
         }
 
         private void OnViewDetailedReportTapped(object sender, TappedEventArgs e)
         {
-            DisplayAlert("Detailed Report", "Functionality to show detailed report is not implemented.", "OK");
+            if (this.Window != null) DisplayAlert("Detailed Report", "Functionality to show detailed report is not implemented.", "OK");
         }
+
+        // Add this line if CategoryPickerPopup is defined in XAML code-behind
+        // If it's purely in XAML with x:Name, this isn't strictly needed here
+        // but ensure it's accessible (e.g., public or internal field in the partial class)
+        // Example assuming it's a ContentView named CategoryPickerPopup in XAML:
+        // public ContentView CategoryPickerPopup { get; set; } // Adjust type if needed
     }
 }
+
+
