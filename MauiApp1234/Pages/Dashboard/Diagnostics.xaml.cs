@@ -131,12 +131,38 @@ namespace MauiApp1234.Pages.Dashboard
                         cmd.Parameters.AddWithValue("@customerId", _customerId);
                         object result = await cmd.ExecuteScalarAsync();
 
+                       
+                       
+
                         if (result != DBNull.Value && result != null && decimal.TryParse(result.ToString(), out _totalIncome))
                         {
-                            MainThread.BeginInvokeOnMainThread(() =>
+
+                            switch (_selectedTimePeriod)
                             {
-                                TotalIncomeLabel.Text = _totalIncome.ToString("C0", CultureInfo.GetCultureInfo("en-GB"));
-                            });
+                                case "Week":
+                                    MainThread.BeginInvokeOnMainThread(() =>
+                                    {
+                                        TotalIncomeLabel.Text = _totalIncome.ToString("C0", CultureInfo.GetCultureInfo("en-GB"));
+                                    });
+                                    break;
+
+                                case "Year":
+                                    MainThread.BeginInvokeOnMainThread(() =>
+                                    {
+                                       _totalIncome = _totalIncome * 12;
+                                        TotalIncomeLabel.Text = _totalIncome.ToString("C0", CultureInfo.GetCultureInfo("en-GB"));
+                                    });
+                                    break;
+
+                                case "Month":
+                                default:
+                                    MainThread.BeginInvokeOnMainThread(() =>
+                                    {
+                                        TotalIncomeLabel.Text = _totalIncome.ToString("C0", CultureInfo.GetCultureInfo("en-GB"));
+                                    });
+                                    break;
+                            }
+                           
                         }
                         else
                         {
