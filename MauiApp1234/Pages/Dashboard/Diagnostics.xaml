@@ -182,11 +182,7 @@
 						</Frame>
 					</Grid>
 
-					<Label Text="View Detailed Report" TextColor="#6f61ef" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,20,0,0">
-						<Label.GestureRecognizers>
-							<TapGestureRecognizer Tapped="OnViewDetailedReportTapped"/>
-						</Label.GestureRecognizers>
-					</Label>
+					
 
 				</VerticalStackLayout>
 			</Frame>
