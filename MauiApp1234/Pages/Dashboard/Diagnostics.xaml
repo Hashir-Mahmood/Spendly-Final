@@ -40,19 +40,10 @@
 					<Label Text="Expense Breakdown" FontSize="22" FontAttributes="Bold" HorizontalOptions="Center"/>
 					<Label Text="Track your expenses across categories" FontSize="14" TextColor="Gray" HorizontalOptions="Center" Margin="0,5,0,15"/>
 
-					<Label Text="Select categories to display:" FontAttributes="Bold" Margin="0,0,0,5"/>
+					
 					<ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Never" Margin="0,0,0,15">
-						<HorizontalStackLayout Spacing="8" x:Name="CategoryChipsLayout">
-							<Frame Padding="8,5" CornerRadius="15" BackgroundColor="LightGray">
-								<HorizontalStackLayout Spacing="5">
-									<Label Text="+ Add Category" TextColor="#6f61ef" FontSize="12" FontAttributes="Bold">
-										<Label.GestureRecognizers>
-											<TapGestureRecognizer Tapped="OnAddCategoryTapped"/>
-										</Label.GestureRecognizers>
-									</Label>
-								</HorizontalStackLayout>
-							</Frame>
-						</HorizontalStackLayout>
+                        <HorizontalStackLayout Spacing="8" x:Name="CategoryChipsLayout">
+                        </HorizontalStackLayout>
 					</ScrollView>
 
 					<chart:SfCircularChart HeightRequest="250" Margin="0,0,0,15" x:Name="ExpensePieChart">
@@ -110,7 +101,7 @@
 							<Label Text="Health" VerticalOptions="Center"/>
 						</HorizontalStackLayout>
 						<HorizontalStackLayout Grid.Row="0" Grid.Column="2" Spacing="5">
-							<CheckBox x:Name="TransferCheckbox" />
+							<CheckBox x:Name="TransferCheckbox"/>
 							<Label Text="Transfer" VerticalOptions="Center"/>
 						</HorizontalStackLayout>
 						<HorizontalStackLayout Grid.Row="1" Grid.Column="0" Spacing="5">
