@@ -135,7 +135,7 @@
                         <ViewCell>
                             <Frame CornerRadius="10" Padding="15" BackgroundColor="White" VerticalOptions="Center">
                                 <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="Auto,*,Auto,Auto">
-                                    <Image Grid.RowSpan="2" Source="netflix.png" HeightRequest="45" WidthRequest="45"
+                                    <Image Grid.RowSpan="2" Source="subscriptionicon.png" HeightRequest="45" WidthRequest="45"
                                            Margin="0,0,15,0" Aspect="AspectFit"/>
                                     <Label Grid.Column="1" Text="{Binding name}" FontAttributes="Bold" TextColor="Black" FontSize="16"/>
                                     <Label Grid.Column="1" Grid.Row="1" Text="{Binding renewal, StringFormat='Renews {0:d}'}" TextColor="#666" FontSize="12"/>
@@ -163,7 +163,7 @@
                 </ListView.ItemTemplate>
             </ListView>
 
-            <Frame CornerRadius="10" Padding="15" BackgroundColor="White">
+            <Frame CornerRadius="10" Padding="15" BackgroundColor="White" x:Name="NetflixPremium">
                 <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="Auto,*,Auto,Auto">
                     <Image Grid.RowSpan="2" Source="netflix.png" HeightRequest="45" WidthRequest="45"
                            Margin="0,0,15,0" Aspect="AspectFit"/>
@@ -183,11 +183,13 @@
                             CornerRadius="5"
                             Padding="8,5"
                             VerticalOptions="Center"
-                            HorizontalOptions="End"/>
+                            HorizontalOptions="End"
+                            x:Name="cancelNetflixPremium"
+                            Clicked="cancelNetflixPremium_Clicked"/>
                 </Grid>
             </Frame>
 
-            <Frame CornerRadius="10" Padding="15" BackgroundColor="White">
+            <Frame CornerRadius="10" Padding="15" BackgroundColor="White" x:Name="Netflix">
                 <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="Auto,*,Auto,Auto">
                     <Image Grid.RowSpan="2" Source="netflix.png" HeightRequest="45" WidthRequest="45"
                            Margin="0,0,15,0" Aspect="AspectFit"/>
@@ -207,11 +209,13 @@
                             CornerRadius="5"
                             Padding="8,5"
                             VerticalOptions="Center"
-                            HorizontalOptions="End"/>
+                            HorizontalOptions="End"
+                            x:Name="cancelNetflix"
+                            Clicked="cancelNetflix_Clicked"/>
                 </Grid>
             </Frame>
 
-            <Frame CornerRadius="10" Padding="15" BackgroundColor="White">
+            <Frame CornerRadius="10" Padding="15" BackgroundColor="White" x:Name="Spotify">
                 <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="Auto,*,Auto,Auto">
                     <Image Grid.RowSpan="2" Source="spotify.png" HeightRequest="45" WidthRequest="45"
                            Margin="0,0,15,0" Aspect="AspectFit"/>
@@ -231,11 +235,13 @@
                             CornerRadius="5"
                             Padding="8,5"
                             VerticalOptions="Center"
-                            HorizontalOptions="End"/>
+                            HorizontalOptions="End"
+                            x:Name="cancelSpotify"
+                            Clicked="cancelSpotify_Clicked"/>
                 </Grid>
             </Frame>
 
-            <Frame CornerRadius="10" Padding="15" BackgroundColor="White">
+            <Frame CornerRadius="10" Padding="15" BackgroundColor="White" x:Name="Adobe">
                 <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="Auto,*,Auto,Auto">
                     <Image Grid.RowSpan="2" Source="adobe.png" HeightRequest="45" WidthRequest="45"
                            Margin="0,0,15,0" Aspect="AspectFit"/>
@@ -253,7 +259,9 @@
                             CornerRadius="5"
                             Padding="8,5"
                             VerticalOptions="Center"
-                            HorizontalOptions="End"/>
+                            HorizontalOptions="End"
+                            x:Name="cancelAdobe"
+                            Clicked="cancelAdobe_Clicked"/>
                 </Grid>
             </Frame>
 

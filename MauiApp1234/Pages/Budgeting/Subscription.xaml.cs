@@ -233,6 +233,26 @@ public partial class Subscription : ContentPage
     {
         Navigation.PushAsync(new AddSubscription());
     }
+
+    private void cancelNetflixPremium_Clicked(object sender, EventArgs e)
+    {
+        NetflixPremium.IsVisible = false;
+    }
+
+    private void cancelNetflix_Clicked(object sender, EventArgs e)
+    {
+        Netflix.IsVisible = false;
+    }
+
+    private void cancelSpotify_Clicked(object sender, EventArgs e)
+    {
+        Spotify.IsVisible = false;
+    }
+
+    private void cancelAdobe_Clicked(object sender, EventArgs e)
+    {
+        Adobe.IsVisible = false;
+    }
 }
 
 public class SpendingDataModel
