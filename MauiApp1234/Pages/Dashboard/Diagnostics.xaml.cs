@@ -366,11 +366,11 @@ namespace MauiApp1234.Pages.Dashboard
                 var horizontalLayout = new HorizontalStackLayout { Spacing = 10, Padding = new Thickness(0, 5) };
 
                 // Category Label
-                horizontalLayout.Children.Add(new Label { Text = item.Category, FontSize = 14, FontAttributes = FontAttributes.Bold, WidthRequest = 120, VerticalOptions = LayoutOptions.Center });
+                horizontalLayout.Children.Add(new Label { Text = item.Category, FontSize = 14, FontAttributes = FontAttributes.Bold, WidthRequest = 100, VerticalOptions = LayoutOptions.Center });
                 // Progress Bar
-                horizontalLayout.Children.Add(new ProgressBar { Progress = progress, HeightRequest = 10, WidthRequest = 180, ProgressColor = Color.FromArgb("#6f61ef"), VerticalOptions = LayoutOptions.Center });
+                horizontalLayout.Children.Add(new ProgressBar { Progress = progress, HeightRequest = 10, WidthRequest = 150, ProgressColor = Color.FromArgb("#6f61ef"), VerticalOptions = LayoutOptions.Center });
                 // Amount Label
-                horizontalLayout.Children.Add(new Label { Text = ((decimal)item.Amount).ToString("C0", CultureInfo.GetCultureInfo("en-GB")), FontSize = 14, TextColor = Colors.Red, HorizontalOptions = LayoutOptions.EndAndExpand, VerticalOptions = LayoutOptions.Center });
+                horizontalLayout.Children.Add(new Label { Text = ((decimal)item.Amount).ToString("C0", CultureInfo.GetCultureInfo("en-GB")), FontSize = 14, TextColor = Colors.Black, HorizontalOptions = LayoutOptions.EndAndExpand, VerticalOptions = LayoutOptions.Center });
 
                 ExpenseBreakdownLayout.Children.Add(horizontalLayout);
             }

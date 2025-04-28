@@ -73,7 +73,7 @@
 								<chart:PieSeries.DataLabelSettings>
 									<chart:CircularDataLabelSettings LabelPlacement="Outer" UseSeriesPalette="False">
 										<chart:CircularDataLabelSettings.LabelStyle>
-											<chart:ChartDataLabelStyle LabelFormat="0'%" FontSize="10" TextColor="Black"/>
+											<chart:ChartDataLabelStyle LabelFormat="0" FontSize="10" TextColor="Black"/>
 										</chart:CircularDataLabelSettings.LabelStyle>
 									</chart:CircularDataLabelSettings>
 								</chart:PieSeries.DataLabelSettings>
