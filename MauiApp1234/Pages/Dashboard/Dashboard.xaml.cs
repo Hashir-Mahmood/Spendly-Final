@@ -8,6 +8,8 @@ using Microsoft.Maui.Storage; // For Preferences
 using MauiApp1234.Pages.AI;
 using MauiApp1234.Pages.Dashboard;
 using MauiApp1234.Pages.Settings;
+using System.Collections.ObjectModel;
+using System.Text;
 
 namespace MauiApp1234
 {
@@ -17,6 +19,24 @@ namespace MauiApp1234
         private decimal _totalIncome = 0;
         private decimal _totalExpenses = 0;
         private decimal _totalBalance = 0;
+        private List<SpendingCategory> _spendingCategories = new List<SpendingCategory>();
+
+        // Define available categories
+        private readonly string[] _availableCategories = {
+            "Mortgage", "Utility", "Food", "Shopping", "Leisure",
+            "Health", "Transfer", "Gambling", "Life Event",
+            "Monthly fees", "Withdrawal"
+        };
+
+        // Class to hold spending category data
+        public class SpendingCategory
+        {
+            public string Name { get; set; }
+            public decimal CurrentAmount { get; set; }
+            public decimal BudgetAmount { get; set; }
+            public double Progress => BudgetAmount > 0 ? Math.Min(1.0, (double)(CurrentAmount / BudgetAmount)) : 0;
+            public Color ProgressColor => Progress < 0.5 ? Colors.Green : (Progress < 0.8 ? Colors.Orange : Colors.Red);
+        }
 
         public Dashboard()
         {
@@ -28,6 +48,7 @@ namespace MauiApp1234
             base.OnAppearing();
             Debug.WriteLine("Dashboard OnAppearing called");
             await LoadFinancialDataAsync();
+            await LoadCategorizedSpendingAsync();
         }
 
         private async Task LoadFinancialDataAsync()
@@ -141,6 +162,187 @@ namespace MauiApp1234
             UpdateTotalBalanceDisplay();
         }
 
+        private async Task LoadCategorizedSpendingAsync()
+        {
+            Debug.WriteLine("Loading categorized spending data");
+
+            // Clear existing UI elements
+            CategorizedSpendingContainer.Clear();
+
+            // If no customer ID, abort
+            if (_customerId == 0)
+            {
+                Debug.WriteLine("No customer ID available for categorized spending");
+                return;
+            }
+
+            string connString = "server=dbhost.cs.man.ac.uk;user=b66855mm;password=iTIfvSknLwQZHtrLaHMy4uTsM/UuEQvZfTqa0ei81+k;database=b66855mm";
+            DateTime startDate = new DateTime(2024, 12, 1);
+            DateTime endDate = new DateTime(2024, 12, 31);
+
+            try
+            {
+                using (var conn = new MySqlConnection(connString))
+                {
+                    await conn.OpenAsync();
+
+                    // Get all categories from transactions and their spending totals
+                    var sqlBuilder = new StringBuilder(@"
+                        SELECT
+                            t.`transaction-category` AS Category,
+                            SUM(ABS(t.`transaction-amount`)) AS TotalAmount
+                        FROM `transaction` t
+                        JOIN `account` a ON t.`account-id` = a.`account-id`
+                        WHERE a.`customer-id` = @customerId
+                    ");
+
+                    // Append date filtering clause
+                    sqlBuilder.Append(" AND t.`transaction-date` >= @startDate AND t.`transaction-date` < @endDate ");
+
+                    // Append category filtering clause
+                    sqlBuilder.Append(@"
+                        AND t.`transaction-category` IN ('Mortgage', 'Utility', 'Food', 'Shopping', 'Leisure', 'Health', 'Transfer', 'Gambling', 'Life Event', 'Monthly fees', 'Withdrawal')
+                        GROUP BY t.`transaction-category`
+                        HAVING TotalAmount > 0;
+                    ");
+
+                    string sql = sqlBuilder.ToString();
+                    Debug.WriteLine($"Executing SQL: {sql}");
+
+                    Dictionary<string, decimal> categorySpending = new Dictionary<string, decimal>();
+
+                    using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+                    {
+                        // Add parameters securely
+                        cmd.Parameters.AddWithValue("@customerId", _customerId);
+                        cmd.Parameters.AddWithValue("@startDate", startDate);
+                        cmd.Parameters.AddWithValue("@endDate", endDate);
+
+                        using (var reader = await cmd.ExecuteReaderAsync())
+                        {
+                            while (await reader.ReadAsync())
+                            {
+                                string category = reader.GetString("Category");
+                                decimal amount = reader.GetDecimal("TotalAmount");
+                                categorySpending[category] = amount;
+                            }
+                        }
+                    }
+
+                    // Get budget amounts for the categories
+                    string budgetSql = @"
+                        SELECT 
+                            `category-name` AS CategoryName,
+                            `budget-amount` AS BudgetAmount
+                        FROM `spending-budget`
+                        WHERE `customer-id` = @customerId";
+
+                    Dictionary<string, decimal> categoryBudgets = new Dictionary<string, decimal>();
+
+                    using (MySqlCommand budgetCmd = new MySqlCommand(budgetSql, conn))
+                    {
+                        budgetCmd.Parameters.AddWithValue("@customerId", _customerId);
+
+                        using (var reader = await budgetCmd.ExecuteReaderAsync())
+                        {
+                            while (await reader.ReadAsync())
+                            {
+                                string category = reader.GetString("CategoryName");
+                                decimal budget = reader.GetDecimal("BudgetAmount");
+                                categoryBudgets[category] = budget;
+                            }
+                        }
+                    }
+
+                    // Create spending categories list
+                    _spendingCategories.Clear();
+
+                    // Add categories that have spending
+                    foreach (var kvp in categorySpending)
+                    {
+                        decimal budget = 0;
+                        categoryBudgets.TryGetValue(kvp.Key, out budget);
+
+                        // If no budget is set, default to 120% of current spending
+                        if (budget == 0)
+                        {
+                            budget = kvp.Value * 1.2m;
+                        }
+
+                        _spendingCategories.Add(new SpendingCategory
+                        {
+                            Name = kvp.Key,
+                            CurrentAmount = kvp.Value,
+                            BudgetAmount = budget
+                        });
+                    }
+
+                    // Sort by most spending to least
+                    _spendingCategories = _spendingCategories.OrderByDescending(c => c.CurrentAmount).ToList();
+                }
+
+                // Now populate the UI with the categories
+                if (_spendingCategories.Count == 0)
+                {
+                    // Add demo categories if none found
+                    _spendingCategories.Add(new SpendingCategory { Name = "Mortgage", CurrentAmount = 1200, BudgetAmount = 1500 });
+                    _spendingCategories.Add(new SpendingCategory { Name = "Food", CurrentAmount = 350, BudgetAmount = 400 });
+                    _spendingCategories.Add(new SpendingCategory { Name = "Utility", CurrentAmount = 180, BudgetAmount = 200 });
+                    _spendingCategories.Add(new SpendingCategory { Name = "Leisure", CurrentAmount = 120, BudgetAmount = 100 });
+                }
+
+                foreach (var category in _spendingCategories)
+                {
+                    // Create horizontal layout for category name and amount
+                    var categoryLayout = new StackLayout
+                    {
+                        Orientation = StackOrientation.Horizontal,
+                        Spacing = 10,
+                        Margin = new Thickness(0, 0, 0, 10)
+                    };
+
+                    // Add category name
+                    categoryLayout.Add(new Label
+                    {
+                        Text = category.Name,
+                        FontAttributes = FontAttributes.Bold
+                    });
+
+                    // Add amount text (current/budget)
+                    categoryLayout.Add(new Label
+                    {
+                        Text = $"£{category.CurrentAmount:N0} / £{category.BudgetAmount:N0}",
+                        HorizontalOptions = LayoutOptions.EndAndExpand,
+                        TextColor = category.CurrentAmount > category.BudgetAmount ? Colors.Red : Colors.Black
+                    });
+
+                    // Add to container
+                    CategorizedSpendingContainer.Add(categoryLayout);
+
+                    // Create progress bar
+                    var progressBar = new ProgressBar
+                    {
+                        Progress = category.Progress,
+                        ProgressColor = category.ProgressColor,
+                        Margin = new Thickness(0, 0, 0, 20)
+                    };
+                    CategorizedSpendingContainer.Add(progressBar);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error loading categorized spending: {ex.Message}");
+
+                // Add a message to the UI about the error
+                CategorizedSpendingContainer.Add(new Label
+                {
+                    Text = "Unable to load spending categories.",
+                    TextColor = Colors.Red,
+                    HorizontalOptions = LayoutOptions.Center
+                });
+            }
+        }
+
         private async Task LoadTotalBalanceAsync(MySqlConnection conn)
         {
             try
@@ -249,8 +451,6 @@ namespace MauiApp1234
                             HealthMeterPercentageLabel.TextColor = Colors.Green; // Good
                         }
                     }
-
-                   
                 }
                 else
                 {
@@ -265,8 +465,6 @@ namespace MauiApp1234
                         HealthMeterPercentageLabel.Text = "No income data";
                         HealthMeterPercentageLabel.TextColor = Colors.Gray;
                     }
-
-                    
                 }
             });
         }
@@ -297,12 +495,73 @@ namespace MauiApp1234
         private void OnCategorizedSpendingTapped(object sender, TappedEventArgs e)
         {
             // Navigate to categorized spending page (if implemented)
-            DisplayAlert("Coming Soon", "Detailed spending categories will be available soon.", "OK");
+            Navigation.PushAsync(new Diagnostics());
         }
 
-        private void OnAddCategoryClicked(object sender, EventArgs e)
+        private async void OnAddCategoryClicked(object sender, EventArgs e)
         {
-            DisplayAlert("Add Category", "Feature to add custom spending categories coming soon.", "OK");
+            // Create a list of categories that aren't already being tracked
+            var existingCategories = _spendingCategories.Select(c => c.Name).ToList();
+            var availableNewCategories = _availableCategories.Where(c => !existingCategories.Contains(c)).ToList();
+
+            if (availableNewCategories.Count == 0)
+            {
+                await DisplayAlert("Add Category", "All available categories are already being tracked.", "OK");
+                return;
+            }
+
+            // Show picker with available categories
+            string categoryName = await DisplayActionSheet("Select Category", "Cancel", null, availableNewCategories.ToArray());
+
+            if (string.IsNullOrWhiteSpace(categoryName) || categoryName == "Cancel")
+                return;
+
+            string budgetAmountStr = await DisplayPromptAsync("Budget Amount", $"Enter monthly budget for {categoryName}:", "OK", "Cancel", null, -1, Keyboard.Numeric);
+
+            if (string.IsNullOrWhiteSpace(budgetAmountStr) || !decimal.TryParse(budgetAmountStr, NumberStyles.Currency, CultureInfo.CurrentCulture, out decimal budgetAmount))
+                return;
+
+            // Add to database
+            await AddCategoryToDatabase(categoryName, budgetAmount);
+
+            // Reload categories
+            await LoadCategorizedSpendingAsync();
+        }
+
+        private async Task AddCategoryToDatabase(string categoryName, decimal budgetAmount)
+        {
+            if (_customerId == 0)
+                return;
+
+            string connString = "server=dbhost.cs.man.ac.uk;user=b66855mm;password=iTIfvSknLwQZHtrLaHMy4uTsM/UuEQvZfTqa0ei81+k;database=b66855mm";
+
+            try
+            {
+                using (var conn = new MySqlConnection(connString))
+                {
+                    await conn.OpenAsync();
+
+                    string insertSql = @"
+                        INSERT INTO `spending-budget` 
+                        (`customer-id`, `category-name`, `budget-amount`) 
+                        VALUES (@customerId, @categoryName, @budgetAmount)
+                        ON DUPLICATE KEY UPDATE `budget-amount` = @budgetAmount";
+
+                    using (var cmd = new MySqlCommand(insertSql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@customerId", _customerId);
+                        cmd.Parameters.AddWithValue("@categoryName", categoryName);
+                        cmd.Parameters.AddWithValue("@budgetAmount", budgetAmount);
+
+                        await cmd.ExecuteNonQueryAsync();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error adding category: {ex.Message}");
+                await DisplayAlert("Error", $"Failed to add category: {ex.Message}", "OK");
+            }
         }
 
         private void OnAddGoalClicked(object sender, EventArgs e)
