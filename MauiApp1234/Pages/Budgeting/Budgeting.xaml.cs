@@ -1,137 +1,219 @@
 ﻿using System;
+using System.Buffers.Text;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Globalization;
+using System.Globalization; // Needed for CultureInfo if formatting currency explicitly
 using System.Linq;
+using System.Runtime.ConstrainedExecution;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using MauiApp1234.Pages.AI;
-using MauiApp1234.Pages.Dashboard; // For navigating back to Dashboard if needed
-using MauiApp1234.Pages.Settings;
+using System.Transactions;
+using System.Xml.Linq;
+using MauiApp1234.Pages.AI; // Assuming namespace exists
+using MauiApp1234.Pages.Settings; // Assuming namespace exists
+using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Storage; // For Preferences
 using MySqlConnector;
+using static System.Reflection.Metadata.BlobBuilder;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
-namespace MauiApp1234
+namespace MauiApp1234 // Adjust namespace if needed
 {
     public partial class Budgeting : ContentPage
     {
         // --- Member Fields ---
         private long _customerId = 0;
-        // Connection string (NOT RECOMMENDED FOR PRODUCTION)
-        private readonly string connString = "server=dbhost.cs.man.ac.uk;user=b66855mm;password=YOUR_PASSWORD;database=b66855mm"; // Replace YOUR_PASSWORD
+
+        // Connection string (Replace YOUR_PASSWORD)
+        // Consider moving to a configuration file/service for better security
+        private readonly string connString = "server=dbhost.cs.man.ac.uk;user=b66855mm;password=YOUR_PASSWORD;database=b66855mm";
 
         // Data storage
         private List<SpendingCategoryWithTransactions> _spendingCategories = new List<SpendingCategoryWithTransactions>();
-        private decimal _totalMonthlyBudget = 0m; // Example: Fetch this if you have an overall budget
+        private decimal _totalMonthlyBudget = 0m;
         private decimal _totalMonthlySpending = 0m;
 
         // --- Data Classes ---
+
+        /// <summary>
+        /// Represents details of a single transaction.
+        /// </summary>
         public class TransactionDetail
         {
             public DateTime Date { get; set; }
             public string Reference { get; set; }
             public decimal Amount { get; set; }
+            // Formatted display text for UI binding
             public string DisplayText => $"{Date:dd MMM}: {Reference} (£{Amount:N2})";
         }
 
+        /// <summary>
+        /// Represents a spending category, including its total spending for the period,
+        /// its budget, and the list of transactions within it.
+        /// </summary>
         public class SpendingCategoryWithTransactions
         {
             public string Name { get; set; }
             public decimal TotalSpent { get; set; }
-            public decimal BudgetAmount { get; set; } // Add budget if needed for display
+            public decimal BudgetAmount { get; set; }
             public List<TransactionDetail> Transactions { get; set; } = new List<TransactionDetail>();
-            public string Icon { get; set; } // Emoji icon based on category
-            public string DisplayText => $"£{TotalSpent:N2} spent"; // Simplified display for header
+            public string Icon { get; set; } // Emoji or FontAwesome code
+            // Formatted display text for UI binding
+            public string DisplayText => $"£{TotalSpent:N2} spent";
+            // Calculated property for budget progress (0.0 to 1.0)
+            public double BudgetProgress => BudgetAmount > 0 ? Math.Min(1.0, (double)(TotalSpent / BudgetAmount)) : 0;
+            // Color for the progress bar based on spending vs budget
+            public Color BudgetProgressColor => BudgetProgress < 0.5 ? Colors.Green : (BudgetProgress < 0.9 ? Colors.Orange : Colors.Red); // Adjusted threshold
         }
 
         // --- Constructor ---
         public Budgeting()
         {
             InitializeComponent();
+
+            // Note: Updating UI based on SizeChanged can sometimes be complex due to layout cycles.
+            // Ensure the logic inside UpdateMonthlyBudgetCard is efficient and handles potential nulls.
+            this.SizeChanged += (s, e) => {
+                // Only update UI if we've successfully loaded data and the page has a size
+                if (_spendingCategories.Any() && this.Width > 0 && this.Height > 0)
+                {
+                    UpdateMonthlyBudgetCard();
+                }
+            };
         }
 
         // --- Page Lifecycle ---
-        protected override async void OnAppearing()
+        protected override void OnAppearing()
         {
             base.OnAppearing();
             Debug.WriteLine("Budgeting Page OnAppearing");
-            await LoadDataAsync(); // Changed LoadData to be async
+
+            // Use Task.Run to avoid blocking the UI thread during initial load,
+            // but ensure UI updates happen back on the MainThread.
+            Task.Run(async () => {
+                try
+                {
+                    await LoadDataAsync();
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"Error during background data load: {ex.Message}");
+                    // Display error on the main thread
+                    MainThread.BeginInvokeOnMainThread(async () => {
+                        if (this.Window != null) await DisplayAlert("Error", "An error occurred loading budget data. Please try again.", "OK");
+                        SetLoadingState(false); // Ensure loading indicator is turned off on error
+                    });
+                }
+            });
         }
 
-        // --- Data Loading ---
+        // --- Data Loading Orchestration ---
+        /// <summary>
+        /// Main method to load all necessary data for the budgeting page.
+        /// </summary>
         private async Task LoadDataAsync()
         {
-            SetLoadingState(true);
-            _spendingCategories.Clear(); // Clear previous data
-            _totalMonthlySpending = 0m;
-            // Fetch Customer ID (Essential)
-            if (!await GetCustomerIdAsync())
-            {
-                Debug.WriteLine("Customer ID not available for Budgeting page.");
-                await DisplayAlert("Error", "Could not retrieve customer information. Please log in again.", "OK");
-                SetLoadingState(false);
-                // Optionally navigate back to login or dashboard
-                // await Navigation.PopAsync();
-                return;
-            }
-
-            // Define Fixed Date Range (December 2024)
-            DateTime startDate = new DateTime(2024, 12, 1);
-            DateTime endDate = new DateTime(2024, 12, 31);
-
             try
             {
+                SetLoadingState(true); // Show loading indicator
+                _spendingCategories.Clear();
+                _totalMonthlySpending = 0m;
+                _totalMonthlyBudget = 0m; // Reset budget as well
+
+                // 1. Fetch Customer ID
+                if (!await GetCustomerIdAsync())
+                {
+                    Debug.WriteLine("Customer ID not available for Budgeting page.");
+                    if (this.Window != null) await DisplayAlert("Login Required", "Could not retrieve customer information. Please log in again.", "OK");
+                    SetLoadingState(false);
+                    return; // Stop loading if no customer ID
+                }
+
+                // 2. Define Fixed Date Range (Currently December 2024)
+                // TODO: Consider making this dynamic (e.g., current month or user selectable)
+                DateTime startDate = new DateTime(2024, 12, 1);
+                DateTime endDate = new DateTime(2025, 1, 1); // Use Jan 1st (exclusive) for Dec 31st (inclusive)
+
+                // 3. Fetch Data from Database
                 using (var conn = new MySqlConnection(connString))
                 {
                     await conn.OpenAsync();
                     Debug.WriteLine("Database connection successful for Budgeting page.");
 
-                    // 1. Fetch all expense transactions for the period
-                    var allTransactions = await FetchTransactionsAsync(conn, startDate, endDate);
+                    // Fetch data concurrently where possible
+                    Task<List<(string Category, TransactionDetail Detail)>> transactionsTask = FetchTransactionsWithCategoriesAsync(conn, startDate, endDate);
+                    Task<Dictionary<string, decimal>> budgetsTask = FetchBudgetsAsync(conn);
+                    Task<decimal> totalBudgetTask = FetchTotalMonthlyBudgetAsync(conn); // Fetches overall budget
 
-                    // 2. Fetch budget amounts (optional, but good for context)
-                    var categoryBudgets = await FetchBudgetsAsync(conn);
+                    // Wait for all data fetching tasks to complete
+                    await Task.WhenAll(transactionsTask, budgetsTask, totalBudgetTask);
 
-                    // 3. Group transactions by category and calculate totals
-                    GroupTransactionsAndCreateCategories(allTransactions, categoryBudgets);
+                    var allTransactionsWithCategories = await transactionsTask;
+                    var categoryBudgets = await budgetsTask;
+                    _totalMonthlyBudget = await totalBudgetTask; // Assign the fetched overall budget
 
-                    // 4. Calculate overall monthly spending (sum of all category totals)
+                    // 4. Process Data
+                    GroupTransactionsAndCreateCategories(allTransactionsWithCategories, categoryBudgets);
+
+                    // Calculate overall spending for the period based on fetched transactions
                     _totalMonthlySpending = _spendingCategories.Sum(c => c.TotalSpent);
+                    Debug.WriteLine($"Total Spending for Dec 2024: {_totalMonthlySpending}");
+                    Debug.WriteLine($"Overall Monthly Budget: {_totalMonthlyBudget}");
 
-                    // 5. Fetch/Calculate Total Monthly Budget (Example - needs implementation)
-                    _totalMonthlyBudget = await FetchTotalMonthlyBudgetAsync(conn); // Placeholder
+                } // Connection automatically closed
 
-                } // Connection closed automatically
+                // 5. Update UI (on Main Thread)
+                MainThread.BeginInvokeOnMainThread(() => {
+                    UpdateMonthlyBudgetCard();
+                    PopulateSpendingCategoriesUI();
+                });
 
-                // 6. Update UI elements
-                UpdateMonthlyBudgetCard();
-                PopulateSpendingCategoriesUI(); // This will now build the expandable UI
-
+            }
+            catch (MySqlException ex)
+            {
+                Debug.WriteLine($"Database error in LoadDataAsync: {ex.Message} (Number: {ex.Number})");
+                if (this.Window != null) await DisplayAlert("Database Error", "Failed to retrieve budget data. Please check your connection and try again.", "OK");
+                // Clear UI on error
+                MainThread.BeginInvokeOnMainThread(() => {
+                    if (SpendingCategoriesContainer != null) SpendingCategoriesContainer.Clear();
+                    // Optionally display an error message in the container
+                });
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Error loading budgeting data: {ex.Message}");
+                Debug.WriteLine($"General error loading budgeting data: {ex.Message}");
                 Debug.WriteLine($"Stack Trace: {ex.StackTrace}");
-                await DisplayAlert("Database Error", $"Failed to load budgeting details: {ex.Message}", "OK");
+                if (this.Window != null) await DisplayAlert("Error", $"Failed to load budgeting details: {ex.Message}", "OK");
                 // Clear UI on error
-                MainThread.BeginInvokeOnMainThread(() => SpendingCategoriesContainer.Clear());
+                MainThread.BeginInvokeOnMainThread(() => {
+                    if (SpendingCategoriesContainer != null) SpendingCategoriesContainer.Clear();
+                    // Optionally display an error message in the container
+                });
             }
             finally
             {
-                SetLoadingState(false);
+                SetLoadingState(false); // Hide loading indicator
             }
         }
 
-        private async Task<List<TransactionDetail>> FetchTransactionsAsync(MySqlConnection conn, DateTime startDate, DateTime endDate)
+        // --- Database Fetching Methods ---
+
+        /// <summary>
+        /// Fetches expense transactions within the specified date range for the customer.
+        /// </summary>
+        private async Task<List<(string Category, TransactionDetail Detail)>> FetchTransactionsWithCategoriesAsync(
+            MySqlConnection conn, DateTime startDate, DateTime endDate)
         {
-            var transactions = new List<TransactionDetail>();
+            var transactionsWithCategory = new List<(string Category, TransactionDetail Detail)>();
+            // SQL query to get relevant transaction details, focusing on expenses
             string sql = @"
-                SELECT t.`transaction-date`, ABS(t.`transaction-amount`) AS Amount, t.`transaction-category`, t.`transaction-reference`
+                SELECT t.`transaction-date`, ABS(t.`transaction-amount`) AS Amount,
+                       t.`transaction-category` AS Category, t.`transaction-reference`
                 FROM `transaction` t
                 JOIN `account` a ON t.`account-id` = a.`account-id`
                 WHERE a.`customer-id` = @customerId
-                  AND t.`transaction-date` BETWEEN @startDate AND @endDate
+                  AND t.`transaction-date` >= @startDate AND t.`transaction-date` < @endDate
                   AND t.`transaction-amount` < 0  -- Only expenses
                 ORDER BY t.`transaction-category`, t.`transaction-date` DESC"; // Order for grouping and display
 
@@ -139,33 +221,41 @@ namespace MauiApp1234
             {
                 cmd.Parameters.AddWithValue("@customerId", _customerId);
                 cmd.Parameters.AddWithValue("@startDate", startDate);
-                cmd.Parameters.AddWithValue("@endDate", endDate);
+                cmd.Parameters.AddWithValue("@endDate", endDate); // Use exclusive end date
 
                 using (var reader = await cmd.ExecuteReaderAsync())
                 {
                     while (await reader.ReadAsync())
                     {
-                        // Check for DBNull before accessing potentially null columns like reference
-                        string reference = reader.IsDBNull(reader.GetOrdinal("transaction-reference"))
-                                           ? "N/A"
-                                           : reader.GetString("transaction-reference");
+                        // Handle potential null category or reference from DB
+                        string category = reader.IsDBNull(reader.GetOrdinal("Category"))
+                            ? "Uncategorized" // Assign a default category if null
+                            : reader.GetString("Category");
 
-                        transactions.Add(new TransactionDetail
-                        {
-                            Date = reader.GetDateTime("transaction-date"),
-                            Amount = reader.GetDecimal("Amount"), // Already ABS() in SQL
-                            Reference = reference,
-                            // We need the category for grouping, store it temporarily or pass it along
-                            // For simplicity, we'll group later based on the category name read here.
-                            // Category = reader.GetString("transaction-category") // Implicitly used for grouping next
-                        });
+                        string reference = reader.IsDBNull(reader.GetOrdinal("transaction-reference"))
+                            ? "N/A" // Assign default reference if null
+                            : reader.GetString("transaction-reference");
+
+                        transactionsWithCategory.Add((
+                            category,
+                            new TransactionDetail
+                            {
+                                Date = reader.GetDateTime("transaction-date"),
+                                Amount = reader.GetDecimal("Amount"), // Already ABS in SQL
+                                Reference = reference
+                            }
+                        ));
                     }
-                }
-            }
-            Debug.WriteLine($"Fetched {transactions.Count} expense transactions.");
-            return transactions;
+                } // Reader disposed
+            } // Command disposed
+
+            Debug.WriteLine($"Fetched {transactionsWithCategory.Count} expense transactions for the period.");
+            return transactionsWithCategory;
         }
 
+        /// <summary>
+        /// Fetches category-specific budgets from the `spending-budget` table.
+        /// </summary>
         private async Task<Dictionary<string, decimal>> FetchBudgetsAsync(MySqlConnection conn)
         {
             var budgets = new Dictionary<string, decimal>();
@@ -173,235 +263,320 @@ namespace MauiApp1234
                 SELECT `category-name` AS Category, `budget-amount` AS BudgetAmount
                 FROM `spending-budget`
                 WHERE `customer-id` = @customerId";
-            using (var cmd = new MySqlCommand(sql, conn))
+
+            try
             {
-                cmd.Parameters.AddWithValue("@customerId", _customerId);
-                using (var reader = await cmd.ExecuteReaderAsync())
+                using (var cmd = new MySqlCommand(sql, conn))
                 {
-                    while (await reader.ReadAsync())
+                    cmd.Parameters.AddWithValue("@customerId", _customerId);
+                    using (var reader = await cmd.ExecuteReaderAsync())
                     {
-                        budgets[reader.GetString("Category")] = reader.GetDecimal("BudgetAmount");
-                    }
-                }
+                        while (await reader.ReadAsync())
+                        {
+                            // Ensure category name is not null before adding
+                            string categoryName = reader.GetString("Category");
+                            if (!string.IsNullOrEmpty(categoryName))
+                            {
+                                budgets[categoryName] = reader.GetDecimal("BudgetAmount");
+                            }
+                        }
+                    } // Reader disposed
+                } // Command disposed
+                Debug.WriteLine($"Fetched {budgets.Count} category budgets.");
             }
-            Debug.WriteLine($"Fetched {budgets.Count} category budgets.");
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error fetching category budgets: {ex.Message}");
+                // Return empty dictionary on error, allows the app to continue
+            }
             return budgets;
         }
 
-        // Example placeholder - Replace with your actual logic if you store an overall budget
+        /// <summary>
+        /// Fetches the overall monthly budget stored in the `customer` table.
+        /// </summary>
         private async Task<decimal> FetchTotalMonthlyBudgetAsync(MySqlConnection conn)
         {
-            // Option 1: Sum of individual category budgets
-            // var budgets = await FetchBudgetsAsync(conn); // Fetch again or pass dictionary
-            // return budgets.Sum(kvp => kvp.Value);
-
-            // Option 2: Fetch from a dedicated field/table (e.g., customer table)
-            string sql = "SELECT monthly_budget FROM customer WHERE customer_id = @customerId"; // Fictional column
-            using (var cmd = new MySqlCommand(sql, conn))
-            {
-                cmd.Parameters.AddWithValue("@customerId", _customerId);
-                object result = await cmd.ExecuteScalarAsync();
-                if (result != null && result != DBNull.Value)
-                {
-                    return Convert.ToDecimal(result);
-                }
-            }
-            // Default if not found
-            return 2500m; // Default value used in original XAML example
-        }
-
-
-        private void GroupTransactionsAndCreateCategories(List<TransactionDetail> allTransactions, Dictionary<string, decimal> categoryBudgets)
-        {
-            // Need to re-read category from the transaction fetch or modify fetch logic.
-            // Assuming FetchTransactionsAsync implicitly provides category info for grouping.
-            // Let's refine FetchTransactionsAsync slightly to return category with details.
-
-            // --- Refined Fetch Logic (Conceptual - Adapt FetchTransactionsAsync) ---
-            // Modify FetchTransactionsAsync to return List<Tuple<string, TransactionDetail>>
-            // or a class holding both category and transaction details.
-            // For now, we'll simulate grouping based on the category name which *should* have been fetched.
-            // This requires modifying the FetchTransactionsAsync SQL and return type.
-            // --- End Refined Fetch Logic ---
-
-            // *** Assuming FetchTransactionsAsync was modified to return category info ***
-            // Example structure needed from Fetch:
-            // class TransactionWithCategory { public string Category; public TransactionDetail Detail; }
-            // List<TransactionWithCategory> fetchedData = await FetchTransactionsAsync(...);
-
-            // --- TEMPORARY WORKAROUND: Re-query to get category mapping (Inefficient) ---
-            // This is NOT ideal but works with the current FetchTransactionsAsync structure.
-            // A better solution integrates category into the initial fetch.
-            var transactionsWithCategory = new List<(string Category, TransactionDetail Detail)>();
+            decimal defaultBudget = 2500m; // Default value if not found or error occurs
             try
             {
-                using (var conn = new MySqlConnection(connString))
+                // Assumes a 'monthly_budget' column exists in the 'customer' table
+                string sql = "SELECT `monthly_budget` FROM `customer` WHERE `customer_id` = @customerId";
+                using (var cmd = new MySqlCommand(sql, conn))
                 {
-                    conn.Open();
-                    string sql = @"
-                        SELECT t.`transaction-date`, ABS(t.`transaction-amount`) AS Amount, t.`transaction-category` AS Category, t.`transaction-reference`
-                        FROM `transaction` t
-                        JOIN `account` a ON t.`account-id` = a.`account-id`
-                        WHERE a.`customer-id` = @customerId
-                          AND t.`transaction-date` BETWEEN @startDate AND @endDate -- Need start/end date here too
-                          AND t.`transaction-amount` < 0";
-                    // Define startDate/endDate again or pass them
-                    DateTime startDate = new DateTime(2024, 12, 1);
-                    DateTime endDate = new DateTime(2024, 12, 31);
-
-                    using (var cmd = new MySqlCommand(sql, conn))
+                    cmd.Parameters.AddWithValue("@customerId", _customerId);
+                    object result = await cmd.ExecuteScalarAsync();
+                    if (result != null && result != DBNull.Value && decimal.TryParse(result.ToString(), out decimal fetchedBudget))
                     {
-                        cmd.Parameters.AddWithValue("@customerId", _customerId);
-                        cmd.Parameters.AddWithValue("@startDate", startDate);
-                        cmd.Parameters.AddWithValue("@endDate", endDate);
-                        using (var reader = cmd.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                string category = reader.GetString("Category");
-                                string reference = reader.IsDBNull(reader.GetOrdinal("transaction-reference")) ? "N/A" : reader.GetString("transaction-reference");
-                                transactionsWithCategory.Add((
-                                    category,
-                                    new TransactionDetail
-                                    {
-                                        Date = reader.GetDateTime("transaction-date"),
-                                        Amount = reader.GetDecimal("Amount"),
-                                        Reference = reference
-                                    }
-                                ));
-                            }
-                        }
+                        Debug.WriteLine($"Fetched overall monthly budget: {fetchedBudget}");
+                        return fetchedBudget;
+                    }
+                    else
+                    {
+                        Debug.WriteLine($"Overall monthly budget not found or invalid for customer {_customerId}. Using default.");
                     }
                 }
             }
-            catch (Exception ex) { Debug.WriteLine($"Error in temporary category fetch: {ex.Message}"); return; }
-            // --- End TEMPORARY WORKAROUND ---
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error fetching overall monthly budget: {ex.Message}");
+                // Fall through to return default value
+            }
+            return defaultBudget;
+        }
 
+        // --- Data Processing ---
 
-            var groupedData = transactionsWithCategory // Use the list that includes category names
-                .GroupBy(t => t.Category) // Group by the fetched category name
+        /// <summary>
+        /// Groups the fetched transactions by category and creates the final list
+        /// of SpendingCategoryWithTransactions objects, incorporating budget data.
+        /// </summary>
+        private void GroupTransactionsAndCreateCategories(
+            List<(string Category, TransactionDetail Detail)> transactionsWithCategory,
+            Dictionary<string, decimal> categoryBudgets)
+        {
+            // Group transactions by category name
+            var groupedData = transactionsWithCategory
+                .GroupBy(t => t.Category)
                 .Select(g => new SpendingCategoryWithTransactions
                 {
-                    Name = g.Key,
-                    TotalSpent = g.Sum(item => item.Detail.Amount),
-                    Transactions = g.Select(item => item.Detail)
-                                    .OrderByDescending(td => td.Date) // Order transactions within category
-                                    .ToList(),
-                    BudgetAmount = categoryBudgets.TryGetValue(g.Key, out decimal budget) ? budget : 0m, // Get budget
-                    Icon = GetIconForCategory(g.Key) // Assign an icon
+                    Name = g.Key, // The category name
+                    TotalSpent = g.Sum(item => item.Detail.Amount), // Sum amounts for this category
+                    Transactions = g.Select(item => item.Detail) // Get all transactions for this category
+                                   .OrderByDescending(td => td.Date) // Order transactions by date (most recent first)
+                                   .ToList(),
+                    // Get budget for this category, default to 0 if not found
+                    BudgetAmount = categoryBudgets.TryGetValue(g.Key, out decimal budget) ? budget : 0m,
+                    Icon = GetIconForCategory(g.Key) // Assign an icon based on category name
                 })
-                .OrderByDescending(c => c.TotalSpent) // Order categories by amount spent
+                .OrderByDescending(c => c.TotalSpent) // Order categories by amount spent (highest first)
                 .ToList();
 
-            _spendingCategories = groupedData;
+            // Optionally, add categories that have a budget but no spending in the period
+            foreach (var budgetEntry in categoryBudgets)
+            {
+                if (!groupedData.Any(sc => sc.Name.Equals(budgetEntry.Key, StringComparison.OrdinalIgnoreCase)))
+                {
+                    groupedData.Add(new SpendingCategoryWithTransactions
+                    {
+                        Name = budgetEntry.Key,
+                        TotalSpent = 0m,
+                        BudgetAmount = budgetEntry.Value,
+                        Icon = GetIconForCategory(budgetEntry.Key),
+                        Transactions = new List<TransactionDetail>() // Empty list
+                    });
+                }
+            }
+
+            // Re-sort if categories with only budgets were added
+            _spendingCategories = groupedData.OrderByDescending(c => c.TotalSpent).ToList();
+
             Debug.WriteLine($"Created {_spendingCategories.Count} spending category groups.");
         }
 
         // --- UI Population & Updates ---
 
+        /// <summary>
+        /// Shows or hides a loading indicator in the main content area.
+        /// </summary>
         private void SetLoadingState(bool isLoading)
         {
-            // Simple version: Show/hide a placeholder in the container
             MainThread.BeginInvokeOnMainThread(() =>
             {
-                SpendingCategoriesContainer.Clear(); // Clear previous content or placeholder
+                // Ensure the container exists
+                if (SpendingCategoriesContainer == null)
+                {
+                    Debug.WriteLine("SetLoadingState: SpendingCategoriesContainer is null.");
+                    return;
+                }
+
+                SpendingCategoriesContainer.Clear(); // Clear previous content
                 if (isLoading)
                 {
-                    SpendingCategoriesContainer.Add(new Label { Text = "Loading categories...", TextColor = Colors.Gray, HorizontalOptions = LayoutOptions.Center, Padding = 20 });
+                    SpendingCategoriesContainer.Add(new ActivityIndicator
+                    {
+                        IsRunning = true,
+                        HorizontalOptions = LayoutOptions.Center,
+                        VerticalOptions = LayoutOptions.Center,
+                        Margin = new Thickness(20)
+                    });
+                    SpendingCategoriesContainer.Add(new Label
+                    {
+                        Text = "Loading budget details...",
+                        TextColor = Colors.Gray,
+                        HorizontalOptions = LayoutOptions.Center,
+                    });
                 }
-                // You could also disable buttons etc. here
+                // If not loading, the PopulateSpendingCategoriesUI method will add content later.
             });
         }
 
+        /// <summary>
+        /// Updates the UI elements within the monthly budget card (progress bar, labels).
+        /// </summary>
         private void UpdateMonthlyBudgetCard()
         {
             MainThread.BeginInvokeOnMainThread(() =>
             {
-                decimal remaining = _totalMonthlyBudget - _totalMonthlySpending;
-                double progress = _totalMonthlyBudget > 0 ? Math.Min(1.0, (double)(_totalMonthlySpending / _totalMonthlyBudget)) : 0;
-
-                if (MonthlyBudgetRemainingLabel != null) MonthlyBudgetRemainingLabel.Text = $"Remaining: {remaining:C0}"; // Format as £ without pence
-                if (MonthlyBudgetTotalLabel != null) MonthlyBudgetTotalLabel.Text = $"{_totalMonthlyBudget:C0}";
-
-                if (MonthlyBudgetProgressBar != null && MonthlyBudgetProgressLabel != null)
+                try
                 {
-                    // Calculate width based on parent container width (approximation)
-                    // This requires the parent Grid/Frame to have rendered. Might need adjustment or SizeChanged event.
-                    double parentWidth = this.Width - 40; // Estimate based on page padding
-                    if (parentWidth <= 0) parentWidth = 250; // Fallback width
+                    // --- Safety Checks for UI Elements ---
+                    if (MonthlyBudgetRemainingLabel == null || MonthlyBudgetTotalLabel == null ||
+                        MonthlyBudgetProgressBar == null || MonthlyBudgetProgressLabel == null)
+                    {
+                        Debug.WriteLine("UpdateMonthlyBudgetCard: One or more UI elements are null. Skipping update.");
+                        return;
+                    }
+                    // Also check parent for width calculation
+                    if (MonthlyBudgetProgressBar.Parent is not VisualElement parentElement)
+                    {
+                        Debug.WriteLine("UpdateMonthlyBudgetCard: ProgressBar parent is not a VisualElement. Cannot get width.");
+                        return;
+                    }
+                    //-----------------------------------------
 
-                    double progressBarWidth = parentWidth * progress;
+                    decimal remaining = _totalMonthlyBudget - _totalMonthlySpending;
+                    // Calculate progress, ensuring no division by zero and capping at 1.0
+                    double progress = _totalMonthlyBudget > 0
+                        ? Math.Min(1.0, (double)(_totalMonthlySpending / _totalMonthlyBudget))
+                        : 0;
+
+                    // Update Labels
+                    MonthlyBudgetRemainingLabel.Text = $"Remaining: {remaining:C0}"; // Format as currency, no decimals
+                    MonthlyBudgetTotalLabel.Text = $"{_totalMonthlyBudget:C0}"; // Format as currency, no decimals
+                    MonthlyBudgetProgressLabel.Text = $"{progress:P0}"; // Format as percentage, no decimals
+
+                    // --- Update Progress Bar Width ---
+                    // Use parent's width for calculation, provides better responsiveness
+                    double containerWidth = parentElement.Width;
+                    double availableWidth = containerWidth - MonthlyBudgetProgressBar.Margin.HorizontalThickness; // Account for margins
+
+                    // Ensure width is positive before calculation
+                    if (availableWidth <= 0)
+                    {
+                        Debug.WriteLine($"UpdateMonthlyBudgetCard: Invalid available width ({availableWidth}). Using fallback.");
+                        availableWidth = 200; // Provide a sensible fallback width
+                    }
+
+                    double progressBarWidth = availableWidth * progress;
                     MonthlyBudgetProgressBar.WidthRequest = progressBarWidth;
 
-                    MonthlyBudgetProgressLabel.Text = $"{progress:P0}"; // Format as percentage (e.g., 50%)
-                                                                        // Adjust label position - place it slightly after the progress bar ends
-                    MonthlyBudgetProgressLabel.Margin = new Thickness(progressBarWidth + 5, 0, 0, 0);
+                    // --- Position Percentage Label ---
+                    // Position label slightly after the progress bar end using TranslationX
+                    // Adjust the '+ 5' offset as needed for visual spacing
+                    MonthlyBudgetProgressLabel.TranslationX = progressBarWidth + 5;
+
+                }
+                catch (Exception ex)
+                {
+                    // Catch potential errors during UI update (e.g., layout issues)
+                    Debug.WriteLine($"Error updating budget card UI: {ex.Message}");
                 }
             });
         }
 
-
+        /// <summary>
+        /// Clears and repopulates the main container with expandable category views.
+        /// </summary>
         private void PopulateSpendingCategoriesUI()
         {
             MainThread.BeginInvokeOnMainThread(() =>
             {
-                SpendingCategoriesContainer.Clear(); // Clear loading message or old categories
+                if (SpendingCategoriesContainer == null)
+                {
+                    Debug.WriteLine("PopulateSpendingCategoriesUI: SpendingCategoriesContainer is null.");
+                    return; // Cannot populate if container doesn't exist
+                }
+
+                SpendingCategoriesContainer.Clear(); // Remove previous items
 
                 if (_spendingCategories.Count == 0)
                 {
-                    SpendingCategoriesContainer.Add(new Label { Text = "No spending data found for Dec 2024.", TextColor = Colors.Gray, HorizontalOptions = LayoutOptions.Center, Padding = 20 });
+                    // Display a message if no categories were found/created
+                    SpendingCategoriesContainer.Add(new Label
+                    {
+                        Text = "No spending data found for December 2024.",
+                        TextColor = Colors.Gray,
+                        HorizontalOptions = LayoutOptions.Center,
+                        Padding = 20
+                    });
                     return;
                 }
 
+                // Create and add a view for each spending category
                 foreach (var category in _spendingCategories)
                 {
                     SpendingCategoriesContainer.Add(CreateExpandableCategoryView(category));
                 }
+                Debug.WriteLine($"Populated UI with {_spendingCategories.Count} category views.");
             });
         }
 
+        /// <summary>
+        /// Creates a single expandable view for a spending category, including header and transactions list.
+        /// </summary>
         private View CreateExpandableCategoryView(SpendingCategoryWithTransactions category)
         {
-            // Container for the category (header + transactions list)
-            var categoryLayout = new VerticalStackLayout { Spacing = 0 }; // No space between header and list
+            // --- Main Container for this category ---
+            var categoryLayout = new VerticalStackLayout { Spacing = 0 };
 
-            // Frame for the visible header part
+            // --- Header Section (Frame containing Grid) ---
             var headerFrame = new Frame
             {
-                Padding = 15,
-                HasShadow = false,
+                Padding = new Thickness(15, 10, 15, 10), // Adjusted padding
+                HasShadow = false, // Cleaner look
                 BackgroundColor = Colors.White,
-                CornerRadius = 12,
-                Margin = new Thickness(0, 0, 0, 2) // Small margin below header
+                CornerRadius = 8, // Slightly smaller radius
+                Margin = new Thickness(0, 0, 0, 1) // Thin separator line effect
             };
 
-            var headerGrid = new Grid { ColumnDefinitions = { new ColumnDefinition(GridLength.Auto), new ColumnDefinition(GridLength.Star), new ColumnDefinition(GridLength.Auto) } };
+            var headerGrid = new Grid
+            {
+                ColumnDefinitions = {
+                    new ColumnDefinition(GridLength.Auto),    // Icon
+                    new ColumnDefinition(GridLength.Star),   // Category Name & Amount
+                    new ColumnDefinition(GridLength.Auto)    // Expand Indicator
+                },
+                ColumnSpacing = 10 // Spacing between columns
+            };
 
-            // Icon
-            headerGrid.Add(new Label { Text = category.Icon, FontSize = 24, VerticalOptions = LayoutOptions.Center, Margin = new Thickness(0, 0, 15, 0) }, 0, 0);
+            // Column 0: Icon
+            headerGrid.Add(new Label
+            {
+                Text = category.Icon,
+                FontSize = 22, // Slightly smaller icon
+                VerticalOptions = LayoutOptions.Center
+            }, 0, 0); // Add to column 0, row 0
 
-            // Category Name & Total Spent
-            var infoLayout = new VerticalStackLayout { Spacing = 2, VerticalOptions = LayoutOptions.Center }; // Reduced spacing
+            // Column 1: Category Info (Name and Total Spent)
+            var infoLayout = new VerticalStackLayout { Spacing = 2, VerticalOptions = LayoutOptions.Center };
             infoLayout.Add(new Label { Text = category.Name, FontAttributes = FontAttributes.Bold });
-            infoLayout.Add(new Label { Text = category.DisplayText, TextColor = Color.FromArgb("#6b7280"), FontSize = 14 });
-            headerGrid.Add(infoLayout, 1, 0);
+            infoLayout.Add(new Label { Text = category.DisplayText, TextColor = Colors.Gray, FontSize = 13 }); // Smaller secondary text
+            headerGrid.Add(infoLayout, 1, 0); // Add to column 1, row 0
 
-            // Expand/Collapse Indicator
-            var expandLabel = new Label { Text = "▼", FontSize = 20, TextColor = Color.FromArgb("#6b7280"), VerticalOptions = LayoutOptions.Center, HorizontalOptions = LayoutOptions.End };
-            headerGrid.Add(expandLabel, 2, 0);
+            // Column 2: Expand/Collapse Indicator
+            var expandLabel = new Label
+            {
+                Text = "▼", // Initial state: collapsed
+                FontSize = 18,
+                TextColor = Colors.Gray,
+                VerticalOptions = LayoutOptions.Center,
+                HorizontalOptions = LayoutOptions.End
+            };
+            headerGrid.Add(expandLabel, 2, 0); // Add to column 2, row 0
 
             headerFrame.Content = headerGrid;
 
-            // Hidden container for transactions
+            // --- Transactions Section (Initially Hidden) ---
             var transactionsListLayout = new VerticalStackLayout
             {
-                IsVisible = false, // Initially hidden
-                Padding = new Thickness(15, 10, 15, 10), // Indent transactions slightly
-                BackgroundColor = Color.FromArgb("#f0f0f0"), // Slightly different background
-                Spacing = 8
+                IsVisible = false, // Start collapsed
+                Padding = new Thickness(20, 10, 20, 10), // Indent transactions slightly
+                BackgroundColor = Color.FromArgb("#f9f9f9"), // Very light gray background
+                Spacing = 5 // Space between transaction items
             };
 
-            // Populate transactions
+            // Populate transactions list
             if (category.Transactions.Any())
             {
                 foreach (var transaction in category.Transactions)
@@ -411,161 +586,217 @@ namespace MauiApp1234
             }
             else
             {
-                transactionsListLayout.Add(new Label { Text = "No transactions in this category.", TextColor = Colors.Gray, FontSize = 12 });
+                // Message if no transactions exist for this category
+                transactionsListLayout.Add(new Label
+                {
+                    Text = "No transactions in this category for Dec 2024.",
+                    TextColor = Colors.Gray,
+                    FontSize = 12,
+                    Padding = new Thickness(0, 5) // Add some padding
+                });
             }
 
-            // Add Tap Gesture to the Header Frame to toggle visibility
+            // --- Expand/Collapse Logic ---
             var tapGesture = new TapGestureRecognizer();
             tapGesture.Tapped += (s, e) => {
-                transactionsListLayout.IsVisible = !transactionsListLayout.IsVisible; // Toggle visibility
-                expandLabel.Text = transactionsListLayout.IsVisible ? "▲" : "▼"; // Change indicator
+                bool wasVisible = transactionsListLayout.IsVisible;
+                transactionsListLayout.IsVisible = !wasVisible; // Toggle visibility
+                expandLabel.Text = transactionsListLayout.IsVisible ? "▲" : "▼"; // Update indicator
+                // Optional: Animate the expansion/collapse
+                // transactionsListLayout.FadeTo(transactionsListLayout.IsVisible ? 1 : 0, 150);
             };
-            headerFrame.GestureRecognizers.Add(tapGesture);
+            headerFrame.GestureRecognizers.Add(tapGesture); // Add gesture to the header
 
-            // Add header and transaction list to the main category layout
+            // --- Assemble the View ---
             categoryLayout.Add(headerFrame);
             categoryLayout.Add(transactionsListLayout);
 
             return categoryLayout;
         }
 
+        /// <summary>
+        /// Creates a simple view for displaying a single transaction detail row.
+        /// </summary>
         private View CreateTransactionView(TransactionDetail transaction)
         {
-            // Simple view for a single transaction
-            var transactionLayout = new Grid { ColumnDefinitions = { new ColumnDefinition(GridLength.Star), new ColumnDefinition(GridLength.Auto) } };
-            transactionLayout.Add(new Label { Text = $"{transaction.Date:dd MMM}: {transaction.Reference}", FontSize = 12, VerticalOptions = LayoutOptions.Center }, 0, 0);
-            transactionLayout.Add(new Label { Text = $"-£{transaction.Amount:N2}", FontSize = 12, FontAttributes = FontAttributes.Bold, HorizontalOptions = LayoutOptions.End, VerticalOptions = LayoutOptions.Center }, 1, 0);
+            // Use a Grid for better alignment of date/reference and amount
+            var transactionLayout = new Grid
+            {
+                ColumnDefinitions = {
+                    new ColumnDefinition(GridLength.Star), // Date and Reference (takes available space)
+                    new ColumnDefinition(GridLength.Auto)  // Amount (takes needed space)
+                },
+                Margin = new Thickness(0, 2) // Small vertical margin
+            };
 
-            // Add a thin separator line
-            var separator = new BoxView { HeightRequest = 1, Color = Colors.LightGray, Margin = new Thickness(0, 4, 0, 0) };
+            // Column 0: Date and Reference
+            transactionLayout.Add(new Label
+            {
+                Text = $"{transaction.Date:dd MMM}: {transaction.Reference}",
+                FontSize = 12,
+                TextColor = Colors.DarkSlateGray,
+                VerticalOptions = LayoutOptions.Center,
+                LineBreakMode = LineBreakMode.TailTruncation // Truncate long references
+            }, 0, 0);
 
-            return new VerticalStackLayout { Spacing = 0, Children = { transactionLayout, separator } };
+            // Column 1: Amount
+            transactionLayout.Add(new Label
+            {
+                Text = $"-£{transaction.Amount:N2}", // Format as negative currency
+                FontSize = 12,
+                FontAttributes = FontAttributes.Bold, // Make amount stand out
+                TextColor = Colors.DarkSlateGray,
+                HorizontalOptions = LayoutOptions.End, // Align to the right
+                VerticalOptions = LayoutOptions.Center
+            }, 1, 0);
+
+            // Optional: Add a thin separator line below each transaction
+            var separator = new BoxView
+            {
+                HeightRequest = 1,
+                Color = Colors.LightGray,
+                Margin = new Thickness(0, 4, 0, 0) // Margin above the next transaction
+            };
+
+            // Return a StackLayout containing the Grid and the separator
+            return new VerticalStackLayout { Spacing = 0, Children = { transactionLayout /*, separator */ } };
+            // Uncomment separator if desired
         }
 
-        // Helper to get an icon based on category name (customize as needed)
+
+        // --- Helper Methods ---
+
+        /// <summary>
+        /// Returns an appropriate emoji icon based on the category name.
+        /// </summary>
         private string GetIconForCategory(string categoryName)
         {
-            switch (categoryName?.ToLower())
+            // Use case-insensitive matching and handle potential null input
+            switch (categoryName?.ToLowerInvariant())
             {
                 case "food":
                 case "dining":
                 case "food & dining":
-                case "groceries":
-                    return "🍽️";
+                case "groceries": return "🍽️"; // Food/Dining
                 case "utility":
                 case "utilities":
-                case "bills":
-                    return "🛠️"; // Hammer and Wrench
-                case "shopping":
-                    return "🛒";
+                case "bills": return "💡"; // Utilities (Lightbulb)
+                case "shopping": return "🛒"; // Shopping
                 case "leisure":
-                case "entertainment":
-                    return "🏖️"; // Beach with Umbrella (or 🎬 Clapper Board)
+                case "entertainment": return "🎭"; // Entertainment/Leisure (Theater masks)
                 case "health":
-                case "healthcare":
-                    return "⚕️"; // Medical Symbol
+                case "healthcare": return "⚕️"; // Health (Medical symbol)
                 case "transport":
-                case "transportation":
-                    return "🚗"; // Car (or 🚌 Bus)
+                case "transportation": return "🚗"; // Transport
                 case "mortgage":
-                case "rent":
-                    return "🏠"; // House
-                case "transfer":
-                    return "💸"; // Money with Wings
-                case "gambling":
-                    return "🎰"; // Slot Machine
-                case "life event":
-                    return "🎉"; // Party Popper
-                case "monthly fees":
-                    return "💳"; // Credit Card
-                case "withdrawal":
-                    return "🏧"; // ATM sign
-                default:
-                    return "💰"; // Money Bag (default)
+                case "rent": return "🏠"; // Housing
+                case "transfer": return "💸"; // Transfer
+                case "gambling": return "🎰"; // Gambling
+                case "life event": return "🎉"; // Life Event
+                case "monthly fees": return "💳"; // Fees (Credit card)
+                case "withdrawal": return "🏧"; // Withdrawal
+                case "uncategorized": return "❓"; // Uncategorized
+                default: return "💰"; // Default (Money bag)
             }
         }
 
-        // --- Placeholder/Helper for Customer ID ---
+        /// <summary>
+        /// Retrieves the customer ID from Preferences.
+        /// </summary>
+        /// <returns>True if successful, False otherwise.</returns>
         private async Task<bool> GetCustomerIdAsync()
         {
-            // Reuse logic from Dashboard or implement your auth flow
-            long storedId = Preferences.Get("customer_id", 0L);
-            if (storedId != 0)
+            // Check if already loaded
+            if (_customerId != 0) return true;
+
+            // Try to get from preferences
+            string customerIdStr = Preferences.Get("customer_id", string.Empty);
+
+            if (!string.IsNullOrWhiteSpace(customerIdStr) && long.TryParse(customerIdStr, out _customerId))
             {
-                _customerId = storedId;
                 Debug.WriteLine($"Budgeting Page: Retrieved Customer ID: {_customerId}");
-                return true;
+                return true; // Successfully retrieved and parsed
             }
             else
             {
+                // ID not found or invalid in preferences
                 _customerId = 0;
-                Debug.WriteLine("Budgeting Page: Customer ID not found.");
+                Debug.WriteLine("Budgeting Page: Customer ID not found or invalid in Preferences.");
+                // Don't show alert here, let LoadDataAsync handle it
                 return false;
             }
         }
-
 
         // --- Event Handlers ---
 
         // Top Bar Icons
         private async void ChatbotIcon_Tapped(object sender, TappedEventArgs e)
         {
-            await Navigation.PushAsync(new Ai());
+            // Navigate to AI page using Shell routing if possible, fallback to PushAsync
+            try { await Shell.Current.GoToAsync("//ai"); }
+            catch { if (this.Window != null) await Navigation.PushAsync(new Ai()); } // Ensure Ai page exists
         }
 
         private async void OnNotificationsIconTapped(object sender, TappedEventArgs e)
         {
-            // Assuming 'notifications' is a page class
-            // await Navigation.PushAsync(new notifications());
-            await DisplayAlert("Notifications", "No new notifications.", "OK"); // Placeholder
+            // Placeholder for notifications
+            if (this.Window != null) await DisplayAlert("Notifications", "No new notifications.", "OK");
         }
 
         private async void SettingsIcon_Tapped(object sender, TappedEventArgs e)
         {
-            await Navigation.PushAsync(new Settings()); // Assuming SettingsPage exists
+            // Navigate to Settings page using Shell routing if possible, fallback to PushAsync
+            try { await Shell.Current.GoToAsync("//settings"); }
+            catch { if (this.Window != null) await Navigation.PushAsync(new Settings()); } // Ensure Settings page exists
         }
 
-        // Card Buttons
+        // Buttons within the page content (if any)
         private async void SubscriptionButton_Clicked(object sender, EventArgs e)
         {
-            // Assuming 'Subscription' is a page class
-            // await Navigation.PushAsync(new Subscription());
-            await DisplayAlert("Subscription", "Manage subscription feature coming soon.", "OK"); // Placeholder
+            if (this.Window != null) await DisplayAlert("Subscription", "Manage subscription feature coming soon.", "OK");
         }
 
         private void FreezeStreakButton_Clicked(object sender, EventArgs e)
         {
-            // Update UI directly for demo
+            // Example: Update an icon (ensure IconLabel exists in your XAML)
             if (IconLabel != null) IconLabel.Text = "❄️";
-            DisplayAlert("Streak Frozen", "Your budget streak is now frozen!", "OK"); // Placeholder action
+            if (this.Window != null) DisplayAlert("Streak Frozen", "Your budget streak is now frozen!", "OK");
         }
 
-        // Bottom Navigation
+        // Bottom Tab Bar Navigation (Example using Shell)
         private async void home_Tapped(object sender, TappedEventArgs e)
         {
-            // Navigate back to Dashboard, potentially popping this page
-            await Navigation.PopToRootAsync(); // Or PushAsync(new Dashboard()) if preferred
+            try { await Shell.Current.GoToAsync("//dashboard"); } // Navigate to Dashboard route
+            catch (Exception ex) { Debug.WriteLine($"Shell Navigation Error: {ex.Message}"); }
         }
 
         private async void budget_Tapped(object sender, TappedEventArgs e)
         {
-            // Already on this page, maybe refresh?
-            Debug.WriteLine("Budget navigation tapped - Refreshing data.");
+            // Already on this page, maybe refresh data?
             await LoadDataAsync();
         }
 
         private async void investment_Tapped(object sender, TappedEventArgs e)
         {
-            // Assuming 'Investing' is a page class
-            // await Navigation.PushAsync(new Investing());
-            await DisplayAlert("Navigate", "Navigate to Investing page (Not Implemented)", "OK"); // Placeholder
+            try { await Shell.Current.GoToAsync("//investments"); } // Navigate to Investments route
+            catch (Exception ex) { Debug.WriteLine($"Shell Navigation Error: {ex.Message}"); }
         }
 
         private async void infohub_Tapped(object sender, TappedEventArgs e)
         {
-            // Assuming 'InfoHub1' is a page class
-            // await Navigation.PushAsync(new InfoHub1());
-            await DisplayAlert("Navigate", "Navigate to Info Hub page (Not Implemented)", "OK"); // Placeholder
+            try { await Shell.Current.GoToAsync("//infohub"); } // Navigate to InfoHub route
+            catch (Exception ex) { Debug.WriteLine($"Shell Navigation Error: {ex.Message}"); }
         }
-    }
-}
+
+        // --- XAML Element References ---
+        // Ensure these names match the x:Name attributes in your Budgeting.xaml file
+        // Example:
+        // <Label x:Name="MonthlyBudgetRemainingLabel" ... />
+        // <Label x:Name="MonthlyBudgetTotalLabel" ... />
+        // <BoxView x:Name="MonthlyBudgetProgressBar" ... /> // Or whatever element you use
+        // <Label x:Name="MonthlyBudgetProgressLabel" ... />
+        // <VerticalStackLayout x:Name="SpendingCategoriesContainer" ... />
+        // <Label x:Name="IconLabel" ... /> // For the FreezeStreak example
+
+    } // End of Budgeting class
+} // End of namespace

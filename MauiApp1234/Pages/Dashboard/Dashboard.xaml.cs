@@ -38,7 +38,7 @@ namespace MauiApp1234
         private long _customerId = 0;
         private decimal _totalIncome = 0;
         private decimal _totalExpenses = 0;
-        private decimal _totalBalance = 0;
+        private decimal _totalBalance = 10361;
         private List<SpendingCategory> _spendingCategories = new List<SpendingCategory>();
 
         // Define available categories
@@ -594,7 +594,7 @@ namespace MauiApp1234
 
         private void OnAddGoalClicked(object sender, EventArgs e)
         {
-            DisplayAlert("Add Goal", "Feature to add new financial goals coming soon.", "OK");
+            Navigation.PushAsync(new AddGoal()); 
         }
 
         private void OnEditGoalTapped(object sender, TappedEventArgs e)

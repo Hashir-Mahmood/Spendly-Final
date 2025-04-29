@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiApp1234.Pages.Dashboard.AddGoal"
+             Title="Add Goal">
+    <Grid RowDefinitions="Auto,Auto,*,Auto">
+        <ScrollView Grid.Row="2">
+            <StackLayout Padding="20" Spacing="20">
+                <Label Text="Goal Name" FontSize="16" FontAttributes="Bold" TextColor="#444" />
+                <Entry x:Name="GoalNameEntry" Placeholder="Enter goal name" BackgroundColor="White" TextColor="#444" />
+
+                <Label Text="Description" FontSize="16" FontAttributes="Bold" TextColor="#444" />
+                <Entry x:Name="DescriptionEntry" Placeholder="Enter goal description" BackgroundColor="White" TextColor="#444" />
+
+                <Label Text="Progress" FontSize="16" FontAttributes="Bold" TextColor="#444" />
+                <Entry x:Name="ProgressEntry" Placeholder="Enter current progress (0-100)" Keyboard="Numeric" BackgroundColor="White" TextColor="#444" />
+
+                <Label Text="Remaining Amount" FontSize="16" FontAttributes="Bold" TextColor="#444" />
+                <Entry x:Name="RemainingAmountEntry" Placeholder="Enter remaining amount" Keyboard="Numeric" BackgroundColor="White" TextColor="#444" />
+
+                <Label Text="Target Date" FontSize="16" FontAttributes="Bold" TextColor="#444" />
+                <DatePicker x:Name="TargetDatePicker" BackgroundColor="White" TextColor="#444"/>
+
+                <Button Text="Add Goal"
+                    Clicked="AddGoalButton_Clicked"
+                    BackgroundColor="#007AFF"
+                    TextColor="White"
+                    CornerRadius="10"
+                    Padding="15"
+                    FontAttributes="Bold"
+                    FontSize="18" />
+            </StackLayout>
+        </ScrollView>
+        <!-- Bottom Navigation -->
+        <Grid Grid.Row="3" BackgroundColor="White" HeightRequest="60" ColumnDefinitions="*,*,*,*">
+            <!-- return button -->
+            <Button Text="←" 
+                FontSize="20" 
+                HorizontalOptions="Start" 
+                WidthRequest="40" 
+                HeightRequest="40" 
+                CornerRadius="20" 
+                BackgroundColor="Transparent" 
+                TextColor="Black" 
+                Padding="0" 
+                BorderWidth="0"
+                x:Name="ReturnButton"
+                Clicked="ReturnButton_Clicked"/>
+        </Grid>
+    </Grid>
+</ContentPage>

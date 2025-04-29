@@ -10,7 +10,7 @@
         <vm:AiViewModel />
     </ContentPage.BindingContext>
 
-    <Grid RowDefinitions="Auto,*,Auto">
+    <Grid RowDefinitions="Auto,*,Auto,Auto">
 
         <!-- Header -->
         <Grid Grid.Row="0" Padding="20,15" ColumnDefinitions="*,Auto">
@@ -98,5 +98,21 @@
                         Command="{Binding SendCommand}"/>
             </Grid>
         </Frame>
+        <!-- Bottom Navigation -->
+        <Grid Grid.Row="3" BackgroundColor="White" HeightRequest="60" ColumnDefinitions="*,*,*,*">
+            <!-- return button -->
+            <Button Text="←" 
+FontSize="20" 
+HorizontalOptions="Start" 
+WidthRequest="40" 
+HeightRequest="40" 
+CornerRadius="20" 
+BackgroundColor="Transparent" 
+TextColor="Black" 
+Padding="0" 
+BorderWidth="0"
+x:Name="ReturnButton"
+Clicked="ReturnButton_Clicked"/>
+        </Grid>
     </Grid>
 </ContentPage>
