@@ -2,94 +2,73 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiApp1234.Pages.AI.Ai"
+             xmlns:vm="clr-namespace:MauiApp1234.ViewModels"
              BackgroundColor="#F8F9FC"
              Shell.NavBarIsVisible="False">
-    
-    <Grid RowDefinitions="Auto,Auto,*,Auto">
-        <Grid RowDefinitions="Auto,*,Auto" Grid.Row="2">
+
+    <ContentPage.BindingContext>
+        <vm:AiViewModel />
+    </ContentPage.BindingContext>
+
+    <Grid RowDefinitions="Auto,*,Auto">
+
         <!-- Header -->
         <Grid Grid.Row="0" Padding="20,15" ColumnDefinitions="*,Auto">
-                <Label Text="AI Chat" 
+            <Label Text="AI Chat" 
                    FontSize="24" 
                    FontAttributes="Bold" 
                    VerticalOptions="Center"/>
-            </Grid>
+        </Grid>
 
-        <!-- Chat Area -->
-        <CollectionView Grid.Row="1" 
-                        Margin="10,0"
-                        ItemsSource="{Binding Messages}"
-                        RemainingItemsThreshold="2"
-                        ItemsUpdatingScrollMode="KeepLastItemInView">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Grid Padding="5">
-                        <!-- User Message -->
-                        <Frame IsVisible="{Binding IsUser}"
-                               BackgroundColor="#E6E1FF"
-                               CornerRadius="15"
-                               Padding="15,10"
-                               HasShadow="False"
-                               Margin="0,5,50,5"
-                               HorizontalOptions="Start">
-                            <StackLayout Spacing="5">
-                                <Label Text="{Binding Content}" 
-                                       TextColor="Black"/>
-                                <Label Text="Copy" 
-                                       TextColor="#616161"
-                                       FontSize="12"
-                                       TextDecorations="Underline">
-                                    <Label.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.CopyCommand}"
-                                                              CommandParameter="{Binding Content}"/>
-                                    </Label.GestureRecognizers>
-                                </Label>
-                            </StackLayout>
-                        </Frame>
+        <!-- Chat Area and Typing Indicator -->
+        <Grid Grid.Row="1" RowDefinitions="*,Auto">
+            <CollectionView Grid.Row="0"
+                            Margin="10,0"
+                            ItemsSource="{Binding Messages}"
+                            ItemsUpdatingScrollMode="KeepLastItemInView">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Padding="5">
+                            <!-- User Message -->
+                            <Frame IsVisible="{Binding IsUser}"
+                                   BackgroundColor="#E6E1FF"
+                                   CornerRadius="15"
+                                   Padding="15,10"
+                                   HasShadow="False"
+                                   Margin="0,5,50,5"
+                                   HorizontalOptions="Start">
+                                <Label Text="{Binding Content}" TextColor="Black"/>
+                            </Frame>
 
-                        <!-- AI Message -->
-                        <Frame IsVisible="{Binding IsNotUser}"
-                               BackgroundColor="White"
-                               BorderColor="#E5E5E5"
-                               CornerRadius="15"
-                               Padding="15,10"
-                               HasShadow="False"
-                               Margin="50,5,0,5"
-                               HorizontalOptions="End">
-                            <StackLayout Spacing="5">
-                                <Label Text="{Binding Content}" 
-                                       TextColor="Black"/>
-                                <Label Text="Copy" 
-                                       TextColor="#616161"
-                                       FontSize="12"
-                                       TextDecorations="Underline">
-                                    <Label.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.CopyCommand}"
-                                                              CommandParameter="{Binding Content}"/>
-                                    </Label.GestureRecognizers>
-                                </Label>
-                            </StackLayout>
-                        </Frame>
-                    </Grid>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+                            <!-- AI Message -->
+                            <Frame IsVisible="{Binding IsNotUser}"
+                                   BackgroundColor="White"
+                                   BorderColor="#E5E5E5"
+                                   CornerRadius="15"
+                                   Padding="15,10"
+                                   HasShadow="False"
+                                   Margin="50,5,0,5"
+                                   HorizontalOptions="End">
+                                <Label Text="{Binding Content}" TextColor="Black"/>
+                            </Frame>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
 
-        <!-- Typing indicator -->
-        <StackLayout Grid.Row="1" 
-                     VerticalOptions="End" 
-                     HorizontalOptions="Start"
-                     Margin="25,0,0,10"
-                     IsVisible="{Binding IsTyping}">
-            <Frame BackgroundColor="White"
-                   BorderColor="#E5E5E5"
-                   CornerRadius="15"
-                   Padding="15,10"
-                   HasShadow="False">
-                <Label Text="AI is typing..." 
-                       TextColor="#616161"/>
-            </Frame>
-        </StackLayout>
+            <!-- Typing Indicator -->
+            <StackLayout Grid.Row="1" 
+                         Margin="25,0,0,10"
+                         IsVisible="{Binding IsTyping}">
+                <Frame BackgroundColor="White"
+                       BorderColor="#E5E5E5"
+                       CornerRadius="15"
+                       Padding="15,10"
+                       HasShadow="False">
+                    <Label Text="AI is typing..." TextColor="#616161"/>
+                </Frame>
+            </StackLayout>
+        </Grid>
 
         <!-- Input Area -->
         <Frame Grid.Row="2"
@@ -101,14 +80,11 @@
                CornerRadius="20">
             <Grid ColumnDefinitions="*,Auto">
                 <Editor Grid.Column="0"
-                       Placeholder="Type your message..."
-                       PlaceholderColor="#6B7280"
-                       TextColor="Black"
-                       BackgroundColor="Transparent"
-                       Text="{Binding CurrentMessage}"
-                       AutoSize="TextChanges"
-                       MaximumHeightRequest="100"
-                       VerticalOptions="Center"/>
+                        Placeholder="Type your message..."
+                        Text="{Binding CurrentMessage}"
+                        AutoSize="TextChanges"
+                        MaximumHeightRequest="100"
+                        VerticalOptions="Center"/>
 
                 <Button Grid.Column="1"
                         Text="➤"
@@ -122,42 +98,5 @@
                         Command="{Binding SendCommand}"/>
             </Grid>
         </Frame>
-
-        <!-- Options menu -->
-        <Button Grid.Row="2" 
-                VerticalOptions="Start" 
-                HorizontalOptions="Center"
-                Margin="0,-25,0,0"
-                BackgroundColor="#8B80FF"
-                CornerRadius="15"
-                WidthRequest="50"
-                HeightRequest="30"
-                Command="{Binding ShowOptionsCommand}">
-            <Button.ImageSource>
-                <FontImageSource Glyph="•••" 
-                                Color="White" 
-                                Size="12"/>
-            </Button.ImageSource>
-        </Button>
     </Grid>
-        <!-- Bottom Navigation -->
-        <Grid Grid.Row="3" BackgroundColor="White" HeightRequest="60" ColumnDefinitions="*,*,*,*">
-            <!-- return button -->
-            <Button Text="←" 
-FontSize="20" 
-HorizontalOptions="Start" 
-WidthRequest="40" 
-HeightRequest="40" 
-CornerRadius="20" 
-BackgroundColor="Transparent" 
-TextColor="Black" 
-Padding="0" 
-BorderWidth="0"
-x:Name="ReturnButton"
-Clicked="ReturnButton_Clicked"/>
-        </Grid>
-    </Grid>
-    
-  
-    
 </ContentPage>

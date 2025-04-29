@@ -1,20 +1,14 @@
-using System;
+namespace MauiApp1234.Pages.AI;
 
-using Microsoft.Maui.Controls;
-
-namespace MauiApp1234.Pages.AI
+public partial class Ai : ContentPage
 {
-    public partial class Ai : ContentPage
+    public Ai()
     {
-        public Ai()
-        {
-            InitializeComponent();
-            
-        }
+        InitializeComponent();
+    }
 
-        private void ReturnButton_Clicked(object sender, EventArgs e)
-        {
-            Navigation.PopAsync();
-        }
+    private void ReturnButton_Clicked(object sender, EventArgs e)
+    {
+        Navigation.PopAsync();
     }
 }
