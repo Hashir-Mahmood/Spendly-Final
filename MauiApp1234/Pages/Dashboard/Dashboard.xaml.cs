@@ -55,7 +55,7 @@ namespace MauiApp1234
             public decimal CurrentAmount { get; set; }
             public decimal BudgetAmount { get; set; }
             public double Progress => BudgetAmount > 0 ? Math.Min(1.0, (double)(CurrentAmount / BudgetAmount)) : 0;
-            public Color ProgressColor => Progress < 0.5 ? Colors.Green : (Progress < 0.8 ? Colors.Orange : Colors.Red);
+            public Color ProgressColor => Progress < 0.5 ? Colors.Green : (Progress < 0.8 ? Colors.Orange : Color.FromHex("#6f61ef"));
         }
 
         public Dashboard()

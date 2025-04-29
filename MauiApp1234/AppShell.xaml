@@ -9,7 +9,7 @@
     Title="MauiApp1234">
 
     <!-- Define routes first -->
-    <ShellContent Route="onboarding" ContentTemplate="{DataTemplate local:onboardingPage}" />
+    <ShellContent Route="onboarding" ContentTemplate="{DataTemplate local:Dashboard}" />
     <!-- Add this before or after your TabBar -->
     <ShellContent Route="loginPage" ContentTemplate="{DataTemplate local:LogInPage1}" />
     <ShellContent ContentTemplate="{DataTemplate local:Dashboard}" Route="dashboard" />
