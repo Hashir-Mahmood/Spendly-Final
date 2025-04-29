@@ -139,49 +139,62 @@
 				</Grid>
 			</Frame>
 
-			<Frame CornerRadius="10" Padding="15" BackgroundColor="White" BorderColor="LightGray" HasShadow="True">
-				<VerticalStackLayout>
-					<Label Text="Financial Summary" FontSize="22" FontAttributes="Bold" HorizontalOptions="Center"/>
-					<Label Text="Monthly overview" FontSize="14" TextColor="Gray" HorizontalOptions="Center" Margin="0,5,0,15"/>
+                <Frame CornerRadius="10" Padding="15" BackgroundColor="White" BorderColor="LightGray" HasShadow="True">
+                    <Grid>
+                        <!-- Main layout content -->
+                        <VerticalStackLayout>
+                            <Label Text="Financial Summary" FontSize="22" FontAttributes="Bold" HorizontalOptions="Center"/>
+                            <Label Text="Monthly overview" FontSize="14" TextColor="Gray" HorizontalOptions="Center" Margin="0,5,0,15"/>
 
-					<Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" RowSpacing="15" ColumnSpacing="15">
-						<Frame Grid.Row="0" Grid.Column="0" BackgroundColor="#e8f5e9" Padding="15" CornerRadius="10" BorderColor="#c8e6c9">
-							<VerticalStackLayout Spacing="5">
-								<Label Text="Income" FontAttributes="Bold" HorizontalOptions="Center" FontSize="14"/>
-								<Label x:Name="TotalIncomeLabel"
-                                       Text="Loading..." TextColor="#2e7d32" FontSize="20"
-                                       FontAttributes="Bold"
-                                       HorizontalOptions="Center"/>
-							</VerticalStackLayout>
-						</Frame>
+                            <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" RowSpacing="15" ColumnSpacing="15">
+                                <Frame Grid.Row="0" Grid.Column="0" BackgroundColor="#e8f5e9" Padding="15" CornerRadius="10" BorderColor="#c8e6c9">
+                                    <VerticalStackLayout Spacing="5">
+                                        <Label Text="Income" FontAttributes="Bold" HorizontalOptions="Center" FontSize="14"/>
+                                        <Label x:Name="TotalIncomeLabel"
+                               Text="Loading..." TextColor="#2e7d32" FontSize="20"
+                               FontAttributes="Bold"
+                               HorizontalOptions="Center"/>
+                                    </VerticalStackLayout>
+                                </Frame>
 
-						<Frame Grid.Row="0" Grid.Column="1" BackgroundColor="#ffebee" Padding="15" CornerRadius="10" BorderColor="#ffcdd2">
-							<VerticalStackLayout Spacing="5">
-								<Label Text="Total Expenses" FontAttributes="Bold" HorizontalOptions="Center" FontSize="14"/>
-								<Label x:Name="TotalExpensesLabel"
-                                       Text="Loading..." TextColor="#c62828" FontSize="20"
-                                       FontAttributes="Bold"
-                                       HorizontalOptions="Center"/>
-							</VerticalStackLayout>
-						</Frame>
+                                <Frame Grid.Row="0" Grid.Column="1" BackgroundColor="#ffebee" Padding="15" CornerRadius="10" BorderColor="#ffcdd2">
+                                    <VerticalStackLayout Spacing="5">
+                                        <Label Text="Total Expenses" FontAttributes="Bold" HorizontalOptions="Center" FontSize="14"/>
+                                        <Label x:Name="TotalExpensesLabel"
+                               Text="Loading..." TextColor="#c62828" FontSize="20"
+                               FontAttributes="Bold"
+                               HorizontalOptions="Center"/>
+                                    </VerticalStackLayout>
+                                </Frame>
 
-						<Frame Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="#e3f2fd" Padding="15" CornerRadius="10" BorderColor="#bbdefb">
-							<VerticalStackLayout Spacing="5">
-								<Label Text="Net Cash Flow" FontAttributes="Bold" HorizontalOptions="Center" FontSize="16"/>
-								<Label x:Name="NetCashFlowLabel"
-                                       Text="Loading..." TextColor="#1565c0" FontSize="24"
-                                       FontAttributes="Bold"
-                                       HorizontalOptions="Center"/>
-							</VerticalStackLayout>
-						</Frame>
-					</Grid>
+                                <Frame Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="#e3f2fd" Padding="15" CornerRadius="10" BorderColor="#bbdefb">
+                                    <VerticalStackLayout Spacing="5">
+                                        <Label Text="Net Cash Flow" FontAttributes="Bold" HorizontalOptions="Center" FontSize="16"/>
+                                        <Label x:Name="NetCashFlowLabel"
+                               Text="Loading..." TextColor="#1565c0" FontSize="24"
+                               FontAttributes="Bold"
+                               HorizontalOptions="Center"/>
+                                    </VerticalStackLayout>
+                                </Frame>
+                            </Grid>
+                        </VerticalStackLayout>
 
-					
+                        <!-- Pencil emoji in top-right corner -->
+                        <Label Text="✏️"
+       FontSize="20"
+       HorizontalOptions="End"
+       VerticalOptions="Start"
+       Margin="0">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnEditTapped" />
+                            </Label.GestureRecognizers>
+                        </Label>
 
-				</VerticalStackLayout>
-			</Frame>
+                    </Grid>
+                </Frame>
 
-		</VerticalStackLayout>
+
+            </VerticalStackLayout>
 	</ScrollView>
         <!-- Bottom Navigation -->
         <Grid Grid.Row="3" BackgroundColor="White" HeightRequest="60" ColumnDefinitions="*,*,*,*">
