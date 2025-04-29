@@ -256,7 +256,7 @@ public partial class Subscription : ContentPage
 
     private void ReturnButton_Clicked(object sender, EventArgs e)
     {
-        Navigation.PopAsync();
+        Navigation.PushAsync(new Budgeting());
     }
 }
 

@@ -9,21 +9,11 @@
         <Grid RowDefinitions="Auto,*,Auto" Grid.Row="2">
         <!-- Header -->
         <Grid Grid.Row="0" Padding="20,15" ColumnDefinitions="*,Auto">
-            <Label Text="AI Chat" 
+                <Label Text="AI Chat" 
                    FontSize="24" 
                    FontAttributes="Bold" 
                    VerticalOptions="Center"/>
-
-            <Button Grid.Column="1"
-                    Text="←"
-                    FontSize="20"
-                    BackgroundColor="#E6E1FF"
-                    TextColor="Black"
-                    CornerRadius="10"
-                    WidthRequest="40"
-                    HeightRequest="40"
-                    Command="{Binding BackCommand}"/>
-        </Grid>
+            </Grid>
 
         <!-- Chat Area -->
         <CollectionView Grid.Row="1" 
