@@ -106,15 +106,16 @@ namespace MauiApp1234
             // Mark onboarding as seen
             Preferences.Set("HasSeenOnboarding", true);
 
-            // Animate current page fade out
-            await this.FadeTo(0, 250, Easing.CubicInOut);
+            // Slide out the current page (move it off the screen to the left)
+            await this.TranslateTo(-this.Width, 0, 250, Easing.CubicInOut);
 
             // Navigate to login within Shell
             await Shell.Current.GoToAsync("///loginPage");
 
-            // You can add animation for the page appearance if needed
-            // This would require handling the appearing event in the login page itself
+            // After navigating, slide in the new page from the right (you can handle this on the new page if desired)
+            // If you want the new page to have a slide effect as well, handle this on the page's Appearing event.
         }
+
     }
 
     public class OnboardingItem
