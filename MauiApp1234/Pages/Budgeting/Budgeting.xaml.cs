@@ -1,4 +1,4 @@
-namespace MauiApp1234;
+﻿namespace MauiApp1234;
 
 using MauiApp1234.Pages.AI;
 using MauiApp1234.Pages.Settings;
@@ -69,5 +69,10 @@ public partial class Budgeting : ContentPage
     private void infohub_Tapped(object sender, TappedEventArgs e)
     {
         Navigation.PushAsync(new InfoHub1());
+    }
+
+    private void Button_Clicked_1(object sender, EventArgs e)
+    {
+        IconLabel.Text = "❄️";
     }
 }
