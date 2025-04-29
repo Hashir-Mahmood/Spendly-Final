@@ -39,7 +39,7 @@ public class AiViewModel : INotifyPropertyChanged
 
     private bool _isTyping;
     private readonly HttpClient _httpClient;
-    private const string OpenAIApiKey = "YOUR_OPENAI_API_KEY"; // Replace with your actual OpenAI API key
+    private const string OpenAIApiKey = "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"; // Replace with your actual OpenAI API key
 
     public AiViewModel()
     {
