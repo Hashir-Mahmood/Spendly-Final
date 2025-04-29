@@ -186,7 +186,7 @@
        VerticalOptions="Start"
        Margin="0">
                             <Label.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="OnEditTapped" />
+                                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
                             </Label.GestureRecognizers>
                         </Label>
 

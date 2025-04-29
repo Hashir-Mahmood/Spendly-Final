@@ -462,6 +462,11 @@ namespace MauiApp1234.Pages.Dashboard
             Navigation.PopAsync();
         }
 
+        private void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
+        {
+            Navigation.PopAsync();
+        }
+
         // Add this line if CategoryPickerPopup is defined in XAML code-behind
         // If it's purely in XAML with x:Name, this isn't strictly needed here
         // but ensure it's accessible (e.g., public or internal field in the partial class)
