@@ -7,9 +7,7 @@
              Shell.NavBarIsVisible="False">
 
     <Grid RowDefinitions="Auto,Auto,*,Auto">
-        <!-- Header with Icons -->
         <Grid Grid.Row="0" Margin="20,10" ColumnDefinitions="Auto,*,Auto,Auto">
-            <!-- Icon on the left -->
             <Frame Grid.Column="0" CornerRadius="24" Padding="10" HasShadow="False" BackgroundColor="White" HorizontalOptions="CenterAndExpand">
                 <Image Source="ai.png" HeightRequest="20" WidthRequest="20" x:Name="ChatbotIcon"/>
                 <Frame.GestureRecognizers>
@@ -17,10 +15,8 @@
                 </Frame.GestureRecognizers>
             </Frame>
 
-            <!-- Space in the middle (will automatically expand) -->
             <Grid Grid.Column="1" />
 
-            <!-- Notification icon on the right -->
             <Frame Grid.Column="2" CornerRadius="24" Padding="10" HasShadow="False" BackgroundColor="White" >
                 <Image Source="bell.png" HeightRequest="20" WidthRequest="20" x:Name="NotificationsIcon"/>
                 <Frame.GestureRecognizers>
@@ -28,7 +24,6 @@
                 </Frame.GestureRecognizers>
             </Frame>
 
-            <!-- Settings icon on the right -->
             <Frame Grid.Column="3" CornerRadius="20" Padding="10" HasShadow="False" BackgroundColor="White" Margin="10,0,0,0">
                 <Image Source="settings.png" HeightRequest="20" WidthRequest="20" x:Name="SettingsIcon"/>
                 <Frame.GestureRecognizers>
@@ -37,19 +32,13 @@
             </Frame>
         </Grid>
 
+        <Label Grid.Row="1" Text="Budgeting" FontSize="22" FontAttributes="Bold"
+               HorizontalOptions="Center" Margin="20,5,20,15" />
 
-
-        <!-- Dashboard Title -->
-        <Label Grid.Row="1" Text="Budgeting" FontSize="22" FontAttributes="Bold"  
-           HorizontalOptions="Center" Margin="20,5,20,15" />
-
-        <!-- Main Content -->
         <ScrollView Grid.Row="2">
             <VerticalStackLayout Spacing="15" Padding="20,0,20,20">
-                <!-- Budget Streak Card -->
                 <Frame CornerRadius="15" Padding="15" HasShadow="False" BackgroundColor="White">
                     <VerticalStackLayout Spacing="15">
-                        <!-- Header and streak info -->
                         <Grid ColumnDefinitions="*,Auto">
                             <StackLayout Grid.Column="0" Orientation="Vertical" Spacing="5">
                                 <Label Text="Budget Streak" TextColor="#6366f1" FontSize="18" FontAttributes="Bold" />
@@ -57,11 +46,10 @@
                             </StackLayout>
                             <StackLayout Grid.Column="1" Orientation="Horizontal" HorizontalOptions="End">
                                 <Label x:Name="IconLabel" Text="🔥 " FontSize="57" VerticalOptions="Center" />
-                                <Label Text="42" FontSize="57" TextColor="#6366f1" FontAttributes="Bold" VerticalOptions="Center" />
+                                <Label Text="42" FontSize="57" TextColor="#6366f1" FontAttributes="Bold" VerticalOptions="Center" x:Name="StreakNumberLabel"/>
                             </StackLayout>
                         </Grid>
-                        <!-- Progress Indicators -->
-                        <Grid ColumnDefinitions="*,*,*,*,*,*,*" ColumnSpacing="5">
+                        <Grid ColumnDefinitions="*,*,*,*,*,*,*" ColumnSpacing="5" x:Name="StreakProgressGrid">
                             <BoxView Grid.Column="0" HeightRequest="6" CornerRadius="3" BackgroundColor="#10b981" />
                             <BoxView Grid.Column="1" HeightRequest="6" CornerRadius="3" BackgroundColor="#10b981" />
                             <BoxView Grid.Column="2" HeightRequest="6" CornerRadius="3" BackgroundColor="#10b981" />
@@ -70,97 +58,45 @@
                             <BoxView Grid.Column="5" HeightRequest="6" CornerRadius="3" BackgroundColor="#d1d5db" />
                             <BoxView Grid.Column="6" HeightRequest="6" CornerRadius="3" BackgroundColor="#d1d5db" />
                         </Grid>
-                        <!-- Buttons -->
                         <HorizontalStackLayout Spacing="10">
-                            <Button Text="Subscription" BackgroundColor="#6366f1" TextColor="White" CornerRadius="20" HeightRequest="40" WidthRequest="140" Clicked="Button_Clicked"  />
-                            <Button Text="Freeze Streak" BackgroundColor="#a5f3fc" TextColor="#0891b2" CornerRadius="20" HeightRequest="40" WidthRequest="140" Clicked="Button_Clicked_1" />
+                            <Button Text="Subscription" BackgroundColor="#6366f1" TextColor="White" CornerRadius="20" HeightRequest="40" WidthRequest="140" Clicked="SubscriptionButton_Clicked" />
+                            <Button Text="Freeze Streak" BackgroundColor="#a5f3fc" TextColor="#0891b2" CornerRadius="20" HeightRequest="40" WidthRequest="140" Clicked="FreezeStreakButton_Clicked" />
                         </HorizontalStackLayout>
                     </VerticalStackLayout>
                 </Frame>
 
-                <!-- Monthly Budget Card -->
                 <Frame CornerRadius="15" Padding="15" HasShadow="False" BackgroundColor="White">
                     <VerticalStackLayout Spacing="10">
                         <Label Text="Monthly Budget" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center" />
                         <Grid ColumnDefinitions="*,Auto">
-                            <Label Grid.Column="0" Text="Remaining: £1,240" TextColor="#10b981" />
-                            <Label Grid.Column="1" Text="£2,500" TextColor="#6b7280" />
+                            <Label Grid.Column="0" Text="Remaining: £0" TextColor="#10b981" x:Name="MonthlyBudgetRemainingLabel"/>
+                            <Label Grid.Column="1" Text="£0" TextColor="#6b7280" x:Name="MonthlyBudgetTotalLabel"/>
                         </Grid>
                         <Grid HeightRequest="20">
                             <Frame Padding="0" CornerRadius="5" HasShadow="False" HeightRequest="20" BackgroundColor="#f3f4f6">
-                                <BoxView HeightRequest="20" WidthRequest="200" HorizontalOptions="Start" BackgroundColor="#6366f1" />
+                                <BoxView HeightRequest="20" WidthRequest="0" HorizontalOptions="Start" BackgroundColor="#6366f1" x:Name="MonthlyBudgetProgressBar"/>
                             </Frame>
-                            <!-- Position the label at the right end of the filled portion of the bar -->
-                            <Label Text="50%" TextColor="#6366f1" FontAttributes="Bold" VerticalOptions="Center" 
-                   HorizontalOptions="Start" Margin="205,0,0,0" />
+                            <Label Text="0%" TextColor="#6366f1" FontAttributes="Bold" VerticalOptions="Center"
+                                   HorizontalOptions="Start" Margin="5,0,0,0" x:Name="MonthlyBudgetProgressLabel"/>
                         </Grid>
                     </VerticalStackLayout>
                 </Frame>
 
-                <!-- Spending Categories Section -->
-                <!-- Spending Categories Section -->
-                <Label Text="Spending Categories" FontSize="18" FontAttributes="Bold" Margin="0,10,0,5" />
+                <Label Text="Spending Categories (Dec 2024)" FontSize="18" FontAttributes="Bold" Margin="0,10,0,5" />
                 <Frame CornerRadius="15" Padding="10" HasShadow="False" BackgroundColor="#f9fafb">
-                    <VerticalStackLayout Spacing="8">
-                        <!-- Food & Dining -->
-                        <Frame Padding="15" HasShadow="False" BackgroundColor="White" CornerRadius="12">
-                            <Grid ColumnDefinitions="Auto,*,Auto">
-                                <Label Grid.Column="0" Text="🍽️" FontSize="24" TextColor="#3B82F6" VerticalOptions="Center" Margin="0,0,15,0" />
-                                <VerticalStackLayout Grid.Column="1" Spacing="5">
-                                    <Label Text="Food &amp; Dining" FontAttributes="Bold" />
-                                    <Label Text="£460 spent" TextColor="#6b7280" FontSize="14" />
-                                </VerticalStackLayout>
-                                <Label Grid.Column="2" Text="▼" FontSize="25" TextColor="#6b7280" VerticalOptions="Center" />
-                            </Grid>
-                        </Frame>
-
-                        <!-- Utilities -->
-                        <Frame Padding="15" HasShadow="False" BackgroundColor="White" CornerRadius="12">
-                            <Grid ColumnDefinitions="Auto,*,Auto">
-                                <Label Grid.Column="0" Text="🛠️" FontSize="24" TextColor="#10B981" VerticalOptions="Center" Margin="0,0,15,0" />
-                                <VerticalStackLayout Grid.Column="1" Spacing="5">
-                                    <Label Text="Utilities" FontAttributes="Bold" />
-                                    <Label Text="£280 spent" TextColor="#6b7280" FontSize="14" />
-                                </VerticalStackLayout>
-                                <Label Grid.Column="2" Text="▼" FontSize="25" TextColor="#6b7280" VerticalOptions="Center" />
-                            </Grid>
-                        </Frame>
-
-                        <!-- Shopping -->
-                        <Frame Padding="15" HasShadow="False" BackgroundColor="White" CornerRadius="12">
-                            <Grid ColumnDefinitions="Auto,*,Auto">
-                                <Label Grid.Column="0" Text="🛒" FontSize="24" TextColor="#F59E0B" VerticalOptions="Center" Margin="0,0,15,0" />
-                                <VerticalStackLayout Grid.Column="1" Spacing="5">
-                                    <Label Text="Shopping" FontAttributes="Bold" />
-                                    <Label Text="£520 spent" TextColor="#6b7280" FontSize="14" />
-                                </VerticalStackLayout>
-                                <Label Grid.Column="2" Text="▼" FontSize="25" TextColor="#6b7280" VerticalOptions="Center" />
-                            </Grid>
-                        </Frame>
-
-                        <!-- Leisure -->
-                        <Frame Padding="15" HasShadow="False" BackgroundColor="White" CornerRadius="12">
-                            <Grid ColumnDefinitions="Auto,*,Auto">
-                                <Label Grid.Column="0" Text="🏖️" FontSize="24" TextColor="#10B981" VerticalOptions="Center" Margin="0,0,15,0" />
-                                <VerticalStackLayout Grid.Column="1" Spacing="5">
-                                    <Label Text="Leisure" FontAttributes="Bold" />
-                                    <Label Text="£280 spent" TextColor="#6b7280" FontSize="14" />
-                                </VerticalStackLayout>
-                                <Label Grid.Column="2" Text="▼" FontSize="25" TextColor="#6b7280" VerticalOptions="Center" />
-                            </Grid>
-                        </Frame>
+                    <VerticalStackLayout x:Name="SpendingCategoriesContainer" Spacing="8">
+                        <Label Text="Loading categories..." TextColor="Gray" HorizontalOptions="Center" Padding="20"/>
                     </VerticalStackLayout>
                 </Frame>
             </VerticalStackLayout>
         </ScrollView>
 
-        <!-- Bottom Navigation -->
         <Grid Grid.Row="3" BackgroundColor="White" HeightRequest="60" ColumnDefinitions="*,*,*,*">
             <Image Grid.Column="0" Source="home_grey.png" HeightRequest="24" HorizontalOptions="Center" VerticalOptions="Center" x:Name="home">
                 <Image.GestureRecognizers>
                     <TapGestureRecognizer Tapped="home_Tapped"></TapGestureRecognizer>
                 </Image.GestureRecognizers>
-                </Image>
+            </Image>
             <Image Grid.Column="1" Source="budget_purple.png" HeightRequest="24" HorizontalOptions="Center" VerticalOptions="Center" x:Name="budget">
                 <Image.GestureRecognizers>
                     <TapGestureRecognizer Tapped="budget_Tapped"/>
@@ -170,14 +106,13 @@
                 <Image.GestureRecognizers>
                     <TapGestureRecognizer Tapped="investment_Tapped"/>
                 </Image.GestureRecognizers>
-                </Image>
+            </Image>
             <Image Grid.Column="3" Source="infohub_grey.png" HeightRequest="24" HorizontalOptions="Center" VerticalOptions="Center" x:Name="infohub">
                 <Image.GestureRecognizers>
                     <TapGestureRecognizer Tapped="infohub_Tapped"/>
                 </Image.GestureRecognizers>
-                </Image>
+            </Image>
         </Grid>
     </Grid>
-
 
 </ContentPage>
