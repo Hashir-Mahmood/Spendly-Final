@@ -6,4 +6,9 @@ public partial class notifications : ContentPage
 	{
 		InitializeComponent();
 	}
+
+    private void ReturnButton_Clicked(object sender, EventArgs e)
+    {
+        Navigation.PopAsync();
+    }
 }

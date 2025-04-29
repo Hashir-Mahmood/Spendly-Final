@@ -90,5 +90,10 @@ namespace MauiApp1234
             // Navigate to login page (replace with your actual login page name)
             await Navigation.PushAsync(new LogInPage1());
         }
+
+        private void ReturnButton_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PopAsync();
+        }
     }
 }

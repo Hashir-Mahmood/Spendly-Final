@@ -30,7 +30,7 @@
                 else
                 {
                     // Navigate to a tab page if onboarding has been seen
-                    await Shell.Current.GoToAsync("///dashboard");
+                    await Shell.Current.GoToAsync("///loginPage");
                 }
             });
         }

@@ -5,9 +5,11 @@
              BackgroundColor="#f4f6f9"
              xmlns:syncfusion="clr-namespace:Syncfusion.Maui.Charts;assembly=Syncfusion.Maui.Charts"
              Title="Subscription"
-             xmlns:local="clr-namespace:MauiApp1234">
-
-    <ScrollView>
+             xmlns:local="clr-namespace:MauiApp1234"
+             NavigationPage.HasNavigationBar="False"
+             Shell.NavBarIsVisible="False">
+    <Grid RowDefinitions="Auto,Auto,*,Auto">
+        <ScrollView Grid.Row="2">
         <StackLayout Padding="20" Spacing="20">
 
             <Grid Margin="0,10" ColumnDefinitions="Auto,*,Auto,Auto">
@@ -265,41 +267,55 @@
                 </Grid>
             </Frame>
 
-            <Frame CornerRadius="10" Padding="15" BackgroundColor="White">
-                <StackLayout>
-                    <Label Text="Monthly Spending" FontSize="22" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,0,0,5"/>
-                    <Label Text="Last 6 months" TextColor="#666" FontSize="14" HorizontalOptions="Center" Margin="0,0,0,15"/>
+                <Frame CornerRadius="10" Padding="15" BackgroundColor="White">
+                    <StackLayout>
+                        <Label Text="Monthly Spending" FontSize="22" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,0,0,5"/>
+                        <Label Text="Last 6 months" TextColor="#666" FontSize="14" HorizontalOptions="Center" Margin="0,0,0,15"/>
 
-                    <syncfusion:SfCartesianChart HeightRequest="200">
-                        <syncfusion:SfCartesianChart.XAxes>
-                            <syncfusion:CategoryAxis>
-                                <syncfusion:CategoryAxis.Title>
-                                    <syncfusion:ChartAxisTitle Text="Month"/>
-                                </syncfusion:CategoryAxis.Title>
-                            </syncfusion:CategoryAxis>
-                        </syncfusion:SfCartesianChart.XAxes>
+                        <syncfusion:SfCartesianChart HeightRequest="200">
+                            <syncfusion:SfCartesianChart.XAxes>
+                                <syncfusion:CategoryAxis>
+                                    <syncfusion:CategoryAxis.Title>
+                                        <syncfusion:ChartAxisTitle Text="Month"/>
+                                    </syncfusion:CategoryAxis.Title>
+                                </syncfusion:CategoryAxis>
+                            </syncfusion:SfCartesianChart.XAxes>
 
-                        <syncfusion:SfCartesianChart.YAxes>
-                            <syncfusion:NumericalAxis>
-                                <syncfusion:NumericalAxis.Title>
-                                    <syncfusion:ChartAxisTitle Text="Amount (£)"/>
-                                </syncfusion:NumericalAxis.Title>
-                            </syncfusion:NumericalAxis>
-                        </syncfusion:SfCartesianChart.YAxes>
+                            <syncfusion:SfCartesianChart.YAxes>
+                                <syncfusion:NumericalAxis>
+                                    <syncfusion:NumericalAxis.Title>
+                                        <syncfusion:ChartAxisTitle Text="Amount (£)"/>
+                                    </syncfusion:NumericalAxis.Title>
+                                </syncfusion:NumericalAxis>
+                            </syncfusion:SfCartesianChart.YAxes>
 
-                        <syncfusion:SfCartesianChart.Series>
-                            <syncfusion:ColumnSeries ItemsSource="{Binding MonthlySpendingData}" 
+                            <syncfusion:SfCartesianChart.Series>
+                                <syncfusion:ColumnSeries ItemsSource="{Binding MonthlySpendingData}" 
                                                      XBindingPath="Month" 
                                                      YBindingPath="Amount" 
                                                      Fill="#6f61ef">
-                            </syncfusion:ColumnSeries>
-                        </syncfusion:SfCartesianChart.Series>
-                    </syncfusion:SfCartesianChart>
-                </StackLayout>
-            </Frame>
-
-
-
-        </StackLayout>
+                                </syncfusion:ColumnSeries>
+                            </syncfusion:SfCartesianChart.Series>
+                        </syncfusion:SfCartesianChart>
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
     </ScrollView>
+        <!-- Bottom Navigation -->
+        <Grid Grid.Row="3" BackgroundColor="White" HeightRequest="60" ColumnDefinitions="*,*,*,*">
+            <!-- return button -->
+            <Button Text="←" 
+FontSize="20" 
+HorizontalOptions="Start" 
+WidthRequest="40" 
+HeightRequest="40" 
+CornerRadius="20" 
+BackgroundColor="Transparent" 
+TextColor="Black" 
+Padding="0" 
+BorderWidth="0"
+x:Name="ReturnButton"
+Clicked="ReturnButton_Clicked"/>
+        </Grid>
+    </Grid>
 </ContentPage>

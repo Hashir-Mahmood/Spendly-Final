@@ -5,9 +5,11 @@
              xmlns:local="clr-namespace:MauiApp1234"
              x:Class="MauiApp1234.Debt"
              Title="Debt"
-             BackgroundColor="#f4f6f9">
-
-    <ScrollView>
+             BackgroundColor="#f4f6f9"
+             NavigationPage.HasNavigationBar="False"
+             Shell.NavBarIsVisible="False">
+    <Grid RowDefinitions="Auto,Auto,*,Auto">
+        <ScrollView Grid.Row="2">
         <VerticalStackLayout Padding="20">
 
             <!-- Header with Icons -->
@@ -209,4 +211,21 @@
 
         </VerticalStackLayout>
     </ScrollView>
+        <!-- Bottom Navigation -->
+        <Grid Grid.Row="3" BackgroundColor="White" HeightRequest="60" ColumnDefinitions="*,*,*,*">
+            <!-- return button -->
+            <Button Text="←" 
+FontSize="20" 
+HorizontalOptions="Start" 
+WidthRequest="40" 
+HeightRequest="40" 
+CornerRadius="20" 
+BackgroundColor="Transparent" 
+TextColor="Black" 
+Padding="0" 
+BorderWidth="0"
+x:Name="ReturnButton"
+Clicked="ReturnButton_Clicked"/>
+        </Grid>
+    </Grid>
 </ContentPage>

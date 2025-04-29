@@ -40,4 +40,9 @@ public partial class PasswordResetInstructionsPage : ContentPage
                 break;
         }
     }
+
+    private void ReturnButton_Clicked(object sender, EventArgs e)
+    {
+        Navigation.PopAsync();
+    }
 }

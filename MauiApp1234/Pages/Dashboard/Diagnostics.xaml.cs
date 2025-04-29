@@ -457,6 +457,11 @@ namespace MauiApp1234.Pages.Dashboard
             if (this.Window != null) DisplayAlert("Detailed Report", "Functionality to show detailed report is not implemented.", "OK");
         }
 
+        private void ReturnButton_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PopAsync();
+        }
+
         // Add this line if CategoryPickerPopup is defined in XAML code-behind
         // If it's purely in XAML with x:Name, this isn't strictly needed here
         // but ensure it's accessible (e.g., public or internal field in the partial class)

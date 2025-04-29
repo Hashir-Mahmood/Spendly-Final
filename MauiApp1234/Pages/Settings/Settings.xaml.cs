@@ -125,4 +125,8 @@ public partial class Settings : ContentPage
         }
     }
 
+    private void ReturnButton_Clicked(object sender, EventArgs e)
+    {
+        Navigation.PopAsync();
+    }
 }

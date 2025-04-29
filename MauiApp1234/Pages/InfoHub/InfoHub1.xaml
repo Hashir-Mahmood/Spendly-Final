@@ -3,67 +3,69 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiApp1234.InfoHub1"
              Title="InfoHub1"
-             xmlns:local="clr-namespace:MauiApp1234">
-
-    <ScrollView BackgroundColor="#f4f6f9">
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-
-            <Grid Grid.Row="0" Margin="20,10" ColumnDefinitions="Auto,*,Auto,Auto">
-                
-            </Grid>
-
-            <Grid Grid.Row="0" BackgroundColor="#6366f1" Padding="20">
+             xmlns:local="clr-namespace:MauiApp1234"
+             NavigationPage.HasNavigationBar="False"
+             Shell.NavBarIsVisible="False">
+    <Grid RowDefinitions="Auto,Auto,*,Auto">
+        <ScrollView BackgroundColor="#f4f6f9" Grid.Row="2">
+            <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
                 <Grid Grid.Row="0" Margin="20,10" ColumnDefinitions="Auto,*,Auto,Auto">
-                    <Frame Grid.Column="0" CornerRadius="24" Padding="10" HasShadow="False" BackgroundColor="White" HorizontalOptions="CenterAndExpand">
-                        <Image Source="ai.png" HeightRequest="20" WidthRequest="20" x:Name="ChatbotIcon"/>
-                        <Frame.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="ChatbotIcon_Tapped"/>
-                        </Frame.GestureRecognizers>
-                    </Frame>
 
-                    <Grid Grid.Column="1" />
-
-                    <Frame Grid.Column="2" CornerRadius="24" Padding="10" HasShadow="False" BackgroundColor="White" >
-                        <Image Source="bell.png" HeightRequest="20" WidthRequest="20" x:Name="NotificationsIcon"/>
-                        <Frame.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnNotificationsIconTapped"/>
-                        </Frame.GestureRecognizers>
-                    </Frame>
-
-                    <Frame Grid.Column="3" CornerRadius="20" Padding="10" HasShadow="False" BackgroundColor="White" Margin="10,0,0,0">
-                        <Image Source="settings.png" HeightRequest="20" WidthRequest="20" x:Name="SettingsIcon"/>
-                        <Frame.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="SettingsIcon_Tapped"/>
-                        </Frame.GestureRecognizers>
-                    </Frame>
                 </Grid>
 
-                <Label Grid.Row="1"
+                <Grid Grid.Row="0" BackgroundColor="#6366f1" Padding="20">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0" Margin="20,10" ColumnDefinitions="Auto,*,Auto,Auto">
+                        <Frame Grid.Column="0" CornerRadius="24" Padding="10" HasShadow="False" BackgroundColor="White" HorizontalOptions="CenterAndExpand">
+                            <Image Source="ai.png" HeightRequest="20" WidthRequest="20" x:Name="ChatbotIcon"/>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="ChatbotIcon_Tapped"/>
+                            </Frame.GestureRecognizers>
+                        </Frame>
+
+                        <Grid Grid.Column="1" />
+
+                        <Frame Grid.Column="2" CornerRadius="24" Padding="10" HasShadow="False" BackgroundColor="White" >
+                            <Image Source="bell.png" HeightRequest="20" WidthRequest="20" x:Name="NotificationsIcon"/>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnNotificationsIconTapped"/>
+                            </Frame.GestureRecognizers>
+                        </Frame>
+
+                        <Frame Grid.Column="3" CornerRadius="20" Padding="10" HasShadow="False" BackgroundColor="White" Margin="10,0,0,0">
+                            <Image Source="settings.png" HeightRequest="20" WidthRequest="20" x:Name="SettingsIcon"/>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="SettingsIcon_Tapped"/>
+                            </Frame.GestureRecognizers>
+                        </Frame>
+                    </Grid>
+
+                    <Label Grid.Row="1"
                        Text="InfoHub"
                        TextColor="White"
                        FontSize="32"
                        FontAttributes="Bold"
                        Margin="0,10,0,5" />
 
-                <Label Grid.Row="2"
+                    <Label Grid.Row="2"
                        Text="Discover insights and learn something new"
                        TextColor="White"
                        FontSize="16"
                        Margin="0,0,0,15" />
 
-                <StackLayout Grid.Row="3" Orientation="Horizontal" Spacing="10">
-                    <Button Text="Article preferences"
+                    <StackLayout Grid.Row="3" Orientation="Horizontal" Spacing="10">
+                        <Button Text="Article preferences"
                             BackgroundColor="#7986CB"
                             TextColor="White"
                             CornerRadius="20"
@@ -71,7 +73,7 @@
                             HeightRequest="40" 
                             x:Name="Category" Clicked="Category_Clicked"/>
 
-                    <Button Text="Retake Quiz"
+                        <Button Text="Retake Quiz"
                             BackgroundColor="#7986CB"
                             TextColor="White"
                             CornerRadius="20"
@@ -79,125 +81,150 @@
                             HeightRequest="40" 
                             x:Name="Quiz" Clicked="Quiz_Clicked"/>
 
-                    <Button Text="Sign Out"
+                        <Button Text="Sign Out"
                             BackgroundColor="#7986CB"
                             TextColor="White"
                             CornerRadius="20"
                             Padding="15,10"
                             HeightRequest="40" 
                             x:Name="SignOut" Clicked="SignOut_Clicked"/>
-                </StackLayout>
-            </Grid>
+                    </StackLayout>
+                </Grid>
 
-            <ScrollView Grid.Row="1">
-                <StackLayout Padding="20,10">
-                    <Label Text="Featured Articles"
+                <ScrollView Grid.Row="1">
+                    <StackLayout Padding="20,10">
+                        <Label Text="Featured Articles"
                            FontSize="24"
                            FontAttributes="Bold"
                            HorizontalOptions="Center"
                            Margin="0,20,0,10" />
 
-                    <CarouselView HeightRequest="200" 
+                        <CarouselView HeightRequest="200" 
                                   PeekAreaInsets="10"
                                   Margin="0,10"
                                   ItemsSource="{Binding FeaturedArticles}">
-                        <CarouselView.ItemTemplate>
-                            <DataTemplate>
-                                <Frame BorderColor="LightGray"
+                            <CarouselView.ItemTemplate>
+                                <DataTemplate>
+                                    <Frame BorderColor="LightGray"
                                     CornerRadius="10"
                                     HasShadow="True"
                                     Margin="5">
-                                    <Grid>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto" />
-                                            <RowDefinition Height="Auto" />
-                                        </Grid.RowDefinitions>
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                            </Grid.RowDefinitions>
 
-                                        <StackLayout Grid.Row="0">
-                                            <Label
+                                            <StackLayout Grid.Row="0">
+                                                <Label
                                                 Text="{Binding Title}"
                                                 VerticalOptions="Center"
                                                 FontSize="20"
                                                 FontAttributes="Bold" />
-                                            <Image Source="{Binding ImageUrl}"
+                                                <Image Source="{Binding ImageUrl}"
                                                 HeightRequest="100"
                                                 WidthRequest="200"
                                                 Aspect="AspectFill"/>
-                                        </StackLayout>
-                                        <StackLayout Grid.Row="1"
+                                            </StackLayout>
+                                            <StackLayout Grid.Row="1"
                                             Orientation="Horizontal"
                                             Spacing="5">
-                                            <Image Source="clock_icon.png"
+                                                <Image Source="clock_icon.png"
                                                 HeightRequest="16"
                                                 WidthRequest="16" />
-                                            <Label Text="{Binding ReadTime}"
+                                                <Label Text="{Binding ReadTime}"
                                                 FontSize="14"
                                                 TextColor="Gray"
                                                 VerticalOptions="Center" />
-                                        </StackLayout>
-                                    </Grid>
-                                    <Frame.GestureRecognizers>
-                                        <TapGestureRecognizer
+                                            </StackLayout>
+                                        </Grid>
+                                        <Frame.GestureRecognizers>
+                                            <TapGestureRecognizer
                                             Command="{Binding Source={RelativeSource AncestorType={x:Type local:InfoHubViewModel}}, Path=ArticleTappedCommand}"
                                             CommandParameter="{Binding .}" />
-                                    </Frame.GestureRecognizers>
-                                </Frame>
-                            </DataTemplate>
-                        </CarouselView.ItemTemplate>
-                    </CarouselView>
+                                        </Frame.GestureRecognizers>
+                                    </Frame>
+                                </DataTemplate>
+                            </CarouselView.ItemTemplate>
+                        </CarouselView>
 
-                    <Label Text="Latest Videos"
+                        <Label Text="Latest Videos"
                            FontSize="24"
                            FontAttributes="Bold"
                            HorizontalOptions="Center"
                            Margin="0,20,0,10" />
 
-                    <CollectionView HeightRequest="300"
+                        <CollectionView HeightRequest="300"
                                     ItemsSource="{Binding LatestVideos}">
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate>
-                                <Grid Padding="0,10">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="120" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Padding="0,10">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="120" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
 
-                                    <Frame Grid.Column="0"
+                                        <Frame Grid.Column="0"
                                         BackgroundColor="LightGray"
                                         HeightRequest="100"
                                         WidthRequest="120"
                                         CornerRadius="5"
                                         Padding="0">
-                                        <Image Source="{Binding ThumbnailUrl}" Aspect="AspectFit" />
-                                    </Frame>
+                                            <Image Source="{Binding ThumbnailUrl}" Aspect="AspectFit" />
+                                        </Frame>
 
-                                    <StackLayout Grid.Column="1" Padding="10,0">
-                                        <Label Text="{Binding Title}"
+                                        <StackLayout Grid.Column="1" Padding="10,0">
+                                            <Label Text="{Binding Title}"
                                             FontAttributes="Bold"
                                             FontSize="16"
                                             LineBreakMode="WordWrap" />
 
-                                        <Label Text="{Binding Description}"
+                                            <Label Text="{Binding Description}"
                                             TextColor="Gray"
                                             FontSize="14"
                                             Margin="0,5,0,5" />
 
-                                        <StackLayout Orientation="Horizontal" Spacing="5">
-                                            <Image Source="eye_icon.png" HeightRequest="16" WidthRequest="16" />
-                                            <Label Text="{Binding ViewCount}" FontSize="14" TextColor="Gray" />
+                                            <StackLayout Orientation="Horizontal" Spacing="5">
+                                                <Image Source="eye_icon.png" HeightRequest="16" WidthRequest="16" />
+                                                <Label Text="{Binding ViewCount}" FontSize="14" TextColor="Gray" />
+                                            </StackLayout>
                                         </StackLayout>
-                                    </StackLayout>
-                                    <Grid.GestureRecognizers>
-                                        <TapGestureRecognizer
+                                        <Grid.GestureRecognizers>
+                                            <TapGestureRecognizer
                                             Command="{Binding Source={RelativeSource AncestorType={x:Type local:InfoHubViewModel}}, Path=VideoTappedCommand}"
                                             CommandParameter="{Binding .}" />
-                                    </Grid.GestureRecognizers>
-                                </Grid>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
-                </StackLayout>
-            </ScrollView>
+                                        </Grid.GestureRecognizers>
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </StackLayout>
+                </ScrollView>
+
+            </Grid>
+
+        </ScrollView>
+        <Grid Grid.Row="3" BackgroundColor="White" HeightRequest="60" ColumnDefinitions="*,*,*,*">
+            <Image Grid.Column="0" Source="home_grey.png" HeightRequest="24" HorizontalOptions="Center" VerticalOptions="Center" x:Name="home">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="home_Tapped"></TapGestureRecognizer>
+                </Image.GestureRecognizers>
+            </Image>
+            <Image Grid.Column="1" Source="budget_grey.png" HeightRequest="24" HorizontalOptions="Center" VerticalOptions="Center" x:Name="budget">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="budget_Tapped"/>
+                </Image.GestureRecognizers>
+            </Image>
+            <Image Grid.Column="2" Source="investment_grey.png" HeightRequest="24" HorizontalOptions="Center" VerticalOptions="Center" x:Name="investment">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="investment_Tapped"/>
+                </Image.GestureRecognizers>
+            </Image>
+            <Image Grid.Column="3" Source="infohub_purple.png" HeightRequest="24" HorizontalOptions="Center" VerticalOptions="Center" x:Name="infohub">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="infohub_Tapped"/>
+                </Image.GestureRecognizers>
+            </Image>
         </Grid>
-    </ScrollView>
+    </Grid>
 </ContentPage>

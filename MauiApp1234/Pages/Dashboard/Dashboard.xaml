@@ -3,178 +3,201 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiApp1234.Dashboard"
              BackgroundColor="#f4f6f9"
-             xmlns:gauge="clr-namespace:Syncfusion.Maui.Gauges;assembly=Syncfusion.Maui.Gauges">
+             xmlns:gauge="clr-namespace:Syncfusion.Maui.Gauges;assembly=Syncfusion.Maui.Gauges"
+             NavigationPage.HasNavigationBar="False"
+             Shell.NavBarIsVisible="False">
+    <Grid RowDefinitions="Auto,Auto,*,Auto">
+        <ScrollView Grid.Row="2">
+            <StackLayout Padding="20" Spacing="20">
 
-    <ScrollView>
-        <StackLayout Padding="20" Spacing="20">
+                <!-- Header with Icons -->
+                <Grid Grid.Row="0" Margin="20,10" ColumnDefinitions="Auto,*,Auto,Auto">
+                    <!-- Icon on the left -->
+                    <Frame Grid.Column="0" CornerRadius="24" Padding="10" HasShadow="False" BackgroundColor="White" HorizontalOptions="CenterAndExpand">
+                        <Image Source="ai.png" HeightRequest="20" WidthRequest="20" x:Name="ChatbotIcon"/>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="ChatbotIcon_Tapped"/>
+                        </Frame.GestureRecognizers>
+                    </Frame>
 
-            <!-- Header with Icons -->
-            <Grid Grid.Row="0" Margin="20,10" ColumnDefinitions="Auto,*,Auto,Auto">
-                <!-- Icon on the left -->
-                <Frame Grid.Column="0" CornerRadius="24" Padding="10" HasShadow="False" BackgroundColor="White" HorizontalOptions="CenterAndExpand">
-                    <Image Source="ai.png" HeightRequest="20" WidthRequest="20" x:Name="ChatbotIcon"/>
-                    <Frame.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="ChatbotIcon_Tapped"/>
-                    </Frame.GestureRecognizers>
+                    <!-- Space in the middle (will automatically expand) -->
+                    <Grid Grid.Column="1" />
+
+                    <!-- Notification icon on the right -->
+                    <Frame Grid.Column="2" CornerRadius="24" Padding="10" HasShadow="False" BackgroundColor="White" >
+                        <Image Source="bell.png" HeightRequest="20" WidthRequest="20" x:Name="NotificationsIcon"/>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnNotificationsIconTapped"/>
+                        </Frame.GestureRecognizers>
+                    </Frame>
+
+                    <!-- Settings icon on the right -->
+                    <Frame Grid.Column="3" CornerRadius="20" Padding="10" HasShadow="False" BackgroundColor="White" Margin="10,0,0,0">
+                        <Image Source="settings.png" HeightRequest="20" WidthRequest="20" x:Name="SettingsIcon"/>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="SettingsIcon_Tapped"/>
+                        </Frame.GestureRecognizers>
+                    </Frame>
+                </Grid>
+
+                <!-- Header -->
+                <Label Text="Financial Dashboard" FontSize="28" FontAttributes="Bold" HorizontalOptions="Center"/>
+
+                <!-- Total Balance Card -->
+                <Frame CornerRadius="10" Padding="15" BackgroundColor="White">
+                    <StackLayout>
+                        <Label Text="Total Balance:" FontAttributes="Bold" HorizontalTextAlignment="Center" FontSize="24"/>
+                        <Label x:Name="TotalBalanceLabel" Text="£2000" FontSize="30" FontAttributes="Bold" HorizontalTextAlignment="Center" Margin="0,10,0,10"/>
+                        <Label Text="see financial diagnostics >>" TextColor="#6f61ef" HorizontalTextAlignment="Center">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnDiagnosticsLabelTapped"/>
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </StackLayout>
                 </Frame>
 
-                <!-- Space in the middle (will automatically expand) -->
-                <Grid Grid.Column="1" />
+                <!-- Financial Health Meter -->
+                <Frame CornerRadius="10" Padding="15" BackgroundColor="White">
+                    <StackLayout>
+                        <Label Text="Financial Health Meter" FontAttributes="Bold" FontSize="22" HorizontalOptions="Center"/>
+                        <Label Text="How well are you managing your finances this month?" HorizontalTextAlignment="Center" Margin="0,10,0,10"/>
 
-                <!-- Notification icon on the right -->
-                <Frame Grid.Column="2" CornerRadius="24" Padding="10" HasShadow="False" BackgroundColor="White" >
-                    <Image Source="bell.png" HeightRequest="20" WidthRequest="20" x:Name="NotificationsIcon"/>
-                    <Frame.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnNotificationsIconTapped"/>
-                    </Frame.GestureRecognizers>
-                </Frame>
-
-                <!-- Settings icon on the right -->
-                <Frame Grid.Column="3" CornerRadius="20" Padding="10" HasShadow="False" BackgroundColor="White" Margin="10,0,0,0">
-                    <Image Source="settings.png" HeightRequest="20" WidthRequest="20" x:Name="SettingsIcon"/>
-                    <Frame.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="SettingsIcon_Tapped"/>
-                    </Frame.GestureRecognizers>
-                </Frame>
-            </Grid>
-
-            <!-- Header -->
-            <Label Text="Financial Dashboard" FontSize="28" FontAttributes="Bold" HorizontalOptions="Center"/>
-
-            <!-- Total Balance Card -->
-            <Frame CornerRadius="10" Padding="15" BackgroundColor="White">
-                <StackLayout>
-                    <Label Text="Total Balance:" FontAttributes="Bold" HorizontalTextAlignment="Center" FontSize="24"/>
-                    <Label x:Name="TotalBalanceLabel" Text="£2000" FontSize="30" FontAttributes="Bold" HorizontalTextAlignment="Center" Margin="0,10,0,10"/>
-                    <Label Text="see financial diagnostics >>" TextColor="#6f61ef" HorizontalTextAlignment="Center">
-                        <Label.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnDiagnosticsLabelTapped"/>
-                        </Label.GestureRecognizers>
-                    </Label>
-                </StackLayout>
-            </Frame>
-
-            <!-- Financial Health Meter -->
-            <Frame CornerRadius="10" Padding="15" BackgroundColor="White">
-                <StackLayout>
-                    <Label Text="Financial Health Meter" FontAttributes="Bold" FontSize="22" HorizontalOptions="Center"/>
-                    <Label Text="How well are you managing your finances this month?" HorizontalTextAlignment="Center" Margin="0,10,0,10"/>
-
-                    <!-- Syncfusion Radial Gauge with proper health ranges -->
-                    <gauge:SfRadialGauge HeightRequest="200">
-                        <gauge:SfRadialGauge.Axes>
-                            <gauge:RadialAxis Minimum="0" Maximum="100"
+                        <!-- Syncfusion Radial Gauge with proper health ranges -->
+                        <gauge:SfRadialGauge HeightRequest="200">
+                            <gauge:SfRadialGauge.Axes>
+                                <gauge:RadialAxis Minimum="0" Maximum="100"
                                           StartAngle="180" EndAngle="0"
                                           ShowTicks="True" ShowLabels="True"
                                           TickOffset="0.05" LabelOffset="0.15"
                                           MinorTicksPerInterval="3"
                                           RadiusFactor="0.8">
-                                <gauge:RadialAxis.Ranges>
-                                    <gauge:RadialRange StartValue="0" EndValue="33" Fill="Red" />
-                                    <gauge:RadialRange StartValue="33" EndValue="67" Fill="Orange" />
-                                    <gauge:RadialRange StartValue="67" EndValue="100" Fill="Green" />
-                                </gauge:RadialAxis.Ranges>
+                                    <gauge:RadialAxis.Ranges>
+                                        <gauge:RadialRange StartValue="0" EndValue="33" Fill="Red" />
+                                        <gauge:RadialRange StartValue="33" EndValue="67" Fill="Orange" />
+                                        <gauge:RadialRange StartValue="67" EndValue="100" Fill="Green" />
+                                    </gauge:RadialAxis.Ranges>
 
-                                <gauge:RadialAxis.Pointers>
-                                    <gauge:NeedlePointer x:Name="HealthMeterNeedle" Value="0"
+                                    <gauge:RadialAxis.Pointers>
+                                        <gauge:NeedlePointer x:Name="HealthMeterNeedle" Value="0"
                                                         KnobRadius="0.1"
                                                         NeedleLength="0.8"
                                                         NeedleStartWidth="3"
                                                         NeedleEndWidth="3"
                                                         KnobStroke="DimGray" />
-                                </gauge:RadialAxis.Pointers>
-                            </gauge:RadialAxis>
-                        </gauge:SfRadialGauge.Axes>
-                    </gauge:SfRadialGauge>
+                                    </gauge:RadialAxis.Pointers>
+                                </gauge:RadialAxis>
+                            </gauge:SfRadialGauge.Axes>
+                        </gauge:SfRadialGauge>
 
-                    <Label x:Name="HealthMeterPercentageLabel" Text="Loading..." TextColor="Gray" FontAttributes="Bold" HorizontalOptions="Center"/>
-                    
-                    <Label Text="see categorized spending >>>" HorizontalTextAlignment="Center" TextColor="#6f61ef">
-                        <Label.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnCategorizedSpendingTapped"/>
-                        </Label.GestureRecognizers>
-                    </Label>
-                </StackLayout>
-            </Frame>
+                        <Label x:Name="HealthMeterPercentageLabel" Text="Loading..." TextColor="Gray" FontAttributes="Bold" HorizontalOptions="Center"/>
 
-            <!-- Budget Alerts -->
-            <Frame CornerRadius="10" Padding="15" BackgroundColor="White">
-                <StackLayout>
-                    <Label Text="Budget Alerts" FontAttributes="Bold" FontSize="20" Margin="0,0,0,10"/>
-                    <StackLayout x:Name="BudgetAlertsContainer">
-                        <StackLayout Orientation="Horizontal" Spacing="10">
-                            <Label Text="⚠" FontSize="18" FontAttributes="Bold" TextColor="DarkRed"/>
-                            <Label Text="You have used all your grocery budget"/>
-                        </StackLayout>
-                        <StackLayout Orientation="Horizontal" Spacing="10">
-                            <Label Text="⚠" FontSize="18" FontAttributes="Bold" TextColor="DarkOrange"/>
-                            <Label Text="You're £3 away from your luxury budget"/>
-                        </StackLayout>
-                        <StackLayout Orientation="Horizontal" Spacing="10">
-                            <Label Text="✓" FontSize="18" FontAttributes="Bold" TextColor="DarkGreen"/>
-                            <Label Text="You're within your retail budget this month"/>
-                        </StackLayout>
-                    </StackLayout>
-                </StackLayout>
-            </Frame>
-
-            <!-- Categorized Spending -->
-            <Frame CornerRadius="10" Padding="15" BackgroundColor="White">
-                <StackLayout>
-                    <Label Text="Categorized Spending" FontAttributes="Bold" Margin="0,5,0,20" FontSize="22" HorizontalOptions="Center"/>
-
-                    <StackLayout x:Name="CategorizedSpendingContainer">
-                        <!-- Categories will be populated dynamically -->
-                        <StackLayout Orientation="Horizontal" Spacing="10" Margin="0,0,0,10">
-                            <Label Text="Mortgage"/>
-                            <Label Text="£1200 / £1500" HorizontalOptions="EndAndExpand"/>
-                        </StackLayout>
-                        <ProgressBar Margin="0,0,0,10" Progress="0.8" ProgressColor="#6f61ef"/>
-                    </StackLayout>
-
-                    <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" Spacing="20">
-                        <Button Margin="0,10,0,10" Text="+ Add New Category" TextColor="White" BackgroundColor="#6f61ef" BorderColor="Grey" BorderWidth="1" CornerRadius="20" FontAttributes="Bold" Clicked="OnAddCategoryClicked"/>
-                    </StackLayout>
-                </StackLayout>
-            </Frame>
-
-            <!-- Financial Goals -->
-            <Frame CornerRadius="10" Padding="15" BackgroundColor="White">
-                <StackLayout>
-                    <Label Text="Financial Goals:" FontSize="22" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,0,0,20"/>
-                    <StackLayout x:Name="FinancialGoalsContainer">
-                        <!-- Sample goal -->
-                        <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-                            <Label Text="Vacation Fund" FontAttributes="Bold"/>
-                            <Image Source="edit_icon.png" HorizontalOptions="End" WidthRequest="20" HeightRequest="20">
-                                <Image.GestureRecognizers>
-                                    <TapGestureRecognizer Tapped="OnEditGoalTapped"/>
-                                </Image.GestureRecognizers>
-                            </Image>
-                        </StackLayout>
-                        <Label Text="Trip to Bali in December"/>
-                        <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-                            <ProgressBar Progress="0.43" ProgressColor="#6f61ef" WidthRequest="200" VerticalOptions="Center"/>
-                            <Label Text="3 months left" HorizontalOptions="EndAndExpand"/>
-                        </StackLayout>
-                        <StackLayout Orientation="Horizontal" Spacing="10">
-                            <Label Text="43% complete" TextColor="#6f61ef"/>
-                            <Label Text="£263 remaining" HorizontalOptions="EndAndExpand"/>
-                        </StackLayout>
-                    </StackLayout>
-
-                    <StackLayout Orientation="Horizontal" Margin="0,15,0,0" Spacing="20">
-                        <Button Text="+ Add New Goal" TextColor="White" BackgroundColor="#6f61ef" BorderColor="Grey" BorderWidth="1" CornerRadius="20" FontAttributes="Bold" Clicked="OnAddGoalClicked"/>
-                        <Label Text="view all goals >>>" TextColor="#6f61ef" VerticalOptions="Center">
+                        <Label Text="see categorized spending >>>" HorizontalTextAlignment="Center" TextColor="#6f61ef">
                             <Label.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="OnViewAllGoalsTapped"/>
+                                <TapGestureRecognizer Tapped="OnCategorizedSpendingTapped"/>
                             </Label.GestureRecognizers>
                         </Label>
                     </StackLayout>
-                </StackLayout>
-            </Frame>
+                </Frame>
 
-        </StackLayout>
-    </ScrollView>
+                <!-- Budget Alerts -->
+                <Frame CornerRadius="10" Padding="15" BackgroundColor="White">
+                    <StackLayout>
+                        <Label Text="Budget Alerts" FontAttributes="Bold" FontSize="20" Margin="0,0,0,10"/>
+                        <StackLayout x:Name="BudgetAlertsContainer">
+                            <StackLayout Orientation="Horizontal" Spacing="10">
+                                <Label Text="⚠" FontSize="18" FontAttributes="Bold" TextColor="DarkRed"/>
+                                <Label Text="You have used all your grocery budget"/>
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal" Spacing="10">
+                                <Label Text="⚠" FontSize="18" FontAttributes="Bold" TextColor="DarkOrange"/>
+                                <Label Text="You're £3 away from your luxury budget"/>
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal" Spacing="10">
+                                <Label Text="✓" FontSize="18" FontAttributes="Bold" TextColor="DarkGreen"/>
+                                <Label Text="You're within your retail budget this month"/>
+                            </StackLayout>
+                        </StackLayout>
+                    </StackLayout>
+                </Frame>
 
+                <!-- Categorized Spending -->
+                <Frame CornerRadius="10" Padding="15" BackgroundColor="White">
+                    <StackLayout>
+                        <Label Text="Categorized Spending" FontAttributes="Bold" Margin="0,5,0,20" FontSize="22" HorizontalOptions="Center"/>
+
+                        <StackLayout x:Name="CategorizedSpendingContainer">
+                            <!-- Categories will be populated dynamically -->
+                            <StackLayout Orientation="Horizontal" Spacing="10" Margin="0,0,0,10">
+                                <Label Text="Mortgage"/>
+                                <Label Text="£1200 / £1500" HorizontalOptions="EndAndExpand"/>
+                            </StackLayout>
+                            <ProgressBar Margin="0,0,0,10" Progress="0.8" ProgressColor="#6f61ef"/>
+                        </StackLayout>
+
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" Spacing="20">
+                            <Button Margin="0,10,0,10" Text="+ Add New Category" TextColor="White" BackgroundColor="#6f61ef" BorderColor="Grey" BorderWidth="1" CornerRadius="20" FontAttributes="Bold" Clicked="OnAddCategoryClicked"/>
+                        </StackLayout>
+                    </StackLayout>
+                </Frame>
+
+                <!-- Financial Goals -->
+                <Frame CornerRadius="10" Padding="15" BackgroundColor="White">
+                    <StackLayout>
+                        <Label Text="Financial Goals:" FontSize="22" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,0,0,20"/>
+                        <StackLayout x:Name="FinancialGoalsContainer">
+                            <!-- Sample goal -->
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                                <Label Text="Vacation Fund" FontAttributes="Bold"/>
+                                <Image Source="edit_icon.png" HorizontalOptions="End" WidthRequest="20" HeightRequest="20">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnEditGoalTapped"/>
+                                    </Image.GestureRecognizers>
+                                </Image>
+                            </StackLayout>
+                            <Label Text="Trip to Bali in December"/>
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                                <ProgressBar Progress="0.43" ProgressColor="#6f61ef" WidthRequest="200" VerticalOptions="Center"/>
+                                <Label Text="3 months left" HorizontalOptions="EndAndExpand"/>
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal" Spacing="10">
+                                <Label Text="43% complete" TextColor="#6f61ef"/>
+                                <Label Text="£263 remaining" HorizontalOptions="EndAndExpand"/>
+                            </StackLayout>
+                        </StackLayout>
+
+                        <StackLayout Orientation="Horizontal" Margin="0,15,0,0" Spacing="20">
+                            <Button Text="+ Add New Goal" TextColor="White" BackgroundColor="#6f61ef" BorderColor="Grey" BorderWidth="1" CornerRadius="20" FontAttributes="Bold" Clicked="OnAddGoalClicked"/>
+                            <Label Text="view all goals >>>" TextColor="#6f61ef" VerticalOptions="Center">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnViewAllGoalsTapped"/>
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </StackLayout>
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
+        </ScrollView>
+        <Grid Grid.Row="3" BackgroundColor="White" HeightRequest="60" ColumnDefinitions="*,*,*,*">
+            <Image Grid.Column="0" Source="home_purple.png" HeightRequest="24" HorizontalOptions="Center" VerticalOptions="Center" x:Name="home">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="home_Tapped"></TapGestureRecognizer>
+                </Image.GestureRecognizers>
+            </Image>
+            <Image Grid.Column="1" Source="budget_grey.png" HeightRequest="24" HorizontalOptions="Center" VerticalOptions="Center" x:Name="budget">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="budget_Tapped"/>
+                </Image.GestureRecognizers>
+            </Image>
+            <Image Grid.Column="2" Source="investment_grey.png" HeightRequest="24" HorizontalOptions="Center" VerticalOptions="Center" x:Name="investment">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="investment_Tapped"/>
+                </Image.GestureRecognizers>
+            </Image>
+            <Image Grid.Column="3" Source="infohub_grey.png" HeightRequest="24" HorizontalOptions="Center" VerticalOptions="Center" x:Name="infohub">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="infohub_Tapped"/>
+                </Image.GestureRecognizers>
+            </Image>
+        </Grid>
+    </Grid>
 </ContentPage>

@@ -15,6 +15,26 @@ namespace MauiApp1234
 {
     public partial class Dashboard : ContentPage
     {
+        private void home_Tapped(object sender, TappedEventArgs e)
+        {
+            Navigation.PushAsync(new Dashboard());
+        }
+
+        private void budget_Tapped(object sender, TappedEventArgs e)
+        {
+            Navigation.PushAsync(new Budgeting());
+        }
+
+        private void investment_Tapped(object sender, TappedEventArgs e)
+        {
+            Navigation.PushAsync(new Investing());
+        }
+
+        private void infohub_Tapped(object sender, TappedEventArgs e)
+        {
+            Navigation.PushAsync(new InfoHub1());
+        }
+
         private long _customerId = 0;
         private decimal _totalIncome = 0;
         private decimal _totalExpenses = 0;

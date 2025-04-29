@@ -11,4 +11,9 @@ public partial class CancelSubscriptionPage : ContentPage
     {
         Navigation.PushAsync(new Subscription());
     }
+
+    private void ReturnButton_Clicked(object sender, EventArgs e)
+    {
+        Navigation.PopAsync();
+    }
 }

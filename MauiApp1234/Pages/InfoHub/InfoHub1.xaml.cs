@@ -8,6 +8,26 @@ using MauiApp1234.Pages.Settings;
 using MySqlConnector;
 public partial class InfoHub1 : ContentPage
 {
+    private void home_Tapped(object sender, TappedEventArgs e)
+    {
+        Navigation.PushAsync(new Dashboard());
+    }
+
+    private void budget_Tapped(object sender, TappedEventArgs e)
+    {
+        Navigation.PushAsync(new Budgeting());
+    }
+
+    private void investment_Tapped(object sender, TappedEventArgs e)
+    {
+        Navigation.PushAsync(new Investing());
+    }
+
+    private void infohub_Tapped(object sender, TappedEventArgs e)
+    {
+        Navigation.PushAsync(new InfoHub1());
+    }
+
     private InfoHubViewModel _viewModel;
     public InfoHub1()
     {

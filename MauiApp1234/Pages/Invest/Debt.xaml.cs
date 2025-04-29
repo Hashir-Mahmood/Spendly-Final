@@ -49,6 +49,11 @@ namespace MauiApp1234
         {
             await Navigation.PushAsync(new Investing());
         }
+
+        private void ReturnButton_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PopAsync();
+        }
     }
 
     public class DebtChartDataModel

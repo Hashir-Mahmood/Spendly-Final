@@ -5,29 +5,17 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:MauiApp1234"
     Shell.FlyoutBehavior="Disabled"
-    Shell.TabBarForegroundColor="#6f61ef"
-    Shell.TabBarUnselectedColor="Gray"
-    Shell.TabBarBackgroundColor="#F1F4F8"
+    
     Title="MauiApp1234">
 
     <!-- Define routes first -->
     <ShellContent Route="onboarding" ContentTemplate="{DataTemplate local:onboardingPage}" />
     <!-- Add this before or after your TabBar -->
     <ShellContent Route="loginPage" ContentTemplate="{DataTemplate local:LogInPage1}" />
-
+    <ShellContent ContentTemplate="{DataTemplate local:Dashboard}" Route="dashboard" />
+    <ShellContent ContentTemplate="{DataTemplate local:Budgeting}" Route="budgeting" />
+    <ShellContent ContentTemplate="{DataTemplate local:Investing}" Route="investments" />
+    <ShellContent ContentTemplate="{DataTemplate local:InfoHub1}" Route="infohub" />
     <!-- TabBar that should be visible for main app flow -->
-    <TabBar>
-        <Tab Icon="home_grey.png">
-            <ShellContent ContentTemplate="{DataTemplate local:Dashboard}" Route="dashboard" />
-        </Tab>
-        <Tab Icon="budget_grey.png">
-            <ShellContent ContentTemplate="{DataTemplate local:Budgeting}" Route="budgeting" />
-        </Tab>
-        <Tab Icon="investment_grey.png">
-            <ShellContent ContentTemplate="{DataTemplate local:Investing}" Route="investments" />
-        </Tab>
-        <Tab Icon="infohub_grey.png">
-            <ShellContent ContentTemplate="{DataTemplate local:InfoHub1}" Route="infohub" />
-        </Tab>
-    </TabBar>
+    
 </Shell>

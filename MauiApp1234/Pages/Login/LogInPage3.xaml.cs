@@ -13,7 +13,7 @@ public partial class LogInPage3 : ContentPage
 
     private async void ReturnButton_Clicked(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new LogInPage2());
+        Navigation.PopAsync();
     }
 
     private async void ResetPasswordButton_Clicked(object sender, EventArgs e)
@@ -101,5 +101,10 @@ public partial class LogInPage3 : ContentPage
                 return false;
             }
         }
+    }
+
+    private void ReturnButton_Clicked_1(object sender, EventArgs e)
+    {
+
     }
 }

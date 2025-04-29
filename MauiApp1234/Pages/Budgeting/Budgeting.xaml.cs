@@ -50,4 +50,24 @@ public partial class Budgeting : ContentPage
     {
         Navigation.PushAsync(new Subscription());
     }
+
+    private void home_Tapped(object sender, TappedEventArgs e)
+    {
+        Navigation.PushAsync(new Dashboard());
+    }
+
+    private void budget_Tapped(object sender, TappedEventArgs e)
+    {
+        Navigation.PushAsync(new Budgeting());
+    }
+
+    private void investment_Tapped(object sender, TappedEventArgs e)
+    {
+        Navigation.PushAsync(new Investing());
+    }
+
+    private void infohub_Tapped(object sender, TappedEventArgs e)
+    {
+        Navigation.PushAsync(new InfoHub1());
+    }
 }

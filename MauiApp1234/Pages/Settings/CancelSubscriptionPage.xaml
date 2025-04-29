@@ -3,7 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiApp1234.Pages.Settings.CancelSubscriptionPage"
              Title="CancelSubscriptionPage"
-             BackgroundColor="White">
+             BackgroundColor="White"
+             NavigationPage.HasNavigationBar="False"
+             Shell.NavBarIsVisible="False">
     
     <!-- Fondo con gradiente de violeta a naranja como en otras páginas -->
     <ContentPage.Background>
@@ -13,7 +15,8 @@
         </LinearGradientBrush>
     </ContentPage.Background>
 
-    <Grid RowDefinitions="Auto,*" Padding="20">
+    <Grid RowDefinitions="Auto,Auto,*,Auto">
+    <Grid RowDefinitions="Auto,*" Padding="20" Grid.Row="2">
         <!-- Logo superior -->
         <StackLayout Grid.Row="0" HorizontalOptions="Center" Margin="0,40,0,0">
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
@@ -377,5 +380,22 @@
                 </VerticalStackLayout>
             </ScrollView>
         </Frame>
+    </Grid>
+        <!-- Bottom Navigation -->
+        <Grid Grid.Row="3" BackgroundColor="White" HeightRequest="60" ColumnDefinitions="*,*,*,*">
+            <!-- return button -->
+            <Button Text="←" 
+FontSize="20" 
+HorizontalOptions="Start" 
+WidthRequest="40" 
+HeightRequest="40" 
+CornerRadius="20" 
+BackgroundColor="Transparent" 
+TextColor="Black" 
+Padding="0" 
+BorderWidth="0"
+x:Name="ReturnButton"
+Clicked="ReturnButton_Clicked"/>
+        </Grid>
     </Grid>
 </ContentPage>

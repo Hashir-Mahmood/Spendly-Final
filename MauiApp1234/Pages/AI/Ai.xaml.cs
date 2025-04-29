@@ -11,5 +11,10 @@ namespace MauiApp1234.Pages.AI
             InitializeComponent();
             
         }
+
+        private void ReturnButton_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PopAsync();
+        }
     }
 }

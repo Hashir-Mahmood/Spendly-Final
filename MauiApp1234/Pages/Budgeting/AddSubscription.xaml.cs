@@ -5,6 +5,9 @@ namespace MauiApp1234.Pages.Budgeting;
 
 public partial class AddSubscription : ContentPage
 {
+
+
+
     public AddSubscription()
     {
         InitializeComponent();
@@ -115,5 +118,11 @@ public partial class AddSubscription : ContentPage
         await Application.Current.MainPage.Navigation.PushAsync(new Subscription());
 
     }
+
+    private void ReturnButton_Clicked(object sender, EventArgs e)
+    {
+        Navigation.PopAsync();
+    }
 }
+
 

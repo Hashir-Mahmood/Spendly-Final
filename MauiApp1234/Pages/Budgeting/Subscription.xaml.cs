@@ -253,6 +253,11 @@ public partial class Subscription : ContentPage
     {
         Adobe.IsVisible = false;
     }
+
+    private void ReturnButton_Clicked(object sender, EventArgs e)
+    {
+        Navigation.PopAsync();
+    }
 }
 
 public class SpendingDataModel

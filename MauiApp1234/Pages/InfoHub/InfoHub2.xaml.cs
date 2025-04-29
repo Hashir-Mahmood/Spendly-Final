@@ -19,4 +19,9 @@ public partial class InfoHub2 : ContentPage
     {
         Navigation.PushAsync(new InfoHub1());
     }
+
+    private void ReturnButton_Clicked(object sender, EventArgs e)
+    {
+        Navigation.PopAsync();
+    }
 }
