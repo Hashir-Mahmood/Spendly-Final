@@ -27,7 +27,7 @@ namespace MauiApp1234 // Adjust namespace if needed
 
         // Connection string (Replace YOUR_PASSWORD)
         // Consider moving to a configuration file/service for better security
-        private readonly string connString = "server=dbhost.cs.man.ac.uk;user=b66855mm;password=YOUR_PASSWORD;database=b66855mm";
+        private readonly string connString = "server=dbhost.cs.man.ac.uk;user=b66855mm;password=iTIfvSknLwQZHtrLaHMy4uTsM/UuEQvZfTqa0ei81+k;database=b66855mm";
 
         // Data storage
         private List<SpendingCategoryWithTransactions> _spendingCategories = new List<SpendingCategoryWithTransactions>();
@@ -292,16 +292,18 @@ namespace MauiApp1234 // Adjust namespace if needed
             return budgets;
         }
 
+
+
         /// <summary>
         /// Fetches the overall monthly budget stored in the `customer` table.
         /// </summary>
         private async Task<decimal> FetchTotalMonthlyBudgetAsync(MySqlConnection conn)
         {
-            decimal defaultBudget = 2500m; // Default value if not found or error occurs
+            decimal defaultBudget = 2500; // Default value if not found or error occurs
             try
             {
                 // Assumes a 'monthly_budget' column exists in the 'customer' table
-                string sql = "SELECT `monthly_budget` FROM `customer` WHERE `customer_id` = @customerId";
+                string sql = "SELECT `monthly_income` FROM `customer` WHERE `customer_id` = @customerId";
                 using (var cmd = new MySqlCommand(sql, conn))
                 {
                     cmd.Parameters.AddWithValue("@customerId", _customerId);
@@ -753,7 +755,7 @@ namespace MauiApp1234 // Adjust namespace if needed
         // Buttons within the page content (if any)
         private async void SubscriptionButton_Clicked(object sender, EventArgs e)
         {
-            if (this.Window != null) await DisplayAlert("Subscription", "Manage subscription feature coming soon.", "OK");
+            await Application.Current.MainPage.Navigation.PushAsync(new Subscription());
         }
 
         private void FreezeStreakButton_Clicked(object sender, EventArgs e)
