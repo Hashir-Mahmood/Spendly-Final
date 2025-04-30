@@ -103,7 +103,9 @@ namespace MauiApp1234
             NextButton.IsEnabled = false;
             SkipButton.IsEnabled = false;
 
-           
+            // Mark onboarding as seen
+            Preferences.Set("HasSeenOnboarding", true);
+
 
             // Slide out the current page (move it off the screen to the left)
             await this.TranslateTo(-this.Width, 0, 250, Easing.CubicInOut);
