@@ -1,4 +1,5 @@
 using MySqlConnector;
+using System.Diagnostics;
 
 namespace MauiApp1234.Pages.Dashboard;
 
@@ -67,7 +68,8 @@ public partial class AddGoal : ContentPage
             try
             {
                 await conn.OpenAsync();
-                string sql = "INSERT INTO goal (customer-id, GoalName, Description, Progress, RemainingAmount, TargetDate, CreatedDate) " +
+                // Using backticks around column names and proper table name based on error message
+                string sql = "INSERT INTO `financial_goals` (`customer-id`, `GoalName`, `Description`, `Progress`, `RemainingAmount`, `TargetDate`, `CreatedDate`) " +
                              "VALUES (@customerId, @goalName, @description, @progress, @remainingAmount, @targetDate, @createdDate)";
 
                 using (MySqlCommand cmd = new MySqlCommand(sql, conn))
@@ -101,7 +103,8 @@ public partial class AddGoal : ContentPage
         }
 
         // Navigate to the Goal summary page - you might need to create this page
-        await Application.Current.MainPage.Navigation.PushAsync(new Dashboard());
+        try { await Shell.Current.GoToAsync("//dashboard"); } // Navigate to Dashboard route
+        catch (Exception ex) {;}
     }
 
     private void ReturnButton_Clicked(object sender, EventArgs e)

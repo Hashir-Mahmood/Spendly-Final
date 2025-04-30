@@ -10,6 +10,8 @@ using MauiApp1234.Pages.Dashboard;
 using MauiApp1234.Pages.Settings;
 using System.Collections.ObjectModel;
 using System.Text;
+using System.ComponentModel;
+using System.Windows.Input;
 
 namespace MauiApp1234
 {
@@ -607,6 +609,305 @@ namespace MauiApp1234
             DisplayAlert("View Goals", "Feature to view all financial goals coming soon.", "OK");
         }
 
+        
+
         #endregion
+    }
+
+    public class GoalViewModel : INotifyPropertyChanged
+    {
+        private ObservableCollection<GoalItem> _goals;
+        public ObservableCollection<GoalItem> Goals
+        {
+            get => _goals;
+            set
+            {
+                _goals = value;
+                OnPropertyChanged(nameof(Goals));
+            }
+        }
+
+        public ICommand DeleteGoalCommand { get; }
+        public ICommand AddGoalCommand { get; }
+        public ICommand RefreshGoalsCommand { get; }
+
+        // Use a constant for the table name to ensure consistency
+        private const string GOALS_TABLE = "financial_goals";
+
+        // Consider moving the connection string to a secure storage or config file
+        private readonly string _connectionString;
+
+        public ObservableCollection<GoalProgressDataModel> GoalProgressData { get; private set; }
+
+        // Add loading state properties
+        private bool _isLoading;
+        public bool IsLoading
+        {
+            get => _isLoading;
+            set
+            {
+                _isLoading = value;
+                OnPropertyChanged(nameof(IsLoading));
+            }
+        }
+
+        public GoalViewModel()
+        {
+            Goals = new ObservableCollection<GoalItem>();
+            GoalProgressData = new ObservableCollection<GoalProgressDataModel>();
+
+            // Retrieve connection string from secure storage or config
+            _connectionString = "server=dbhost.cs.man.ac.uk;user=b66855mm;password=iTIfvSknLwQZHtrLaHMy4uTsM/UuEQvZfTqa0ei81+k;database=b66855mm";
+
+            // Initialize commands
+            DeleteGoalCommand = new Command<int>(async (goalId) => await DeleteGoalAsync(goalId));
+            AddGoalCommand = new Command(async () => await AddGoalAsync());
+            RefreshGoalsCommand = new Command(async () => await LoadGoalsAsync());
+
+            // Load goals when the ViewModel is created
+            LoadGoalsAsync().ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Loads goals from the database for the current customer
+        /// </summary>
+        public async Task LoadGoalsAsync()
+        {
+            if (IsLoading) return;
+
+            IsLoading = true;
+
+            using (MySqlConnection conn = new MySqlConnection(_connectionString))
+            {
+                try
+                {
+                    await conn.OpenAsync();
+
+                    // Get customer ID from preferences
+                    long customerId = GetCurrentCustomerId();
+                    if (customerId <= 0)
+                    {
+                        // Handle case where customer ID is invalid
+                        await ShowAlertAsync("Error", "Customer ID not found. Please log in again.", "OK");
+                        IsLoading = false;
+                        return;
+                    }
+
+                    string sql = $"SELECT * FROM `{GOALS_TABLE}` WHERE `customer-id` = @customerId";
+                    using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@customerId", customerId);
+                        using (MySqlDataReader reader = await cmd.ExecuteReaderAsync())
+                        {
+                            ObservableCollection<GoalItem> goalList = new ObservableCollection<GoalItem>();
+                            while (await reader.ReadAsync())
+                            {
+                                GoalItem goal = new GoalItem
+                                {
+                                    GoalId = reader.GetInt32(0),
+                                    CustomerId = reader.GetInt64(reader.GetOrdinal("customer-id")),
+                                    Name = reader.GetString(reader.GetOrdinal("GoalName")),
+                                    Description = reader.GetString(reader.GetOrdinal("Description")),
+                                    Progress = reader.GetDouble(reader.GetOrdinal("Progress")),
+                                    RemainingAmount = reader.GetDouble(reader.GetOrdinal("RemainingAmount")),
+                                    TargetDate = reader.GetDateTime(reader.GetOrdinal("TargetDate")),
+                                    CreatedDate = reader.GetDateTime(reader.GetOrdinal("CreatedDate"))
+                                };
+                                goalList.Add(goal);
+                            }
+                            Goals = goalList;
+                        }
+                    }
+
+                    // Update progress data after loading goals
+                    UpdateGoalProgressData();
+                }
+                catch (MySqlException ex)
+                {
+                    await HandleDatabaseExceptionAsync("Error loading goals", ex);
+                }
+                catch (Exception ex)
+                {
+                    await HandleGeneralExceptionAsync("Error loading goals", ex);
+                }
+                finally
+                {
+                    IsLoading = false;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Updates the goal progress data for visualization
+        /// </summary>
+        private void UpdateGoalProgressData()
+        {
+            GoalProgressData.Clear();
+            foreach (var goal in Goals)
+            {
+                GoalProgressData.Add(new GoalProgressDataModel
+                {
+                    GoalName = goal.Name,
+                    Progress = goal.Progress
+                });
+            }
+            OnPropertyChanged(nameof(GoalProgressData));
+        }
+
+        /// <summary>
+        /// Deletes a goal from the database
+        /// </summary>
+        private async Task DeleteGoalAsync(int goalId)
+        {
+            bool confirm = await Application.Current.MainPage.DisplayAlert(
+                "Confirm Delete",
+                "Are you sure you want to delete this goal?",
+                "Yes", "No");
+
+            if (!confirm) return;
+
+            using (MySqlConnection conn = new MySqlConnection(_connectionString))
+            {
+                try
+                {
+                    await conn.OpenAsync();
+
+                    // Use the correct table name and column name
+                    string sql = $"DELETE FROM `{GOALS_TABLE}` WHERE `goalId` = @goalId";
+
+                    using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@goalId", goalId);
+                        int rowsAffected = await cmd.ExecuteNonQueryAsync();
+
+                        if (rowsAffected > 0)
+                        {
+                            // Remove goal from local collection
+                            var goalToRemove = Goals.FirstOrDefault(g => g.GoalId == goalId);
+                            if (goalToRemove != null)
+                            {
+                                Goals.Remove(goalToRemove);
+                                UpdateGoalProgressData();
+                            }
+
+                            await ShowAlertAsync("Success", "Goal deleted successfully.", "OK");
+                        }
+                        else
+                        {
+                            await ShowAlertAsync("Error", "Goal not found or could not be deleted.", "OK");
+                        }
+                    }
+                }
+                catch (MySqlException ex)
+                {
+                    await HandleDatabaseExceptionAsync("Error deleting goal", ex);
+                }
+                catch (Exception ex)
+                {
+                    await HandleGeneralExceptionAsync("Error deleting goal", ex);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Navigates to the add goal page
+        /// </summary>
+        private async Task AddGoalAsync()
+        {
+            await Application.Current.MainPage.Navigation.PushAsync(new AddGoal());
+        }
+
+        #region Helper Methods
+
+        /// <summary>
+        /// Gets the current customer ID from preferences
+        /// </summary>
+        private long GetCurrentCustomerId()
+        {
+            long customerId = 0;
+            if (Preferences.Default.ContainsKey("customer_id"))
+            {
+                string customerIdString = Preferences.Default.Get("customer_id", "");
+                if (!string.IsNullOrWhiteSpace(customerIdString))
+                {
+                    if (long.TryParse(customerIdString, out long parsedId))
+                    {
+                        customerId = parsedId;
+                    }
+                }
+            }
+            return customerId;
+        }
+
+        /// <summary>
+        /// Displays an alert to the user
+        /// </summary>
+        private async Task ShowAlertAsync(string title, string message, string buttonText)
+        {
+            await Application.Current.MainPage.DisplayAlert(title, message, buttonText);
+        }
+
+        /// <summary>
+        /// Handles database exceptions
+        /// </summary>
+        private async Task HandleDatabaseExceptionAsync(string context, MySqlException ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"MySQL Error ({context}): {ex.Message}");
+            await ShowAlertAsync("Database Error", $"{context}: {ex.Message}", "OK");
+        }
+
+        /// <summary>
+        /// Handles general exceptions
+        /// </summary>
+        private async Task HandleGeneralExceptionAsync(string context, Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"Error ({context}): {ex.Message}");
+            await ShowAlertAsync("Error", $"An error occurred: {ex.Message}", "OK");
+        }
+
+        #endregion
+
+        #region INotifyPropertyChanged Implementation
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        #endregion
+    }
+
+    /// <summary>
+    /// Model class for financial goal items
+    /// </summary>
+    public class GoalItem
+    {
+        public int GoalId { get; set; }
+        public long CustomerId { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public double Progress { get; set; }
+        public double RemainingAmount { get; set; }
+        public DateTime TargetDate { get; set; }
+        public DateTime CreatedDate { get; set; }
+
+        // Calculated properties for UI display
+        public string FormattedTargetDate => TargetDate.ToString("MMM dd, yyyy");
+        public double ProgressPercentage => Progress * 100; // If Progress is stored as a decimal (0-1)
+        public bool IsCompleted => Progress >= 1.0;
+        public string StatusText => IsCompleted ? "Completed" : "In Progress";
+        public string RemainingAmountFormatted => RemainingAmount.ToString("C");
+    }
+
+    /// <summary>
+    /// Model class for goal progress chart data
+    /// </summary>
+    public class GoalProgressDataModel
+    {
+        public string GoalName { get; set; }
+        public double Progress { get; set; }
+        public double ProgressPercentage => Progress * 100;
     }
 }
