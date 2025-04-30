@@ -82,12 +82,7 @@
                     </VerticalStackLayout>
                 </Frame>
 
-                <Label Text="Spending Categories (Dec 2024)" FontSize="18" FontAttributes="Bold" Margin="0,10,0,5" />
-                <Frame CornerRadius="15" Padding="10" HasShadow="False" BackgroundColor="#f9fafb">
-                    <VerticalStackLayout x:Name="SpendingCategoriesContainer" Spacing="8">
-                        <Label Text="Loading categories..." TextColor="Gray" HorizontalOptions="Center" Padding="20"/>
-                    </VerticalStackLayout>
-                </Frame>
+               
             </VerticalStackLayout>
         </ScrollView>
 
