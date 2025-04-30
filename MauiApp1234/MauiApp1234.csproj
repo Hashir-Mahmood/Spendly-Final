@@ -40,8 +40,7 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiImage Include="Resources\AppIcon\Spendlyapp.png" IsAppIcon="true" />
-
+		<MauiImage Include="Resources\AppIcon\spendlyapp.png" IsAppIcon="true"/>
 
 		<!-- Splash Screen -->
 
@@ -88,6 +87,10 @@
 	  <None Remove="Resources\Images\spendly_logo.png" />
 	  <None Remove="Resources\Images\track.png" />
 	  <None Remove="Resources\Images\wheelchair.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiImage Include="Resources\AppIcon\spendlyapp.png" />
 	</ItemGroup>
 
 	<ItemGroup>
