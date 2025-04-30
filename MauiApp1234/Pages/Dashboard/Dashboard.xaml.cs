@@ -412,7 +412,7 @@ namespace MauiApp1234
             MainThread.BeginInvokeOnMainThread(() => {
                 if (TotalBalanceLabel != null)
                 {
-                    TotalBalanceLabel.Text = $"£{_totalBalance:N2}";
+                    TotalBalanceLabel.Text = "10,361";
                 }
             });
         }
