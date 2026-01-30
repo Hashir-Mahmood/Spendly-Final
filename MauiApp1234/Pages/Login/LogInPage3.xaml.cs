@@ -4,7 +4,7 @@ using System;
 
 public partial class LogInPage3 : ContentPage
 {
-    private readonly string connString = "server=dbhost.cs.man.ac.uk;user=b66855mm;password=iTIfvSknLwQZHtrLaHMy4uTsM/UuEQvZfTqa0ei81+k;database=b66855mm";
+    private readonly string connString = "";
 
     public LogInPage3()
     {
