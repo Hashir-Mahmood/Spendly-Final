@@ -46,7 +46,7 @@ public class SubscriptionViewModel : INotifyPropertyChanged
     public ICommand CancelSubscriptionCommand { get; }
     public ICommand AddSubscriptionCommand { get; }
 
-    private string _connectionString = "server=dbhost.cs.man.ac.uk;user=b66855mm;password=iTIfvSknLwQZHtrLaHMy4uTsM/UuEQvZfTqa0ei81+k;database=b66855mm";
+    private string _connectionString = "server=add your own";
 
     public ObservableCollection<SpendingDataModel> MonthlySpendingData { get; set; }
 
@@ -223,9 +223,9 @@ public partial class Subscription : ContentPage
     {
         DisplayAlert("Subscription Optimization",
             "Recommended Actions:\n\n" +
-            "1. Cancel Netflix Standard (£10.99/mo)\n" +
+            "1. Cancel Netflix Standard (Â£10.99/mo)\n" +
             "2. Share Netflix Premium with family members\n" +
-            "3. Potential annual savings: £131.88",
+            "3. Potential annual savings: Â£131.88",
             "Close");
     }
 
