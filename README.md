@@ -31,10 +31,24 @@ Both contributors were involved in the design, implementation, and testing of th
 
 ## 📂 Project Structure
 
-- `Views` – UI pages  
-- `ViewModels` – Application logic (MVVM)  
-- `Models` – Data models  
-- `Services` – Business logic and helpers  
+MauiApp1234/
+│
+├── Models/ # Data models (e.g. expenses, budgets)
+├── Pages/ # XAML UI pages
+├── ViewModels/ # ViewModels implementing application logic
+├── Resources/ # Styles, images, and other resources
+├── Platforms/ # Platform-specific implementations
+├── Properties/ # Application configuration
+│
+├── App.xaml # Application-level resources
+├── AppShell.xaml # Navigation structure
+├── MainPage.xaml # Entry UI page
+├── MauiProgram.cs # App startup and dependency configuration
+├── MauiApp1234.csproj
+│
+├── .gitignore
+├── .gitattributes
+└── MauiApp1234.sln
 
 ## ▶️ Getting Started
 
