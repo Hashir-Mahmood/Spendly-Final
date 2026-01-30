@@ -16,7 +16,7 @@ namespace MauiApp1234
             InitializeComponent();
 
             // MySQL connection string
-            string connString = "server=dbhost.cs.man.ac.uk;user=b66855mm;password=iTIfvSknLwQZHtrLaHMy4uTsM/UuEQvZfTqa0ei81+k;database=b66855mm";
+            string connString = "server=add your own";
 
             // Open connection to database inside a try-catch-finally block for safety
             try
