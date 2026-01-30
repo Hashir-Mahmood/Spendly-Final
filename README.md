@@ -40,5 +40,5 @@ Both contributors were involved in the design, implementation, and testing of th
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/spendly.git
+   git clone https://github.com/Hashir-Mahmood/spendly.git
 
