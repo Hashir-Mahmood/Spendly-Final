@@ -16,12 +16,12 @@ Spendly was developed using **.NET MAUI**, allowing it to run across multiple pl
 - Categorise spending  
 - View overall spending summaries  
 - Simple and user-friendly interface  
+- Track savings and investements
 
 ## 🛠️ Tech Stack
 
 - **Framework:** .NET MAUI  
-- **Language:** C#  
-- **Architecture:** MVVM  
+- **Language:** C#, XAML  
 - **Version Control:** Git & GitHub  
 
 ## 👥 Collaboration
