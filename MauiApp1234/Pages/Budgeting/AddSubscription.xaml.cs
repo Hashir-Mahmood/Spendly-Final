@@ -11,7 +11,7 @@ public partial class AddSubscription : ContentPage
     public AddSubscription()
     {
         InitializeComponent();
-        string connString = "server=dbhost.cs.man.ac.uk;user=b66855mm;password=iTIfvSknLwQZHtrLaHMy4uTsM/UuEQvZfTqa0ei81+k;database=b66855mm";
+        string connString = "server=add your own";
         MySqlConnection conn = new MySqlConnection(connString);
         conn.Open();
     }
