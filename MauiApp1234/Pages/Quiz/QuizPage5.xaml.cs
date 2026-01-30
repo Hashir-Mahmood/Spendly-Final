@@ -5,7 +5,7 @@ public partial class QuizPage5 : ContentPage
 	public QuizPage5()
 	{
 		InitializeComponent();
-        string connString = "server=dbhost.cs.man.ac.uk;user=b66855mm;password=iTIfvSknLwQZHtrLaHMy4uTsM/UuEQvZfTqa0ei81+k;database=b66855mm";
+        string connString = "";
         MySqlConnection conn = new MySqlConnection(connString);
         conn.Open();
     }
