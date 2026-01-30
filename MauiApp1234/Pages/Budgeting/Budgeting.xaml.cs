@@ -27,7 +27,7 @@ namespace MauiApp1234 // Adjust namespace if needed
 
         // Connection string (Replace YOUR_PASSWORD)
         // Consider moving to a configuration file/service for better security
-        private readonly string connString = "server=add your own";
+        private readonly string connString = "";
 
         // Data storage
         private List<SpendingCategoryWithTransactions> _spendingCategories = new List<SpendingCategoryWithTransactions>();

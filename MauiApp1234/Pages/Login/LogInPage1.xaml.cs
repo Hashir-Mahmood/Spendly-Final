@@ -7,7 +7,7 @@ public partial class LogInPage1 : ContentPage
 	public LogInPage1()
 	{
 		InitializeComponent();
-        string connString = "";
+        string connString = "L";
         try
         {
             MySqlConnection conn = new MySqlConnection(connString);
@@ -15,7 +15,7 @@ public partial class LogInPage1 : ContentPage
         }
         catch (Exception ex)
         {
-            DisplayAlert("Database Error", ex.Message, "OK");
+            DisplayAlert("Database Error", ex.Message, "K");
         }          
     }
 

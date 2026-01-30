@@ -16,7 +16,7 @@ namespace MauiApp1234
             InitializeComponent();
 
             // MySQL connection string
-            string connString = "server=add your own";
+            string connString = "";
 
             // Open connection to database inside a try-catch-finally block for safety
             try

@@ -10,7 +10,7 @@ namespace MauiApp1234
         public MainPage()
         {
             InitializeComponent();
-            string connString = "";
+            string connString = "L";
             MySqlConnection conn = new MySqlConnection(connString);
             conn.Open();
         }

@@ -5,7 +5,7 @@ public partial class QuizPage6 : ContentPage
 	public QuizPage6()
 	{
 		InitializeComponent();
-        string connString = "";
+        string connString = "L";
         MySqlConnection conn = new MySqlConnection(connString);
         conn.Open();
     }

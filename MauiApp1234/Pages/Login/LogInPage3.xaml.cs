@@ -4,7 +4,7 @@ using System;
 
 public partial class LogInPage3 : ContentPage
 {
-    private readonly string connString = "";
+    private readonly string connString = "L";
 
     public LogInPage3()
     {

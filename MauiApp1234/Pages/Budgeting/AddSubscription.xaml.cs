@@ -11,7 +11,7 @@ public partial class AddSubscription : ContentPage
     public AddSubscription()
     {
         InitializeComponent();
-        string connString = "server=add your own";
+        string connString = "server=add yourwn";
         MySqlConnection conn = new MySqlConnection(connString);
         conn.Open();
     }
@@ -56,7 +56,7 @@ public partial class AddSubscription : ContentPage
             }
             else
             {
-                id = Convert.ToInt64(n); // Use Convert.ToInt32 for a larger range
+                id = Convert.ToInt64(n);
             }
         }
         else
