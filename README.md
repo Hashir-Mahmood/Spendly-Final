@@ -54,5 +54,5 @@ MauiApp1234/
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/Hashir-Mahmood/spendly.git
+   git clone https://github.com/Hashir-Mahmood/Spendly-Final.git
 
