@@ -7,7 +7,7 @@ public partial class LogInPage1 : ContentPage
 	public LogInPage1()
 	{
 		InitializeComponent();
-        string connString = "server=dbhost.cs.man.ac.uk;user=b66855mm;password=iTIfvSknLwQZHtrLaHMy4uTsM/UuEQvZfTqa0ei81+k;database=b66855mm";
+        string connString = "";
         try
         {
             MySqlConnection conn = new MySqlConnection(connString);
@@ -115,7 +115,7 @@ public partial class LogInPage1 : ContentPage
         // Change Password visibility
         PasswordEntry.IsPassword = !PasswordEntry.IsPassword;
 
-        // También podrías cambiar la imagen del botón aquí
+        // TambiÃ©n podrÃ­as cambiar la imagen del botÃ³n aquÃ­
         // TogglePasswordButton.Source = PasswordEntry.IsPassword ? "eye_icon.png" : "eye_slash_icon.png";
     }
 
