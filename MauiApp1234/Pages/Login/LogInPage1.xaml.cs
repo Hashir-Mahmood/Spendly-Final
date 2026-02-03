@@ -63,7 +63,7 @@ public partial class LogInPage1 : ContentPage
         }
 
         // Insert data into SQL database
-        string connString = "server=dbhost.cs.man.ac.uk;user=b66855mm;password=iTIfvSknLwQZHtrLaHMy4uTsM/UuEQvZfTqa0ei81+k;database=b66855mm";
+        string connString = "";
         using (var conn = new MySqlConnection(connString))
         {
             try

@@ -85,7 +85,7 @@ namespace MauiApp1234
                 return;
             }
 
-            string connString = "server=dbhost.cs.man.ac.uk;user=b66855mm;password=iTIfvSknLwQZHtrLaHMy4uTsM/UuEQvZfTqa0ei81+k;database=b66855mm";
+            string connString = "";
 
             try
             {
@@ -340,7 +340,7 @@ namespace MauiApp1234
                     // Add amount text (current/budget)
                     categoryLayout.Add(new Label
                     {
-                        Text = $"£{category.CurrentAmount:N0} / £{category.BudgetAmount:N0}",
+                        Text = $"ï¿½{category.CurrentAmount:N0} / ï¿½{category.BudgetAmount:N0}",
                         HorizontalOptions = LayoutOptions.EndAndExpand,
                         TextColor = category.CurrentAmount > category.BudgetAmount ? Colors.Red : Colors.Black
                     });

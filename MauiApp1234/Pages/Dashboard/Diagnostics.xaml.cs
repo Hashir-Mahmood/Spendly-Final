@@ -118,7 +118,7 @@ namespace MauiApp1234.Pages.Dashboard
             }
 
             // *** Limitation Note ***: Fetches stored 'monthly_income', not filtered by date.
-            string connString = "server=dbhost.cs.man.ac.uk;user=b66855mm;password=iTIfvSknLwQZHtrLaHMy4uTsM/UuEQvZfTqa0ei81+k;database=b66855mm"; // Replace with your actual password
+            string connString = ""; // Replace with your actual password
 
             using (var conn = new MySqlConnection(connString))
             {
