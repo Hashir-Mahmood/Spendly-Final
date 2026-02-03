@@ -210,7 +210,7 @@ namespace MauiApp1234.Pages.Dashboard
                 return;
             }
 
-            string connString = "server=dbhost.cs.man.ac.uk;user=b66855mm;password=iTIfvSknLwQZHtrLaHMy4uTsM/UuEQvZfTqa0ei81+k;database=b66855mm"; // Replace with your actual password
+            string connString = ""; // Replace with your actual password
             var expenseData = new List<ExpenseItem>();
             _totalExpenses = 0; // Reset total expenses
 

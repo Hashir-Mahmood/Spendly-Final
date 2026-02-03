@@ -198,7 +198,7 @@ namespace MauiApp1234
                 return;
             }
 
-            string connString = "server=dbhost.cs.man.ac.uk;user=b66855mm;password=iTIfvSknLwQZHtrLaHMy4uTsM/UuEQvZfTqa0ei81+k;database=b66855mm";
+            string connString = "";
             DateTime startDate = new DateTime(2024, 12, 1);
             DateTime endDate = new DateTime(2024, 12, 31);
 
